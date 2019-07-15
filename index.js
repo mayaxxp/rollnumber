@@ -1,1 +1,1 @@
-function(){alert("123456")}
+(function(){alert("123456")})()
