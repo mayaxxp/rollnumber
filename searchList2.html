@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title> 
+		<link  rel="stylesheet" type="text/css"  href="bootstrap-3.3.7-dist/css/bootstrap.min.css"  >
+		<script  type="text/javascript" src="js/jquery-1.11.3.js"  ></script>
+		<script  type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"  ></script>
+		<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+		<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+		<style type="text/css" rel="stylesheet">
+		* {margin: 0px;padding: 0px;}
+			label{margin-bottom: 0px;}
+			hr{line-height: .5em; margin:5px auto 10px;}
+			 .dateOform .text-right{line-height: 2.5;}
+			 .dateOform .form-control{width:auto;}
+			 .dateOform2 hr{width:90%;margin-left: auto;margin-right: auto;position: relative;margin-top: 10px;color: #FFFfff;border:none;border-bottom: 1px #CCCCCC dashed;}
+			 .form-inline .text-right{text-align-last: right;}
+			 .dateOform .form-control[type="file"]{text-align-last: right;padding:3px;box-shadow:none !important;outline: none;-webkit-box-shadow: none !important;}
+			 .radioGroup label{font-weight: 100;margin-left: 20px;}
+			  
+			 .hr-md{width: 98%;margin-left: auto;margin-right: auto;position: relative;margin-top: 10px;border:none;border-bottom: 1px #dedede dashed;}
+		</style>
+	</head>
+	<body style="background: #EEEEEE;">
+		<form id="form1" name="form1" action="<%=path%>/sys/toSaveConf.do"  method="post" enctype="multipart/form-data" >
+		<div style="width:100%;height:100%; position: absolute;left:0;top:0;background:white;">
+			<div  class="container" style="width:96%;height:90%;width:calc(100% - 40px);height:calc(100% - 55px); position: relative; margin-left:auto;margin-right: auto;top:10px;background:white;">
+				<div class="row">
+					<div class="form-inline col-md-5">
+						<a><label>系统管理</label></a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a><label>资源目录数据备份</label></a>
+					</div>
+				</div>
+				<div class="dateOform form-inline row" > <hr/> </div> 
+				<div class="dateOform form-inline row" >
+					<div class="col-md-3 form-inline text-right"><label    >自动备份设置：</label></div>
+					<div class="col-md-7 form-inline">
+							<div class="col-md-5 radioGroup" style="line-height: 34px;height: 34px;">
+								是否每日自动备份：
+							    <label><input type="radio" name="backupAuto" value="1">是  </label> 
+						     	<label><input type="radio" name="backupAuto" value="0">否 </label>
+					   		</div>
+					   		<div for="backupTime" class="col-md-5">每日自动备份时间：
+								<input id="backupTime" name="backupTime" type="text" class="form-control" required  value="${backupTime }">
+					   		</div>
+					   </div> 
+				</div>
+				<div class="dateOform2 form-inline row" > <hr/> </div> 
+				<div class="dateOform form-inline row" >
+					<div class="col-md-3 form-inline text-right"><label   >手动备份设置：</label></div>
+					<div class="col-md-7 form-inline">
+							<div class="col-md-5 radioGroup" style="line-height: 34px;height: 34px;">
+								备份类型：
+							    <label><input type="radio" name="backupAll" value="1">全部备份</label> 
+					       		<label><input type="radio" name="backupAll" value="0">增量备份 </label> 
+					   		</div>
+					   		<div for="backupTime" class="col-md-5  form-inline ">
+					   			数据备份：
+								<input id="later_part_code" class="form-control" name="later_part_code" type="text" placeholder='规则提示"XX-X/XXX-XXX"'> 
+								
+					   		</div>
+					   		<div class="col-md-2  form-inline "><input type="button" class="btn btn-info" value="开始备份 "></div>
+					   </div> 
+				</div>
+				
+				<div class="dateOform2 form-inline row" > <hr/> </div> 
+				
+				<div class="dateOform form-inline row" style="padding-top: 10px;">
+					<label for="later_part_code" class="col-md-3 text-right">已备份记录：</label>
+					<div class="col-md-6 ">
+						<ul class="list-unstyled">
+						  <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						   <li>系统备份日期和时间：2018-06-25  备份开始：13:25:03  备份结束：13:30:05  备份类型：全部备份       系统管理员：XXX</li>
+						</ul>			
+					</div>
+				</div>
+				<div class="row" style=" position:absolute;bottom:-35px;background:white;width: 100%;padding-top: 5px;padding-bottom: 5px;background:#e5eff1;">
+					<div class="form-inline col-md-12 ">
+						<div class="float-right" style="position: relative;float: right;">
+							<input name="bnt" type="button" value="取消" class="btn btn-default float-md-right" /> 
+							<input name="bnt" type="submit" value="保存" class="btn btn-success float-md-right" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</body>
+</html>
