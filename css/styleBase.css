@@ -1,0 +1,5 @@
+* {margin: 0px;padding: 0px;box-sizing: border-box;}
+html,body{height: 100%;width:100%;margin: 0px;padding: 0px;min-height:300px;overflow: hidden;}
+.page-header{position: absolute;width: 100%;height: 40px;line-height: 40px;margin: 0px;padding: 0 20px 10px;}
+.page-center{width:100%;height:85%;height:calc(100% - 84px);height: -webkit-calc(100% - 84px);height:-moz-calc(100% - 84px); position: absolute;left:0;top:40px;background:white;padding-top:10px ;padding-bottom:10px ;overflow-y:auto;}
+.page-footer{position: fixed; bottom: 0px;   background:white;width: 100%;padding-top: 5px;padding-bottom: 5px;background:#e5eff1;}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title> 
+		<link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/styleBase.css" />
+		<script type="text/javascript" src="../../js/jquery-1.11.3.js" ></script>
+		<script  type="text/javascript" src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"  ></script>
+		<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+		<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+	<style type="text/css" rel="stylesheet">
+		form{position: absolute;display: block;height: 100%;width:100%;}
+		label{margin-bottom: 0px;}
+		hr{line-height: .5em; margin:5px auto 10px;}
+		.container{width:96%;height:100%;width:calc(100% - 40px);height:auto; position: relative; margin-left:auto;margin-right: auto; background:white;}
+		.form-inline .form-control{min-width: 170px;width: 60%;display: inline-block;}
+	 
+		.dateOform2 hr{width:90%;margin-left: auto;margin-right: auto;position: relative;margin-top: 10px;color: #FFFfff;border:none;border-bottom: 1px #CCCCCC dashed;}
+			.form-inline .text-right{line-height: 2.5;min-width: 130px;text-align-last: right;}
+			.dateOform .form-control[type="file"]{text-align-last: right;padding:3px;box-shadow:none !important;outline: none;-webkit-box-shadow: none !important;}
+			.radioGroup label{font-weight: 100;margin-left: 20px;}
+			.hr-md{width: 98%;margin-left: auto;margin-right: auto;position: relative;margin-top: 10px;border:none;border-bottom: 1px #dedede dashed;}
+	</style>
+	</head>
+<body  >
+<form id="form1" name="form1" action="<%=path%>/sys/toSaveConf.do"  method="post" enctype="multipart/form-data" >
+	<div class="page-header" >
+		<div class="form-inline ">
+			<a><label>垃圾费用结算</label></a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a><label>结算费用设定</label></a>
+		</div>
+	</div>
+	<div class="page-center" >
+			
+		<div class="container" >
+				 
+				<div class="dateOform form-inline row" >
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-inline text-right">
+						<label>指定垃圾楼：</label>
+					</div>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 form-inline">
+						<select id="backupTime" name="backupTime" type="text" class="form-control" required  value="">
+							<option>坂井垃圾楼</option>
+							<option>北航垃圾楼</option>
+							<option>北外垃圾楼</option>
+							<option>中央党校垃圾楼</option>
+						</select>
+					</div>
+				</div>
+				<div class="dateOform2 form-inline row" > <hr/> </div> 
+				<div class="dateOform form-inline row" >
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-inline text-right"><label>保底量：</label></div>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 form-inline">
+							<input id="later_part_code" class="form-control" name="later_part_code" type="text" placeholder='请设置保底垃圾量'> 
+							<span>吨</span>
+					</div> 
+				</div>
+				<div class="dateOform2 form-inline row" > <hr/> </div> 
+				<div class="dateOform form-inline row" >
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-inline text-right"><label>保底价格：</label></div>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 form-inline">
+							<input id="later_part_code" class="form-control" name="later_part_code" type="text" placeholder='请设置保底垃圾量'> 
+							<span>元/吨</span>
+					</div>
+				</div>
+				<div class="dateOform2 form-inline row" > <hr/> </div> 
+				<div class="dateOform form-inline row" >
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-inline text-right"><label>超出价格：</label></div>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 form-inline">
+							<input id="later_part_code" class="form-control" name="later_part_code" type="text" placeholder='请设置保底垃圾量'> 
+							<span>元/吨</span>
+					</div> 
+				</div>
+				<div class="dateOform2 form-inline row" style="margin-bottom:40px;"> <hr/> </div>
+		</div>
+	</div>
+	<div class="page-footer"  >
+				<div class="form-inline col-md-12 ">
+					<div class="float-right" style="position: relative;float: right;">
+						<input name="bnt" type="button" value="取消" class="btn btn-default float-md-right" />
+						<input name="bnt" type="submit" value="保存" class="btn btn-success float-md-right" />
+					</div>
+				</div>
+	</div>
+</form>
+</body>
+</html>
