@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地图展示数据</title>
+    <link rel="stylesheet" href="css/formapPage.css" />
+</head>
+<body>
+<div id="mapContainer"></div>
+<div class="div_select">
+	<select id="sel_ljl" onchange="openInfoFunSelect(this.value)" style="width:220px;">
+		<option value="">--选择垃圾楼--</option>
+		<option value="1001">永泰庄转运站</option>
+		<option value="1002">苏州街转运站</option>
+	</select>
+</div>
+<div class="left_bottom_info" id="text">
+    轨迹动画效果仅供演示，非实际车辆运行位置。
+</div>
+<!-- 加载地图JSAPI脚本 -->
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=980aa3c043e6f347df9c36abfaa3ecb4"></script>
+<script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.15&key=980aa3c043e6f347df9c36abfaa3ecb4'></script>
+<!-- UI组件库 1.0 -->
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script>
+	//中心：经度(longitude)：116.308313 纬度(latitude)：39.967479	
+	// 垃圾楼坐标点
+	var ccsList = [{"id":"1001","latitude":"40.037739","longitude":"116.354564","name":"永泰庄转运站"},{"id":"1002","latitude":"39.975532","longitude":"116.306652","name":"苏州街转运站"}]; 
+	// 垃圾楼下小区的坐标点
+	var communityList = [{"ccsId":"1001","id":"a","latitude":"40.035439","longitude":"116.360873","name":"永泰1小区"},{"ccsId":"1001","id":"b","latitude":"40.040231","longitude":"116.344001","name":"永泰2小区"},{"ccsId":"1002","id":"c","latitude":"39.986318","longitude":"116.338324","name":"苏州街小区A"},{"ccsId":"1002","id":"d","latitude":"39.988883","longitude":"116.280731","name":"苏州街小区B"}];
+    var map = new AMap.Map('mapContainer', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zoom:11, //初始化地图层级
+        center: [116.397428, 39.90923]  //初始化地图中心点
+       
+    });
+
+    AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
+        if (!PathSimplifier.supportCanvas) {
+            alert('当前环境不支持 Canvas！');
+            return;
+        }
+	    for(var i=0;i<ccsList.length;i++){
+		   var ccs = ccsList [i];
+		   var ccsLonLat = [ccs.longitude, ccs.latitude];
+		   for(var j = 0; j<communityList.length; j++){
+			   comm = communityList[j];
+			   if(ccs.id == comm.ccsId){ // 创建一条线路
+					var pathSimplifierIns = new PathSimplifier({
+						zIndex: 100,
+						autoSetFitView:false,
+						map: map, //所属的地图实例
+						getPath: function(pathData, pathIndex) {
+							return pathData.path;
+						}
+					});
+					window.pathSimplifierIns = pathSimplifierIns;
+					//设置数据
+					pathSimplifierIns.setData([{
+						name: '线路0',
+						path: [
+							[comm.longitude, comm.latitude],
+							[ccs.longitude, ccs.latitude] 
+						]
+					}]);
+					//对第一条线路（即索引 0）创建一个巡航器
+					var navg1 = pathSimplifierIns.createPathNavigator(0, {
+						loop: true, //循环播放
+						speed: 100,  //巡航速度，单位千米/小时
+ 					pathNavigatorStyle:{
+						initRotateDegree: 0,
+			            autoRotate: !0,
+			            width: 16,
+			            height: 16,
+			            lineJoin: "round",
+			            content: "defaultPathNavigator",
+//			            content: PathSimplifier.Render.Canvas.getImageContent('image/plane.png'),//自定义巡航器样式
+			            fillStyle: "#60b200",
+			            strokeStyle: "#7bdd09",
+			            lineWidth: .5,
+			            pathLinePassedStyle: {
+			                lineWidth: 5,
+			                fillStyle: "#60b200",
+			                strokeStyle: "rgba(139, 195, 74, 1)"
+			            }
+					}
+					});
+					navg1.start(); 
+			   } 
+		   }
+	    }
+    });
+
+	var map =  new AMap.Map('mapContainer', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zoom:11, //初始化地图层级
+        center: [116.397428, 39.90923] //初始化地图中心点
+    });
+	
+	var ljlMarks = [];
+	// 垃圾楼的图标显示
+	for (var i = 0; i <ccsList.length; i++){
+		var pObj = ccsList[i]; 
+		var marker = 
+			new AMap.Marker({
+			map : map,
+			position : [pObj.longitude,pObj.latitude],
+			icon : './images/garbageStation.png',
+			offset: new AMap.Pixel(-18, -36),
+			extData:{"type":1, "id":pObj.id},
+			autoRotation : true,
+			title:pObj.name,
+			label:{content: pObj.name,offset: new AMap.Pixel(-24, 37)} 
+		});
+		marker.on('click', function(e) {
+			console.log(e.target.B.extData.id);
+			openInfoFunSelect(e.target.B.extData.id);
+		});
+		ljlMarks.push(marker); 
+	}
+	map.setFitView(ljlMarks,true, [110,20,1,320], 15);
+    // 点击显示 垃圾楼下小区的坐标点
+	function openInfoFunSelect(val){
+		if(val == ""){
+			return;
+		}
+		var thisObj = findLjl(val);
+		//实例化信息窗体
+		var infoWindow = new AMap.InfoWindow({
+			isCustom: true,  //使用自定义窗体
+			offset: new AMap.Pixel(16, -38)
+		});
+		//实例化信息窗体
+		var title ="<span style='font-size:11px;color:#F00;'>"+thisObj.name+"</span>";
+		content = [];
+		
+		content.push("<div class='conleft'><img src='http://tpc.googlesyndication.com/simgad/5843493769827749134' /></div><div class='conright'>");
+		content.push("<div class='info-itemrow'><label>今日垃圾进料量：</label><span>"+ Math.ceil(Math.random()*100)+"</span></div>");
+		content.push("<div class='info-itemrow'><label>今日垃圾进料车次：</label><span>"+ Math.ceil(Math.random()*100)+"</span></div>");
+		content.push("<div class='info-itemrow'><label>今日垃圾出料量：</label><span>" + Math.ceil(Math.random()*100)+"</span></div>");
+		content.push("<div class='info-itemrow'><label>今日垃圾出料车次：</label><span>" + Math.ceil(Math.random()*100)+"</span></div></div>");
+	
+		
+		var bottom_ ="<a href='javascript:void(0)'>详细信息</a>";
+		var theContent = createInfoWindow(title, content.join("<span></span>"),bottom_);
+		infoWindow.setContent(theContent);
+		infoWindow.open(map, [thisObj.longitude, thisObj.latitude]);
+		// 删除所有小区坐标,和线路
+		var allOverlay = map.getAllOverlays();
+		for(var i=0;i<allOverlay.length;i++){
+			if(allOverlay[i].getExtData().type != 1){
+				map.remove(allOverlay[i]);
+			}
+		}
+		var lon = thisObj.longitude;
+		var lat = thisObj.latitude;
+		var id = thisObj.id;
+		var xqFitArr = [];
+		for (var i = 0; i <communityList.length; i++){
+			var xqObj = communityList[i];
+			if(xqObj.ccsId == id){
+				var marker = 
+					new AMap.Marker({
+					map : map,
+					position : [xqObj.longitude,xqObj.latitude],
+					autoRotation : true,
+					title:xqObj.name,
+					label:{content: xqObj.name,offset: new AMap.Pixel(-20, 25)} ,
+					icon : './images/xiaoqu.png',
+					offset: new AMap.Pixel(-10, -24)
+				});
+				marker.on('click', getXqInfo, xqObj); 
+				xqFitArr.push(marker);
+			}
+		}
+		map.setFitView(xqFitArr);
+	}
+    // 根据垃圾楼ID得到垃圾楼的信息对象
+	function findLjl(ccsId){
+		console.log("查找垃圾楼编号：" + ccsId);
+		for (var i = 0; i <ccsList.length; i++){
+			var ljlObj = ccsList[i]; 
+			console.log(ljlObj);
+			if(ljlObj.id == ccsId){
+				return ljlObj;
+			}
+		}
+		return null;
+	}
+	// 得到小区信息
+	function getXqInfo(){
+		var infoWindow = new AMap.InfoWindow({
+			isCustom: true,  //使用自定义窗体
+			offset: new AMap.Pixel(16, -45)
+		});
+		var p = this;
+		//实例化信息窗体
+		var title ="<span style='font-size:11px;color:#F00;'>"+this.name+"</span>";
+		content = [];
+		content.push("<div class='conleft'><img  src='http://tpc.googlesyndication.com/simgad/5843493769827749134'/></div><div class='conright'>");
+		content.push("<div class='info-itemrow'><label>今日垃圾产生量：</label><span>"+ Math.ceil(Math.random()*100)+"</span></div>");
+		content.push("<div class='info-itemrow'><label>今日垃圾车次：</label><span>"+ Math.ceil(Math.random()*100)+"</span></div></div>");
+		 
+		var bottom_ ="<a href='javascript:void(0)'>详细信息</a>";
+		var theContent = createInfoWindow(title, content.join("<span></span>"),bottom_);
+		infoWindow.setContent(theContent);
+		infoWindow.open(map, [this.longitude, this.latitude]);
+	}
+	//构建自定义信息窗体
+	function createInfoWindow(title, content,bottom_) {
+		var info = document.createElement("div");
+		info.className = "info input-card ";
+		//可以通过下面的方式修改自定义窗体的宽高
+		info.style.width = "330px";
+		// 定义顶部标题
+		var top = document.createElement("div");
+		var titleD = document.createElement("div");
+		var closeX = document.createElement("img");
+		var bottomD = document.createElement("div");
+		top.className = "info-top";
+		titleD.innerHTML = title;
+		closeX.src = "https://webapi.amap.com/images/close2.gif";
+		closeX.onclick = closeInfoWindow;
+
+		top.appendChild(titleD);
+		top.appendChild(closeX);
+		info.appendChild(top);
+
+		// 定义中部内容
+		var middle = document.createElement("div");
+		middle.className = "info-middle";
+		middle.style.backgroundColor = 'white';
+		middle.innerHTML = content;
+		info.appendChild(middle);
+
+		// 定义底部内容
+		var bottom = document.createElement("div");
+		bottom.className = "info-bottom";
+		var sharp = document.createElement("img");
+		sharp.src = "https://webapi.amap.com/images/sharp.png";
+		bottomD.innerHTML = bottom_
+		bottom.appendChild(bottomD);
+		bottom.appendChild(sharp);
+		info.appendChild(bottom);
+		return info;
+	}
+	//关闭信息窗体
+	function closeInfoWindow() {
+		map.clearInfoWindow();
+	}
+</script>
+</body>
+</html>

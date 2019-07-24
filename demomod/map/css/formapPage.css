@@ -1,0 +1,43 @@
+html,body,#mapContainer {width: 100%;   height: 100%;  padding: 0px; margin: 0px; font-size: 12px;}
+/*左上角的文本提示样式*/
+.div_select{ position:absolute; left:6px; top:10px;  background-color: rgba(79, 75, 99, 0.38);   padding: 5px 8px;  border-radius: 5px; }
+.div_select>select{height: 28px;line-height:40px;appearance:dimgrey;padding-left: 10px;padding-right: 10px;}
+.div_select>select>option{ position: relative;display: block; padding: 3px 8px;} 
+ul{ font-size: 12px; padding-left: 0px;  }
+li{ padding-left:40px; display: block;height: 28px; }
+
+
+/*左下角的文本提示样式*/
+.left_bottom_info hr {margin-right: 0;  margin-left: 0; border-top-color: grey; }
+.left_bottom_info {padding: .75rem 1.25rem; margin-bottom: 1rem; letter-spacing:.1em;  border-radius: .25rem; position: fixed;    margin-left: auto;  margin-right: auto; bottom:5px;  background:rgba(79, 75, 99, 0.8); width: auto;   border-width: 0;   color: #F9f9f9;  left: 5px;  box-shadow: 0 0px 5px rgba(114, 124, 245, .5); }
+  
+/*		 弹框样式		 * */
+	.info{border-radius: 5px;box-shadow: 0 0 5px rgba(0,0,0,.5);border: solid 1px silver;}	 
+	 		
+	.info .info-top {  position: relative; background: none repeat scroll 0 0 #F9F9F9;  border-bottom: 1px solid #CCC; border-radius: 5px 5px 0 0; } 
+   	.info .info-top div {  display: inline-block;  color: #333333; font-size: 14px; font-weight: bold; line-height: 31px; padding: 0 10px; }
+	.info .info-top img {  position: absolute;  top: 10px; right: 10px; transition-duration: 0.25s; } 
+	.info .info-top img:hover {  box-shadow: 0px 0px 5px #000; } 
+     
+    .info .info-middle{font-size: 12px;  padding: 10px 6px;  line-height: 20px;  }
+    .info .info-middle { font-size: 12px; padding: 10px 6px;  line-height: 20px; }
+    .info .info-middle>img {width: 38%; display: inline-block; float: left;  margin-right: 6px; }
+	.info .info-middle .conleft,div.info-middle .conright{display: inline-block; position: relative;}
+    .info .info-middle .conleft{width:35%;}
+    .info .info-middle .conright{width: 65%;}
+    .info .info-middle .conright>span{width:100%;margin-left: 5px;margin-right: 5px;height:1px;border: none;border-bottom: 1px dashed #C0C0C0;display: flex;}
+    .info .info-middle .conright>.info-itemrow{width: 95%;height:auto; line-height: 20px; display: flex;  justify-content: space-evenly;}
+    .info .info-middle .conright>.info-itemrow label{text-align: right; width:65%;}
+    .info .info-middle .conright>.info-itemrow>span{font-size: 11px; color: #00f;  width: auto; line-height: 20px; display: inline-block;}
+    
+    .info .info-bottom {   width: 100%;  clear: both;  text-align: center; height: 24px; background: #fff; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;  }
+    .info .info-bottom img { position: relative; z-index: 104;  top: 8px;}
+   /*		 弹框样式End	 * */
+  
+/*弹框小区名称样式*/
+.amap-marker-label{border: 1px solid #333333;
+    background-color: rgba(25, 55, 81, 0.6);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 3px 5px;}
