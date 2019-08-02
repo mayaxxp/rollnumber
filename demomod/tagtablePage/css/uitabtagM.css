@@ -1,13 +1,15 @@
 html body {width:100%; height:100%; margin:0px; padding:0px;background: #ebebeb;}
 		*{margin:0px; padding:0px;font-size:12px;font-family: 闁炽儲绌緍ial闁炽儻鎷�,闁炽儲璞crosoft YaHei闁炽儻鎷�,闁炽儲绻堢划锔芥媴閹绢垽鎷烽敓锟�,闁炽儲绻傞悾顐ｆ媴閹绢垽鎷烽敓锟�,sans-serif;}
-		.bkgd_tabPagetag{width:99%;position:absolute;left:0.5%;top:37px;}   /*闁圭鎷烽柡鍫濐樀閵嗗绮甸悙顑熶線宕搁敓锟�*/
+		.bkgd_tabPagetag{width:99%;position:absolute;left:0.5%;top:37px;padding: 0px;}   /*闁圭鎷烽柡鍫濐樀閵嗗绮甸悙顑熶線宕搁敓锟�*/
 		.table_container{height:60%; height: calc(100% - 61px);  height: -moz-calc(100% - 61px);  height: -webkit-calc(100% - 61px);}
 		.table_container table.tablesorter{ }
+		.table_container table thead tr{line-height: 35px;    height: 35px;}}
 		.table_container table.tablesorter tr{line-height:28px;    height: 28px; }
 		.table_container table.tablesorter tbody tr,.table_container table.tablesorter tbody tr td{height: 28px;max-height: 28px;}
-		.table_container table.tablesorter tbody tr td,.table_container table.tablesorter thead tr th{border-left:none;border-right:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;background:none;}
+		.table_container table.tablesorter tbody tr td,.table_container table.tablesorter thead tr th{border-left:none;border-right:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;background:none;
+		text-overflow: ellipsis;    overflow: hidden;    white-space: nowrap;    max-width: 152px;}
 		.table_container table.tablesorter tbody tr td:first-child,.table_container table.tablesorter thead tr th:first-child{border-left:1px solid #e6e6e6;}
-		.table_container table.tablesorter thead tr{background: url(../images/dd.jpg) 15px 4px;}
+		.table_container table.tablesorter thead tr{background:#dddddd url(../img/dd.jpg) 15px 0px;}
 		.table_container table.tablesorter tbody tr:nth-child(odd){ background:#ffffff;}
 		.table_container table.tablesorter tbody tr:nth-child(even){ background:#fbfbfb;}
 		
@@ -45,7 +47,7 @@ html body {width:100%; height:100%; margin:0px; padding:0px;background: #ebebeb;
 		
 		.bkgd_tabPCons{width:94%;width:calc( 100% - 2px );width:-webkit-calc( 100% - 2px );width:-moz-calc( 100% - 2px ); height:90%;height:calc( 100% - 36px );height:-webkit-calc( 100% - 36px );height:-moz-calc( 100% - 36px ); position:relative;top:0px;left:0px;border:1px solid #cccccc; background:#ffffff;border-top-width:0px; border-radius:0 0 5px 5px;}     /*闁告艾瀚伴敓钘夘樀閵嗗秶锟藉湱鍋樼紞瀣焾閵娿儱鐎婚柣銊ュ椤旀劙宕抽敓锟�*/
 		.con_box{display:none; width:100%; height:100%; }        /*濮掓稒顭堥濠氭⒕閹邦垱顥�*/
-		.choicebox{display: block;padding: 5px;   width:100%;width:calc( 100% - 0px );width:-webkit-calc( 100% - 0px );width:-moz-calc( 100% - 0px ); height:90%;height:calc( 100% - 28px);height:-webkit-calc( 100% - 28px);height:-moz-calc( 100% - 28px);overflow:hidden;overflow:scroll;}		/*濮掓稒顭堥濠氭焻婢跺顏ュ銈忔嫹*/
+		.choicebox{display: block;padding: 5px;   width:100%;width:calc( 100% - 0px );width:-webkit-calc( 100% - 0px );width:-moz-calc( 100% - 0px ); height:90%;height:calc( 100% - 28px);height:-webkit-calc( 100% - 28px);height:-moz-calc( 100% - 28px);overflow:hidden;overflow-y:scroll;}		/*濮掓稒顭堥濠氭焻婢跺顏ュ銈忔嫹*/
 		  select{ }
 		 option::-ms-expand{ display: none; }
 		select option{
