@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		html,body{width: 100%;height: 100%;margin: 0px; padding: 0px;}
+		*{box-sizing: border-box;margin: 0px; padding: 0px;}
+	</style>
+	<link  rel="stylesheet" type="text/css"  href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"  >
+	<link rel="stylesheet" href="css/uitabtagM.css" />
+	<link rel="stylesheet" href="../../css/styleBase.css" /> 
+	<link rel="stylesheet" href="css/tagtablePage.css" />
+	<link rel="stylesheet/less" type="text/css" href="css/pageTag.less" /> 
+	<style>
+		.choicebox.handnavbar{padding-top: 0px;}
+		.bkgd_tabPCons,.choicebox{height: 100%;}
+		.tabPageBar ul li{line-height: 34px;}
+		.timeSpan{color: red;padding-left:5px;letter-spacing: .15em;} 
+		.timeSpan:before{content: "日期:";margin-right: 5px;color: black;font-weight: 600;}
+		.timeSpan:after{content: "日";margin-left: 5px;font-weight: 600;;}
+	</style>
+</head>
+<body  >
+	<form id="form1" name="form1" action="<%=path%>/toServer.do" method="post" enctype="multipart/form-data">
+		<div class="page-header">
+					<div class="form-inline col-md-5">
+						<a><label>试点垃圾楼</label></a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+						<a><label>进出料统计</label></a> 
+					</div>
+		</div>
+		<div class="page-center"  >
+			<div class="container"  >
+				 
+				<div class="dateOform2 form-inline row">
+					<hr/> 
+				</div>
+				<div class="dateOform2 form-inline row table_container">
+					<div class="bkgd_tabPagetag clo-lg-12 col-md-12 col-sm-12 col-md-xs">
+						<!--tab页签start-->
+							<div  class="tabPageBar" >
+					     		<div class="leftbtn_tabBar" ><i class="displayNone"></i></div>
+					     		<ul>
+							     	 <li><span class="timeSpan">2019/8/8</span></li>
+						     	</ul>
+					     		<div class="rightbtn_tabBar"><i class="displayNone"></i></div>
+					     	</div>
+				     	<!--tab页签End--> 		
+					</div>
+					<!--tab页签子容器-->
+			     	<div class="bkgd_tabPCons  clo-lg-12 col-md-12 col-sm-12 col-xs-12">  
+				     	<div class="con_box choicebox table_container handnavbar  clo-lg-12 col-md-12 col-sm-12 col-xs-12" id="div_0" >
+				     	    <table id="table_container" class="tablesorter">
+								<thead>
+									<tr class="taitou">
+										<th  ><input type="checkbox" id="checkAllA" name="checkAllA" /></th>
+										<th  >垃圾楼</th>
+										<th  >车牌号</th>
+										<th  >IC卡号</th>
+										<th  >进场时间</th>
+										<th  >垃圾来源</th>
+										<th  >垃圾分类</th>
+										<th  >称重时间</th>
+										<th  >毛重</th>  
+										<th  >皮重</th>  
+										<th  >净重(吨)</th>
+										<th  >报警</th> 
+										<th  >附件</th> 
+									</tr>
+								</thead>
+								<tbody id="table_jinliao_body">
+									 
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="13">
+											 
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+				     	</div> 
+			     		 
+			   		</div>  
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script type="text/javascript" src="../../js/require.js"></script> 
+<script type="text/javascript" src="js/tagtablePage.js"></script> 
+</html>

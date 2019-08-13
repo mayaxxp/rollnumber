@@ -49,14 +49,12 @@ require.config({
 									break;
 							     default:
 							     break;
-								
 							}
 						})
 			})(jQuery);
 			initShowData("1");
 	 		/*** -----------------------------------------------------------查询列表----------------------------------------------------------------- ***/
 			function initShowData(showType){
-		//		console.log("initShowData"+showType);
 		    	var classification = ""//$("#sel_Classification").val(); // 垃圾楼类别编号
 		    	var ccsId =""// $("#sel_ccsInfo").val();                 // 垃圾楼编号
 		    	var queryCondition = {"queryEntrydate": '2019-07-09',"classification":classification,"ccsId":ccsId}; // 查询条件
@@ -73,10 +71,9 @@ require.config({
 		    }
 			
 			function getDataAjax(obj){
-				console.log("initShowData"+obj.target);
+				
 				var url_=obj.url;
 				if(url_!=null||url_!=""){
-					console.log(url_)
 					$.ajax({ // 查询进料
 		        		url : url_,
 		        		dataType : "json",
@@ -183,7 +180,6 @@ require.config({
 			dataType : "json",
 			success : function(data) {
 				if (!$.isEmptyObject(data)) {
-					console.log(data);
 					renderTBChuLIaoTr(data.list);
 				} else {
 					Dialog.alert("没有获取到相关信息！"); 
@@ -209,7 +205,6 @@ require.config({
 			dataType : "json",
 			success : function(data) {
 				if (!$.isEmptyObject(data)) {
-					console.log(data);
 					renderTBJinChuLIaoTr(data.list);
 				} else {
 					Dialog.alert("没有获取到相关信息！"); 
@@ -225,7 +220,6 @@ require.config({
 		var htmlStr = "";
 		if(list.length > 0){
 			$.each(list, function(i, item) {
-				console.log(item);
 				htmlStr +=  "<tr id=\""+item.id+"\">\r\n" + 
 				"				<td style=\"width: 05%;\"><input type=\"checkbox\" value=\""+item.id+"\" name=\"checkAllA_child\"></td>\r\n" + 
 				"				<td style=\"width: 08%;\">"+getCcsInfoNameById(item.ccsId)+"</td>\r\n" +  // 垃圾楼信息
@@ -252,7 +246,6 @@ require.config({
 		var htmlStr = "";
 		if(list.length > 0){
 			$.each(list, function(i, item) {
-				console.log(item);
 				console.log('-----------------------------------------------------');
 				htmlStr +=  "<tr id=\""+item.id+"\">\r\n" + 
 				"<td style=\"width: 05%;\"><input type=\"checkbox\" value=\""+item.id+"\" name=\"checkAllB_child\"></td>\r\n" + 
@@ -277,7 +270,6 @@ require.config({
 		var htmlStr = "";
 		if(list.length > 0){
 			$.each(list, function(i, item) {
-				console.log(item);
 				console.log('---------------xxxxxxxxxxxxxxxx-----');
 				htmlStr += "<tr>\r\n" + 
 				"<td style=\"width: 10%;\">"+(item.ccsName != null ? item.ccsName : "-")+"</td>\r\n" + 
@@ -434,7 +426,6 @@ require.config({
  	            if (!$.isEmptyObject(data)) {
  	            	classList = data.classList;
                     $.each(classList, function(i, item) {
-                    	console.log(item);
                     	$("#sel_Classification").append("<option value='"+item.id+"'>"+item.classificationName+"</option>"); //为Select追加一个Option(下拉项) 
                     });
  	            } else {

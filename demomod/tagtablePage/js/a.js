@@ -1,11 +1,10 @@
-require(["../../js/bkPageBar","../../js/b"],function(bkPageBar,b){
-	
-	var ths=new bkPageBar("eeeeeeeeeee");
-	ths.showName();
-	b.fun3();
-} )
-function fun1(){ 
- console.log("this is a.js::"); 
-  
-}
-fun1();  
+require.config({
+    paths : { 
+    	jquery : ["../../js/jquery-1.11.3"],
+    	less:["../../js/less.min"], 
+    	bkPageBar : ["../../js/bkPageBar"] 
+    }
+})
+require(["jquery","less","bkPageBar"],function(jQuery,less,BkPageBar){
+	 var ths=new BkPageBar("firstDiv");  
+}) 

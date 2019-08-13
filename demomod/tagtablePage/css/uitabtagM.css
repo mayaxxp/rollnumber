@@ -1,6 +1,6 @@
 html body {width:100%; height:100%; margin:0px; padding:0px;background: #ebebeb;}
-		*{margin:0px; padding:0px;font-size:12px;font-family: 闁炽儲绌緍ial闁炽儻鎷�,闁炽儲璞crosoft YaHei闁炽儻鎷�,闁炽儲绻堢划锔芥媴閹绢垽鎷烽敓锟�,闁炽儲绻傞悾顐ｆ媴閹绢垽鎷烽敓锟�,sans-serif;}
-		.bkgd_tabPagetag{width:99%;position:absolute;left:0.5%;top:37px;padding: 0px;}   /*闁圭鎷烽柡鍫濐樀閵嗗绮甸悙顑熶線宕搁敓锟�*/
+		*{margin:0px; padding:0px;font-size:12px;font-family: “Arial”,”Microsoft YaHei”,”黑体”,”宋体”,sans-serif;;}
+		.bkgd_tabPagetag{width:99%;position:absolute;left:0.5%;top:37px;padding: 0px;}   
 		.table_container{height:60%; height: calc(100% - 61px);  height: -moz-calc(100% - 61px);  height: -webkit-calc(100% - 61px);}
 		.table_container table.tablesorter{ }
 		.table_container table thead tr{line-height: 35px;    height: 35px;}}
@@ -14,12 +14,12 @@ html body {width:100%; height:100%; margin:0px; padding:0px;background: #ebebeb;
 		.table_container table.tablesorter tbody tr:nth-child(even){ background:#fbfbfb;}
 		
 		.table_container table.tablesorter tr th,.table_container table.tablesorter tr td{height: 100%;}
-		.tabPageBar{width:100%;height:34px;position:relative;top:0px;left:0px;} 		 /*濡炪倗鏁搁鐑藉冀韫囨稑鍔ラ柛鎺炴嫹*/ 
+		.tabPageBar{width:100%;height:34px;position:relative;top:0px;left:0px;}   
 		.inlinebox_toLeft{position: relative;float: left;display: inline-block;}
-		.tabPageBar ul,.tabPageBar>.btngroup{background:url("../img/tabtagGroupbackground.png") center left;cursor:default;overflow:hidden;position:relative;float:left; margin:0px; padding:0px;display: inline-block;width:90%;width:calc( 100% - 50px );width:-webkit-calc( 100% - 50px );width:-moz-calc( 100% - 50px );height:34px; }	/*濡炪倗鏁搁椋庯拷鍦嚀濞呮姴l*/
-		.tabPageBar ul li{display: inline-block;cursor:default;width: auto;height:34px;line-height:34px;padding-left:10px;padding-right:10px; position:relative;float:left;line-height:40px;}  /*濡炪倗鏁搁绌昳*/
+		.tabPageBar ul,.tabPageBar>.btngroup{background:url("../img/tabtagGroupbackground.png") center left;cursor:default;overflow:hidden;position:relative;float:left; margin:0px; padding:0px;display: inline-block;width:90%;width:calc( 100% - 50px );width:-webkit-calc( 100% - 50px );width:-moz-calc( 100% - 50px );height:34px; }	 
+		.tabPageBar ul li{display: inline-block;cursor:default;width: auto;height:34px;line-height:34px;padding-left:10px;padding-right:10px; position:relative;float:left;line-height:40px;}  
  		
- 		.dowebok{line-height: 30px;position: relative; width:90%;width:calc( 100% - 85px );width:-webkit-calc( 100% - 85px );width:-moz-calc( 100% - 85px );;}
+ 		.dowebok{line-height: 30px;position: relative; width:90%;width:calc( 100% - 85px );width:-webkit-calc( 100% - 85px );width:-moz-calc( 100% - 85px );}
  		.con_box label {position: relative;float: left;display: inline-block;line-height:30px; padding: 0px 10px;margin: 0px 0px 0px 50px; outline-offset: 0px;}
 		.con_box ul { list-style-type: none;display:inline-block; padding-top:5px;}
 		.con_box li { display: inline-block; }
@@ -30,29 +30,29 @@ html body {width:100%; height:100%; margin:0px; padding:0px;background: #ebebeb;
 		.con_box form select{margin: 5px 5px 0px;}
 		
 		.tabPageBar .choiceBtn{ padding:0px !important;}
-		.choiceBtnLcstyle{background:url("../img/tabtagbackground.png") top left ;position:relative;float:left;display: inline-block;width:10px;height:34px;}   /*鐟滅増鎸告晶鐘绘焻婢跺顏ュ銈囨暩椤掔i闁告劕鎳愬▓鎴﹀冀瀹勬壆纭�闁稿繐鍟扮粈锟�*/
+		.choiceBtnLcstyle{background:url("../img/tabtagbackground.png") top left ;position:relative;float:left;display: inline-block;width:10px;height:34px;}   
 		.choiceBtnCcstyle{background:url("../img/tabtagbackground.png") left center;position:relative;float:left;display: inline-block;width:auto;height:34px;padding-left:0px;padding-right:0px;}
 		.choiceBtnRcstyle{background:url("../img/tabtagbackground.png") bottom right;position:relative;float:left;display: inline-block;width:10px;height:34px;}
 		
-		.leftbtn_tabBar{background:url("../img/tabtagGroupbackground.png") top left ; position:relative;float:left;display: inline-block;width:25px;height:34px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.leftbtn_tabBar i{background:url("../img/tabtagTrubO.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.leftbtn_tabBar i:HOVER{background:url("../img/tabtagTrubN.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.leftbtn_tabBar i:ACTIVE{background:url("../img/tabtagTrubO.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.rightbtn_tabBar{background:url("../img/tabtagGroupbackground.png") bottom left;position:relative;float:left; display: inline-block;width:25px;height:34px;}   /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垿宕ｉ搹顐ｇ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.rightbtn_tabBar i{background:url("../img/tabtagTrubO.png") bottom left;margin-top:3px; display: inline-block;width:20px;height:28px;}   /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垿宕ｉ搹顐ｇ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.rightbtn_tabBar i:HOVER{background:url("../img/tabtagTrubN.png") bottom left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
-		.rightbtn_tabBar i:ACTIVE{background:url("../img/tabtagTrubO.png") bottom left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    /*鐟滅増鎮b濡炪倗鏁搁椋庢惥閸涙潙娅ら柛姘捣濞堟垵顔忛敂鑺ョ厵婵犲﹥鑹炬慨鈺呭箰婢舵劖灏�*/
+		.leftbtn_tabBar{background:url("../img/tabtagGroupbackground.png") top left ; position:relative;float:left;display: inline-block;width:25px;height:34px;}     
+		.leftbtn_tabBar i{background:url("../img/tabtagTrubO.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}     
+		.leftbtn_tabBar i:HOVER{background:url("../img/tabtagTrubN.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}     
+		.leftbtn_tabBar i:ACTIVE{background:url("../img/tabtagTrubO.png") top left ;margin-top:3px; display: inline-block;width:20px;height:28px;}     
+		.rightbtn_tabBar{background:url("../img/tabtagGroupbackground.png") bottom left;position:relative;float:left; display: inline-block;width:25px;height:34px;}  
+		.rightbtn_tabBar i{background:url("../img/tabtagTrubO.png") bottom left;margin-top:3px; display: inline-block;width:20px;height:28px;}    
+		.rightbtn_tabBar i:HOVER{background:url("../img/tabtagTrubN.png") bottom left ;margin-top:3px; display: inline-block;width:20px;height:28px;}    
+		.rightbtn_tabBar i:ACTIVE{background:url("../img/tabtagTrubO.png") bottom left ;margin-top:3px; display: inline-block;width:20px;height:28px;}   
 		.displayNone{display: none !important;}
 		.gapline{width:98%;height:0px;margin:0px auto;display: block;background-color: #EFEFEF;border: 1px #CCCCCC solid;border-bottom-color:#efefef;border-top-style:double;align: center;}
 		
-		.bkgd_tabPCons{width:94%;width:calc( 100% - 2px );width:-webkit-calc( 100% - 2px );width:-moz-calc( 100% - 2px ); height:90%;height:calc( 100% - 36px );height:-webkit-calc( 100% - 36px );height:-moz-calc( 100% - 36px ); position:relative;top:0px;left:0px;border:1px solid #cccccc; background:#ffffff;border-top-width:0px; border-radius:0 0 5px 5px;}     /*闁告艾瀚伴敓钘夘樀閵嗗秶锟藉湱鍋樼紞瀣焾閵娿儱鐎婚柣銊ュ椤旀劙宕抽敓锟�*/
-		.con_box{display:none; width:100%; height:100%; }        /*濮掓稒顭堥濠氭⒕閹邦垱顥�*/
-		.choicebox{display: block;padding: 5px;   width:100%;width:calc( 100% - 0px );width:-webkit-calc( 100% - 0px );width:-moz-calc( 100% - 0px ); height:90%;height:calc( 100% - 28px);height:-webkit-calc( 100% - 28px);height:-moz-calc( 100% - 28px);overflow:hidden;overflow-y:scroll;}		/*濮掓稒顭堥濠氭焻婢跺顏ュ銈忔嫹*/
+		.bkgd_tabPCons{width:94%;width:calc( 100% - 2px );width:-webkit-calc( 100% - 2px );width:-moz-calc( 100% - 2px ); height:90%;height:calc( 100% - 36px );height:-webkit-calc( 100% - 36px );height:-moz-calc( 100% - 36px ); position:relative;top:0px;left:0px;border:1px solid #cccccc; background:#ffffff;border-top-width:0px; border-radius:0 0 5px 5px;}
+		.con_box{display:none; width:100%; height:100%; }        
+		.choicebox{display: block;padding: 5px;   width:100%;width:calc( 100% - 0px );width:-webkit-calc( 100% - 0px );width:-moz-calc( 100% - 0px ); height:90%;height:calc( 100% - 28px);height:-webkit-calc( 100% - 28px);height:-moz-calc( 100% - 28px);overflow:hidden;overflow-y:scroll;}	 
 		  select{ }
 		 option::-ms-expand{ display: none; }
 		select option{
-		    -moz-appearance:none; /* Firefox */
-		    -webkit-appearance:none; /* Safari 闁告粣鎷� Chrome */
+		    -moz-appearance:none;  
+		    -webkit-appearance:none;  
 		    appearance:none;
 		    width:100%;height:30px;line-height: 30px;
 		    display:block;padding:5px;margin: 5px;
