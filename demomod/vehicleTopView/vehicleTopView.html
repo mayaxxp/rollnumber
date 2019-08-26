@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		 <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>清洁车实时状态</title> 
+	    <link rel="stylesheet" href="vehicleTopView.css" />
+    	<script src="vue.min.js"></script> 
+	</head> 
+	<body>
+		 
+		<div id="appVehicle">
+			<div class="vCain">
+				<div class="vCainBk"><img src="img/vehicleTopView_Bottom.png" width="207" height="340"/></div>
+				<div  class="roadLine"><img  v-bind:class="{'lineAnimo':roadLMove}" src="img/vehicleTopView-line.png" width="100%" height="100%"/></div>
+				<div class="saopanL "  v-bind:class="{'saopanimo':saopanL}"><img class="" src="img/vehicleTopViewspL.png" width="33" height="33"   /></div>
+				<div class="saopanR "  v-bind:class="{'saopanimo':saopanR}"><img src="img/vehicleTopViewspR.png" width="33" height="33"/></div>
+				<div class="penshuiW "><img v-bind:class="{'penshuiOn':penshuiOn}" src="img/vehicleTopViewW.png" width="116" height="348"/></div>
+				<div class="vehicleMain"><img src="img/vehicleTopViewmain.png" width="129" height="212"/></div>
+				<div class="top_ppp " v-bind:class="{'fadongjOn':fadongj}">
+					<img src="img/vehicleTopViewppp.png" width="37" height="37"/> 
+				</div> 
+				<div class="top_ppp top_pppMO"   > 
+					<img src="img/vehicleTopViewpppM.png" width="18" height="25"/>
+				</div> 
+				<div class="top_ppp top_pppMN"  > 
+					<img src="img/vehicleTopViewpppMN.png" width="18" height="25"/>
+				</div> 
+			</div>
+			<!--控制按钮-->
+			<div style="position: absolute; left: 203px; top: 0px;line-height: 30px;">
+				<ul >
+					<li><button  v-on:click="fadongj_handler"   ><span  v-if="fadongj">关闭副发动机</span><span  v-if="!fadongj">打开副发动机</span></button></li>
+					<li><button  v-on:click="saopanL_handler" ><span  v-if="saopanL">关闭左侧扫盘</span><span  v-if="!saopanL">打开左侧扫盘</span></button></li>
+					<li><button  v-on:click="saopanR_handler" ><span  v-if="saopanR">关闭右侧扫盘</span><span  v-if="!saopanR">打开右侧扫盘</span></button></li>
+					<li><button  v-on:click="penshui_handler" ><span  v-if="penshuiOn">关闭喷水</span><span  v-if="!penshuiOn">打开喷水</span></button></li>
+					<li><button  v-on:click="roadL_handler" ><span  v-if="roadLMove">使车辆停止</span><span  v-if="!roadLMove">使车辆前行</span></button></li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			var vm=new Vue({
+				el:"#appVehicle",
+				data:{
+					fadongj:true,
+					saopanL:true,
+					saopanR:true,
+					penshuiOn:true,
+					roadLMove:true
+					},
+				methods:{
+					fadongj_handler:function(){this.fadongj=!this.fadongj;
+					this.saopanL=false;
+					this.saopanR=false;
+					this.penshuiOn=false; 
+					},
+					saopanL_handler:function(){if(this.fadongj==0) return;
+						this.saopanL=!this.saopanL;},
+					saopanR_handler:function(){if(this.fadongj==0) return;
+						this.saopanR=!this.saopanR;},
+					penshui_handler:function(){if(this.fadongj==0) return;
+						this.penshuiOn=!this.penshuiOn;},
+					roadL_handler:function(){this.roadLMove=!this.roadLMove;}
+				}
+			})
+		</script>
+	</body>
+</html>
