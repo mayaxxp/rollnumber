@@ -1,14 +1,15 @@
-require.config({
+requirejs.config({
     paths:{
-    	jquery : ["../../js/jquery-1.11.3"],
-    	less:["../../js/less.min"],
-    	Mytabtag : ["js/Mytabtag"],
-    	bootstrap:["../../bootstrap-3.3.7-dist/js/bootstrap.min"]
+    	jquery : ["../../../js/jquery-1.11.3"],
+    	less:["../../../js/less.min"],
+    	mytabtag : ["./Mytabtag"],
+    	bootstrap:["../../../bootstrap-3.3.7-dist/js/bootstrap.min"],
+    	mypage : ["../../../js/myPage"]
     }
 });
 
-require(["jquery","less","Mytabtag"],function(jquery,less,Mytabtag){ 
-	require(["bootstrap"]);
+requirejs(["jquery","less","Mytabtag","bootstrap"],function(jquery,less,Mytabtag,bootstrap){ 
+	 
 	(function($){
 		$("tbody td").each(function(){
 			var this_=this;

@@ -4,13 +4,8 @@
  * @data：2019-08-01
  * @author：xxp
  */  
-require.config({
-    paths : {
-    	jquery : ["../../js/jquery-1.11.3"] ,
-    	myPage : ["../../js/myPage"]
-    }
-})
- define(["jquery","myPage"],function($,myPage){ 
+ 
+define(["jquery","mypage"],function(jquery,mypage){ 
 			 (function tabPagetagInit($){
 						//var tabname =   //初始化选中标签tag默认样式； 
 						var newHtml='<div class="choiceBtnLcstyle"></div><div class="choiceBtnCcstyle">'+$(".choiceBtn").text()+'</div><div class="choiceBtnRcstyle"></div>'
@@ -51,9 +46,9 @@ require.config({
 							     break;
 							}
 						})
-			})(jQuery);
+			})(jquery);
 			initShowData("1");
-	 		/*** -----------------------------------------------------------查询列表----------------------------------------------------------------- ***/
+	/*** -----------------------------------------------------------查询列表----------------------------------------------------------------- ***/
 			function initShowData(showType){
 		    	var classification = ""//$("#sel_Classification").val(); // 垃圾楼类别编号
 		    	var ccsId =""// $("#sel_ccsInfo").val();                 // 垃圾楼编号
@@ -68,8 +63,7 @@ require.config({
 		     	}else{
 		    		alert("错误提示：未知的显示类型。");
 		    	}
-		    }
-			
+		    } 
 			function getDataAjax(obj){
 				
 				var url_=obj.url;
@@ -88,7 +82,7 @@ require.config({
 		        		dataType : "json",
 		        		success : function(data){
 		        			if (!$.isEmptyObject(data)) {
-		        				var P2 = new myPage(obj.target);
+		        				var P2 = new mypage(obj.target);
 		        				P2.initMathod({
 		        					params: {elemId: '#'+obj.target,total:'0'},
 		        					requestFunction: function () { 
@@ -104,7 +98,7 @@ require.config({
 		        		},
 		        		error:function(msg){
 		        			var targetId=obj.target; 
-				        	var P2 = new myPage(targetId);
+				        	var P2 = new mypage(targetId);
 							P2.initMathod({
 								params: {elemId:'#'+obj.target,total:'1',pageSize:"1"},
 								requestFunction: function () { 
@@ -130,7 +124,7 @@ require.config({
 		        	});
 				}else{
 					var targetId=obj.target; 
-			        	var P2 = new myPage(targetId);
+			        	var P2 = new mypage(targetId);
 						P2.initMathod({
 							params: {elemId:'#'+obj.target,total:'0',pageSize:"1"},
 							requestFunction: function () { 
@@ -142,7 +136,7 @@ require.config({
 			} 
 			
 			
-			// 查询进料列表
+	// 查询进料列表
 	function queryJinLiao(queryConf, qCondition){
 		$.ajax({
 			url : "http://192.168.20.54:9011/ccsmanage/queryPageListCcsData",
@@ -396,7 +390,7 @@ require.config({
 	 /**
 	 * 修改行数据的报警信息
 	 */
-	 function changeInDataAlarmMsg(ids, alarmMsg, type){
+	function changeInDataAlarmMsg(ids, alarmMsg, type){
 		 var idArr = ids.split(",");
 		 for (var i = 0; i <idArr.length; i++){
 			 if(idArr[i] == ""){
@@ -547,8 +541,5 @@ require.config({
     }
     
     
-			
-			
-			
-	} 
+	}
  )
