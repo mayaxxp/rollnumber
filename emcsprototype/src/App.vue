@@ -1,10 +1,12 @@
 <template>
   <div id="app"> 
-		 <Home></Home>
+		 <router-view></router-view>
+		 shouye
   </div>
 </template>
 <script type="text/javascript">
-	 import Home from './views/Home.vue'  
+	 import Home from './views/Home.vue' 
+	 import '@/assets/css/loginpage/loginpage.css'
 export default {
   name: 'app',
   components: {

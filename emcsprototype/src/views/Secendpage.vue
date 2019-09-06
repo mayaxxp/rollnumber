@@ -1,9 +1,9 @@
 <template>
-  <div id="top">
+  <div id="secendpage">
     <img alt="Vue logo" src="../assets/logo.png" width="30" height="40" style="left:0;top:0;width:30px;height:45px;">
-    这是首页面<br>这是首页面<br>这是首页面<br>这是首页面<br>这是首页面<br>
-    <router-link to="/home/aboutdsw"><el-button>--404--</el-button></router-link>
-    <router-link to="/home/sec"><el-button>道路清洁车</el-button></router-link>
+     <h1>这是二级页面</h1>
+    <router-link to="/aboutdsw"><el-button>--404--</el-button></router-link>
+    <router-link to="/sec"><el-button>道路清洁车</el-button></router-link>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 }
 </script>
 <style  >
-#top{
+#secendpage{
   background :rgb(71, 214, 15);
   width:100%;
   height:15%;

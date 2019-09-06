@@ -1,5 +1,5 @@
 <template>
-  <div id="app"> 
+  <div id="homepage"> 
       <router-view></router-view>  
   </div> 
 </template>
@@ -14,3 +14,12 @@ import Firstpage from './Firstpage'
   }
     
 </script>
+<style>
+#homepage{
+ 
+  background:darkgreen;
+  color: #FFFFFF;
+  width: 100%;
+  height: 100%;
+}
+</style>

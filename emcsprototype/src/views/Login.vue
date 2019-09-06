@@ -1,5 +1,5 @@
 <template>
-  <div id="first">
+  <div id="login">
   	<div class="topline"></div> 
     <div class="pageBackground">
 			<div class="titlelogo">
@@ -26,10 +26,10 @@
 						<input type="hidden" id="accountPassWord" name="accountPassWord">
 						<div class="loginico animated fadeInLeft bounce"></div>
 						<div class="shur">
-							<input type="text" id="account" name="account" value="" class="username ggg" placeholder="请输入用户名">
+							<input type="text" id="account" name="account" v-model="user" class="username ggg" placeholder="请输入用户名">
 						</div>
 						<div class="shurff">
-							<input id="accountPassWordView" name="accountPassWordView" value="" type="password" class="password ggg pwd" placeholder="请输入密码">
+							<input id="accountPassWordView" name="accountPassWordView" v-model="pasword" type="password" class="password ggg pwd" placeholder="请输入密码">
 						</div>
 						<div class="shurfff" style="height:34px;">
 							<input type="text" id="verificatCode" name="verificationCode" maxlength="4" class="ggg" style="width: 115px;position:relative;float:left;"   placeholder="请输入验证码">
@@ -37,7 +37,8 @@
 								<img src="http://123.56.210.163//common/image.jsp" id="randImage" width="80" height="30" class="yjmtp" onclick="loadimage()">
 							</div> 
 						</div>
-					 	<router-link to="first" tag="el-button">登录</router-link> |
+					 	<router-link to="/home/first" tag="el-button">登录</router-link>
+					 	
 					</form>
 					
 					<div class="appEwmAC"  >
@@ -59,19 +60,45 @@
 	 import '../assets/css/loginpage/animate.min.css'
 	   
 export default {
-  name: 'Login',
+  name: 'Login', 
+  data: ()=> {
+  	return {
+        show:false,
+        user:"username",
+        pasword:"edkej3mk432k5",
+        this_:this
+       }
+  },
   components: {
   	 
   },
   methods:{
   	loginHander:()=>{ 
-  		window.location.href='/Firstpage'
-  		}
-  }
+  		 console.log(this.user+"==="+this.pasword)
+		}
+  },
+  beforeRouteLeave:(to, from, next) => {
+    	if(to.name==="Firstpage"){
+//  		alert("登录成功");
+	      this.loginHander();
+    		next();
+    	}else{
+    		alert("登录失败");
+    		next("/");
+    	}
+	},
+	beforeRouteEnter:(to, from, next,) => {
+    	alert("欢迎登入");
+    	next();
+	},
+	beforeRouteUpdate:(to, from, next) => {
+    	alert("dfdf");
+    	next();
+	}
 }
 </script>
 <style>
-#first {
+#login {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
