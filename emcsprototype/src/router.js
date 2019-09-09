@@ -36,7 +36,6 @@ const mainpages=[
 						name: 'Firstpage',
 						component: Firstpage,
       					beforeEnter:islogin 
-	
 					},
 					{
 						path: 'about', 
