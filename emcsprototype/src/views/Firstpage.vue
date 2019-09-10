@@ -19,7 +19,7 @@ export default {
 #top{
   background :rgb(71, 214, 15);
   width:100%;
-  height:15%;
+  height:100%;
   position :absolute;
   color: black;
   text-align: center;
