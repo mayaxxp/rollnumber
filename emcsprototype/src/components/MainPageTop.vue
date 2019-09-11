@@ -5,18 +5,18 @@
 				<div class="wc1200 row rowE">
 					<div class="bd mt20">
 						<div id="sca1" class="warp-pic-list">
-							<div id="wrapBox1" class="wrapBox">
+							<div id="wrapBox1" class="wrapBox" >
 							 	<ul id="count1" class="count clearfix"  >
-										<li v-for="{id,cnName,imgUrl,beselected} in dataMenus">
-											<a  :class="{'teg':beselected}"  :id="id" href="javascript:void(0)" @click="getLeftMenu(id)">
-												<div class="kwg"><img :src="imgUrl"></div>
-												<div class="wef">{{cnName}}</div>
+										<li v-for="item in dataMenus" :key="item">
+											<a  :class="{'teg':beselected}"  :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id)">
+												<div class="kwg"><img :src="item.imgUrl"></div>
+												<div class="wef">{{item.cnName}}</div>
 											</a>
 										</li> 
 								</ul>
 							</div> 
 							<a id="right1" class="prev icon btn"></a>
-							<a id="left1" class="next icon btn"></a>
+							<a id="left1" class="next icon btn" @click="movetoadd(5)"></a>
 							 
 						</div>
 					</div>
@@ -47,16 +47,19 @@
 		},
 		data:()=>{
 			return {
-				menulist:[]
+				menulist:[],
+				translateX:0
 			}
-		},
+		}, 
 		created () {  //加载完成之前，执行。执行顺序:父组件-子组件
 		   this.menulist=this.dataMenus;
 		   console.log("【menulist】："+this.menulist); // 空值
 		   console.log(this.dataMenus);
 	    },
-		mounted(){ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
-			
+		mounted:{ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
+			movetoadd:(num)=>{
+				this.translateX=this.translateX+num;
+			}
 		},
 		methods: {  //监听方法click事件等   事件方法执行。
 			backHome:() => {
@@ -72,26 +75,32 @@
 				console.log(thisMene)
 				thisMene.beselected=true;
 				
-			}
+			},
+			
+			
+			// -webkit-transform:translateX(-50%);
+			// -moz-transform:translateX(-50%);
+			// transform:translateX(-50%);
 		},
 		watch:{  //去监听一个值的变化，然后执行相对应的函数
-			
+			// movetoadd:(num)=>{
+			// 	return {"-webkit-transform":translateX(num+68),"-moz-transform":translateX(num+68),"transform":translateX(num+68)}
+			// }
 		}
 	}
 </script>
 
 <style>
-	.top_banner{margin: 0;
-			    display: block;
-			    width: 100%;
-			    height: 94px;
-			    display: inline;
-    			float: left;
+	.top_banner{
+		margin: 0;  width: 100%; height: 94px;  display:inline-block; 
+		 /* float: left; */
 			    background-image: url(../assets/images/mainTopbanner/bj1.jpg);
 			    background-position: left top;
 			    background-repeat: repeat-x;
 			    font-family: "微软雅黑";}
-    .kwg img {
+    
+	.kwg{height: 55%;}
+	.kwg img {
 	    padding: 0px;
 	    float: left;
 	    border-top-width: 0px;
@@ -105,26 +114,29 @@
 	    margin-top: 0px;
 	    margin-right: 11px;
 	    margin-bottom: 0px;
-	    margin-left: 11px;
-	}
+	    margin-left: 11px; 
+		}
     .wef {
+		position: absolute;
 	    margin: 0px !important;
 	    padding: 0px !important;
 	    line-height: 15px;
-	    text-align: center;
-	    width:100%;
+	    text-align: center; 
 	    height:auto;
 	    color: #FFF;
 	    font-size: 13px;  
-	}
+	    width: 68px;
+		white-space: normal
+}
 	.toHome a{display: block;width:56px;height:56px;float:right;margin-right:20px;}
 	.toHome a i{background: url(../assets/images/mainTopbanner/toHomeN.png) 0px 0px no-repeat;pointer-events:none;width:56px;height:56px;display:block;position:relative;}
 	.toHome a:hover i{background: url(../assets/images/mainTopbanner/toHomeO.png) 0px 0px no-repeat;cursor:hand;}
 	.toHome a:active i{background: url(../assets/images/mainTopbanner/toHomeD.png) 0px 0px no-repeat;cursor:hand;}
 	.kuaij{width:100px;}
 	
-.rowE .count{width:auto;height: 100%;padding: 0px;overflow:hidden;white-space: nowrap;display: inline-block;}
+.rowE .count{width:auto;height: 100%;padding: 0px;overflow:hidden;white-space: nowrap;display: inline-block;padding-inline-start:17px;}
 .rowE .count  a {
+	position: relative;
 	display: block;
 	width: 75px;
 	height: 86px;
@@ -135,24 +147,8 @@
 	letter-spacing: .1em;
 	text-decoration: none;
 	color: #FFF;
-	padding-top: 10px;
 }
-.kwg img {
-	padding: 0px;
-	float: left;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 0px;
-	border-left-width: 0px;
-	border-top-style: none;
-	border-right-style: none;
-	border-bottom-style: none;
-	border-left-style: none;
-	margin-top: 0px;
-	margin-right: 11px;
-	margin-bottom: 0px;
-	margin-left: 11px;
-}
+
 .rowE .count a:hover{
 	background-image: url(../assets/images/mainTopbanner/w13O.png);
 	background-repeat: no-repeat;
@@ -171,15 +167,8 @@
 .rowE .count .teg:ACTIVE {
 	background-image: url(../assets/images/mainTopbanner/w13.png);
 }
-.rowE .count  .kwg {
-}
-.wef {
-	margin: 0px !important;
-	padding: 0px !important;
-	line-height: 15px;
-	text-align: center;
-	width: 68px;
-}
+
+
 .count li{display: inline-block;  list-style: none;margin-right: 4px;}
 .logo {
     background-image: url(../assets/images/mainTopbanner/logo.jpg);
@@ -205,7 +194,10 @@
  
 /**/
  
-.wrapBox{height:90px !important;}
+.wrapBox{
+		height:90px !important;
+		overflow: hidden;
+	}
 
 .rowE .warp-pic-list{
 	position: relative;
@@ -266,8 +258,7 @@
 	text-decoration: none;
 	color: #FFF;
 	font-size: 12px;
-	display: inline;
-	float: right;
+	display:inline-block;
 	height: 28px;
 	width: 90px;
 	position: relative;
@@ -284,8 +275,7 @@
 }
 
 .kuaij .eedd img {
-	display: inline;
-	float: left;
+	display:inline-block;
 	margin-top: 6px;
 	margin-right: 2px;
 }
