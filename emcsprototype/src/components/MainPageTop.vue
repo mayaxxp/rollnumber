@@ -1,4 +1,4 @@
-<template>
+<template v-cloak>
 <div id="mainContent" class="top_banner">
 	<div class="logo"></div>
 			<div class="navBar">
@@ -6,9 +6,10 @@
 					<div class="bd mt20">
 						<div id="sca1" class="warp-pic-list">
 							<div id="wrapBox1" class="wrapBox" >
-							 	<ul id="count1" class="count clearfix"  >
-										<li v-for="item in dataMenus" :key="item">
-											<a  :class="{'teg':beselected}"  :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id)">
+								<!---webkit-transform:translateX(translateNumX);-moz-transform:translateX(translateNumX);transform:translateX(translateNumX);-->
+							 	<ul id="count1" class="count clearfix"  :style="">
+										<li v-for="(item,index) in dataMenus" :key="item.id"  :title="index">
+											<a  :class="{'teg':false,'tegBeselected':item.beselected}"       :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id,index)">
 												<div class="kwg"><img :src="item.imgUrl"></div>
 												<div class="wef">{{item.cnName}}</div>
 											</a>
@@ -16,7 +17,7 @@
 								</ul>
 							</div> 
 							<a id="right1" class="prev icon btn"></a>
-							<a id="left1" class="next icon btn" @click="movetoadd(5)"></a>
+							<a id="left1" class="next icon btn" @click="movetoadde(5)"></a>
 							 
 						</div>
 					</div>
@@ -45,47 +46,46 @@
 		    }
 			
 		},
-		data:()=>{
+		data(){
 			return {
 				menulist:[],
-				translateX:0
+				translateNumX:0
 			}
 		}, 
 		created () {  //加载完成之前，执行。执行顺序:父组件-子组件
 		   this.menulist=this.dataMenus;
 		   console.log("【menulist】："+this.menulist); // 空值
-		   console.log(this.dataMenus);
+		   console.log("【dataMenus】："+this.dataMenus);
 	    },
-		mounted:{ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
-			movetoadd:(num)=>{
-				this.translateX=this.translateX+num;
-			}
-		},
-		methods: {  //监听方法click事件等   事件方法执行。
-			backHome:() => {
+//		mounted:{ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
+//			this_:this
+//		},
+		methods:{  //监听方法click事件等   事件方法执行。
+			backHome(){
 				 if(this.dataMenus){
 				 	console.log(this.dataMenus);
 				 }
 			},
-			getLeftMenu:(ID) => {
-				console.log(event)
-				var thisMene= this.menulist.map((menu)=>{
-					return menu.id=ID
-				})
-				console.log(thisMene)
-				thisMene.beselected=true;
+			getLeftMenu(ID,index){ 
+					for(var i=0; i<this.menulist.length; i++){
+				 		   this.menulist[i].beselected=false; 
+					}
+					var selnum=this.menulist[index];
+					selnum.beselected=true;
+					console.log(selnum); 
 				
 			},
-			
-			
-			// -webkit-transform:translateX(-50%);
-			// -moz-transform:translateX(-50%);
-			// transform:translateX(-50%);
+			movetoadde(num){ 
+				if(this.menulist){
+					var mjsld=this.menulist[num];
+					console.log(mjsld);
+				}
+			}
 		},
 		watch:{  //去监听一个值的变化，然后执行相对应的函数
 			// movetoadd:(num)=>{
 			// 	return {"-webkit-transform":translateX(num+68),"-moz-transform":translateX(num+68),"transform":translateX(num+68)}
-			// }
+			// } 
 		}
 	}
 </script>
@@ -167,7 +167,9 @@
 .rowE .count .teg:ACTIVE {
 	background-image: url(../assets/images/mainTopbanner/w13.png);
 }
-
+.rowE .count .tegBeselected {
+	background-image: url(../assets/images/mainTopbanner/w13.png);
+}
 
 .count li{display: inline-block;  list-style: none;margin-right: 4px;}
 .logo {

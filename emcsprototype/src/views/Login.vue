@@ -52,7 +52,7 @@
 						<span class="erweimaLable">安卓端App下载</span>
 					</div>
 				</div>
-				<div v-if="showTost" class="{findtop:showTost selfold }"><h3>即将跳转</h3></div>
+				<div v-if="showTost" class="{findtop:showTost selfold }"><h3>{{tostText}}</h3></div>
 			</div>
 		</div>
     <div class="bottomline">版权所有：北京市海淀区城市管理委员会　 技术支持：北京北科光大信息技术股份有限公司 (010)-82652766</div>
@@ -64,12 +64,13 @@
 	   
 export default {
   name: 'Login', 
-  data: ()=> {
+  data(){
   	return {
         show:false,
         user:"username",
         pasword:"edkej3mk432k5",
-        showTost:false
+        showTost:false,
+        tostText:""
        }
   },
   components: {
@@ -86,27 +87,23 @@ export default {
         return this.pasword.split('').reverse().join('')
       }
 	},
-	beforeRouteLeave: (to, from, next,) => {
-			  // next(()=>{console.log('showTost:');});
-			//   if(vm.invoker){
-			// 	  console.log("pasword:");
-			//   }
-			  console.log(this);
-			// if(to.name==="Firstpage"){ 
-			// 	//this.showTost=true;
-			// 	//setTimeout(function(){next();},1500)
-			// 	// console.log(from)
-			// 	next((vm)=>{console.log('showTost:'+vm.showTost)});
-			// }else{
-			// 	alert("登录失败");
-				next();
-			// };
+	beforeRouteLeave(to, from, next,){
+//			 if(to.name==="Firstpage"){    //访问路径正确
+//			 		this.tostText="访问路径正确～  去验证去～";
+//			 		this.showTost=true;
+//			 		setTimeout(function(){next();},1500) ;
+//			 }else{
+//			 		this.tostText="访问路径错误～  去404去～";
+//		 			this.showTost=true;
+//					setTimeout(function(){next();},1500)
+//			 };
+		next();
 	},
-	beforeRouteEnter:(to, from, next) => {
+	beforeRouteEnter(to, from, next){
     	// alert("欢迎登入");
     	next((vm)=>{console.log('showTost:'+vm.showTost)});
 	},
-	beforeRouteUpdate:(to, from, next) => {
+	beforeRouteUpdate(to, from, next){
     	alert("dfdf");
     	next();
 	}

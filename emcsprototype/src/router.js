@@ -10,13 +10,14 @@ import LoginTimer from './views/LoginTimer'
 Vue.use(Router) 
 /*抽离  共用的 子路由 跳转验证*/
 var islogin = (to, from, next) => {
-				let needLogin = false;      //
-				console.log("【子路由】："+needLogin);
-				if(needLogin){
-					next('/loginTip');  //需要登录 
-				}else{  
-					next();				//已经登录  继续跳转到要跳转的页面
-				}
+		let needLogin = true;      //     false为需要验证；true为不需要验证；
+		
+		console.log("【子路由】："+needLogin);
+		if(needLogin){					
+			next();				//已经登录  继续跳转到要跳转的页面
+		}else{  
+			next('/loginTip');  //需要登录 
+		}
 	}
 
 /*抽离  共用的 子路由  必须在  路由声明 之前*/
