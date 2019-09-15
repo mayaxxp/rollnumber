@@ -1,7 +1,7 @@
 <template>
   <div id="app"> 
-		 <router-view></router-view>
-		 shouye
+		 <router-view></router-view> 
+    
   </div>
 </template>
 <script type="text/javascript">

@@ -29,7 +29,6 @@ export default {
   },
   methods:{
   	loginHander(){ 
-//		window.location.href='/first'
   		this.$nextTick(()=>{
   			 this.$router.push("/")
   		})

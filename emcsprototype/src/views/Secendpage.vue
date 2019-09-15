@@ -1,7 +1,7 @@
 <template>
   <div id="secendpage">
     <MainPageTop :data-menus="childlist"></MainPageTop>
-    
+    <h2>{{this.$store.state.jjcount}}</h2>
   </div>
 </template>
 
