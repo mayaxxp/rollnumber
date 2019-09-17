@@ -9,7 +9,7 @@
 								<!---webkit-transform:translateX(translateNumX);-moz-transform:translateX(translateNumX);transform:translateX(translateNumX);-->
 							 	<ul id="count1" class="count clearfix"  :style="diyConTitleStyle">
 										<li v-for="(item,index) in dataMenus" :key="item.id" >
-											<a  :class="{'teg':false,'tegBeselected':item.beselected}"       :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id,index)">
+											<a  :class="{'teg':false,'tegBeselected':item.beselected}"       :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id,index,item.childs)">
 												<div class="kwg"><img :src="item.imgUrl"></div>
 												<div class="wef">{{item.cnName}}</div>
 											</a>
@@ -28,7 +28,6 @@
 					<router-link to="/home/first" class="routelink"  ><i></i></router-link>
 				</div>
 			</div>
-			<span >{{this.$store.state.jjcount}}</span>
 </div>
 </template>
 
@@ -42,7 +41,8 @@
 						id:"id",
 						cnName:"无菜单",
 						imgUrl:require("../assets/images/mainTopbanner/e5.png"),
-						beselected:true
+						beselected:true,
+						childs:[]
 					}]
 		    }
 			
@@ -55,13 +55,14 @@
 			}
 		}, 
 		created () {  //加载完成之前，执行。执行顺序:父组件-子组件
-		   this.menulist=this.dataMenus;
+		   this.menulist=this.dataMenus; 
 		   console.log("【menulist】："+this.menulist); // 空值
 		   console.log("【dataMenus】："+this.dataMenus);
 	    },
 		mounted(){ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
 				var parthW=this.$refs.wrapbox.clientWidth;
-				
+				var defaultlist=(this.dataMenus)[0].childs;
+				this.$store.dispatch('changeLeftMenuFun',defaultlist);
 				this.menulistlength=parseInt(parthW/75);  
 		},
 		methods:{  //监听方法click事件等   事件方法执行。
@@ -70,12 +71,13 @@
 				 	console.log(this.dataMenus);
 				 }
 			},
-			getLeftMenu(ID,index){ 
+			getLeftMenu(ID,index,childs){ 
 					for(var i=0; i<this.menulist.length; i++){
 				 		   this.menulist[i].beselected=false; 
 					}
 					var selnum=this.menulist[index];
 					selnum.beselected=true;
+					this.$store.dispatch('changeLeftMenuFun',childs)
 					console.log(selnum); 
 				
 			},

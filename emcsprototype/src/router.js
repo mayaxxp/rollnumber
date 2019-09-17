@@ -13,13 +13,12 @@ var islogin = (to, from, next) => {
 		let needLogin = true;      //     false为需要验证；true为不需要验证；
 		
 		console.log("【子路由】："+needLogin);
-		if(needLogin){					
+		if(needLogin){
 			next();				//已经登录  继续跳转到要跳转的页面
-		}else{  
+		}else{
 			next('/loginTip');  //需要登录 
 		}
 	}
-
 /*抽离  共用的 子路由  必须在  路由声明 之前*/
 const mainpages=[
 					{
