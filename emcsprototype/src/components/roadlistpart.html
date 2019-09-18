@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>道路清洁路段监控右侧栏道路列表部分</title>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+		<script src="../../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="roadlist.css" />
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script>
+			function showroadout(id){
+				alert("id")
+			}
+		</script>
+		<script src="vue.min.js" ></script>
+		
+	</head>
+
+	<body>
+		<div id="rightroadList" class="container-fluid"> 
+			<div class="row searchfilterBar">
+				<div class="col-lg-12">
+					<input type="date" class="form-control form-inline" placeholder="请选择日期" autocomplete="off">
+				</div>
+				<div class="col-lg-12">
+					<div class="input-group">
+						<input type="text" class="form-control" aria-label="..." placeholder="请选择级别">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle glyphicon glyphicon-triangle-bottom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				        </button>
+							<ul class="dropdown-menu dropdown-menu-right">
+								<li>
+									<a href="#">一级</a>
+								</li>
+								<li>
+									<a href="#">二级</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="#">应急路段</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="请输入道路名称">
+						<span class="input-group-btn">
+				        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+				      </span>
+					</div>
+				</div>
+			</div>
+			<div class="row roadlist">
+				<div id="defaR" :class="['col-lg-12','roaddefault',{'selected':('defaR'==rselected)}]" @click="change_handler(event.currentTarget.id)">
+					<div class="col-lg-12 btn"><span class="title">常规路段</span></div>
+					<div class="col-lg-12 btn-group-vertical">
+						<div v-for="item in getdefaultR" :key="item.id" :id="item.id" :class="returnClass(item.id)"  @click="togglethisroad">{{item.cnName}}</div>
+						<!--<div id="ra1" :class="returnClass('ra1')"  @click="togglethisroad">A路段路段路段路段路段路段路段路段</div>
+						<div id="ra2" :class="returnClass('ra2')"  @click="togglethisroad">B路段路段路段路段路段路段路段路段路</div>
+						<div id="ra3" :class="returnClass('ra3')"  @click="togglethisroad">B路段路段路段路段路段路段路段路段路</div>-->
+					</div>
+				</div>
+				<div id="ememR" :class="['col-lg-12','roadHoteme',{'selected':('ememR'==rselected)}]" @click="change_handler(event.currentTarget.id)">
+					<div class="col-lg-12 btn"><span class="title">应急路段</span></div>
+					<div class="col-lg-12 btn-group-vertical">
+						<div v-for="item in getemeR" :key="item.id" :id="item.id" :class="returnClass(item.id)"  @click="togglethisroad">{{item.cnName}}</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var vm=new Vue({
+				el:"#rightroadList",
+				data:{				
+					arrAllroad:[],
+					defaultRoad:[{
+								"id":"null",
+								"typely":"defaultRoad",
+								"cnName":"无相关常规道路"
+							}],
+					emeR:[{
+								"id":"null",
+								"typely":"defaultRoad",
+								"cnName":"无相关应急道路"
+							}],
+					rselected:"defaR",
+					arrRselected:[]
+				},
+				created(){
+				    axios
+				    .get('ajax_info.json',{ params: {ID: 12345}})
+				    .then(function(response){
+				      	vm.arrAllroad=response.data;
+				      	console.log(this.arrAllroad)
+				      	})
+				    .catch(function (error) { 
+				      	// 请求失败处理
+				        console.log(error); 
+				      });
+			    },
+				methods:{
+					change_handler(bl){
+						if(bl==this.rselected){return;}else{
+							this.rselected=event.currentTarget.id;
+						}
+					},
+					togglethisroad(){
+						//切换当前点击道路是否存在于 显示 数组中
+						var r=event.currentTarget.id;
+						var arr=this.arrRselected;
+						if(arr.indexOf(r)!= -1){
+							for (var i = 0; i < arr.length; i++) { 
+								if (arr[i] == r){
+									this.arrRselected.splice(i,1);
+								}
+							} 
+						}else{
+							this.arrRselected.push(r);
+							showroadout(r);   //调用  vm  外部 接口   控制  id为“r” 的道路在地图上的显示  以及详情等
+						}
+					},
+					returnClass(id){
+						//  返回 列表中  道路 按钮 的 class  样式；
+						var class_=['col-lg-12','btn','btn-default','glyphicon','glyphicon-eye-close',{'glyphicon-eye-open':((this.arrRselected.indexOf(id)!=-1)?1:0)}]
+						return class_;
+					}
+				},
+				computed:{
+					getdefaultR(){
+						var arr=[];
+					 	var allroad=this.arrAllroad;
+						for(i=0;i<allroad.length;i++){
+							var its=allroad[i]; 
+							if(its.typely==="defaultRoad"){
+								arr.push(allroad[i]);
+							} 
+						}
+						this.defaultRoad=arr
+						return arr;
+					},
+					getemeR(){
+						var arr=[];
+					 	var allroad=this.arrAllroad;
+						for(i=0;i<allroad.length;i++){
+							var its=allroad[i]; 
+							if(its.typely==="emeRoad"){
+								arr.push(allroad[i]);
+							} 
+						}
+						this.emeR=arr
+						return arr;
+					}
+				},
+				watch:{
+					'vm.arrAllroad':{
+						handler(newValue, oldValue){
+							vm.arrAllroad=newValue; 
+							
+						},
+				　　　　   deep: true
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
