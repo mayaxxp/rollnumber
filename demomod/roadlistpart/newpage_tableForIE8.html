@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>GIS地图相关</title>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+		<script src="../../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="roadlist.css" />
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script>
+			function showroadout(id){
+//     			1、绘制 id 为  id 的道路；
+//     			2、底部打开为id的道路详情 表格；
+//				alert("id")
+				showRoadInfo(1)
+			} 
+		</script>
+		<script src="vue.min.js" ></script>
+		<style>
+			html,body{ width:100%; height:100%; border:0px red solid;overflow: hidden;}
+			*{margin: 0;padding: 0;font-family:"黑体" "宋体" "arial, helvetica, sans-serif";}
+			.map_container,.right_container,.bottom_container,.leftTree_container{width:100%;height:100%;float:left;height: inherit; left:2px;background:#0f88ca; border-radius: 5px;overflow: hidden;}
+			.main_container{ width:90%;width:calc(100% - 4px);width: -webkit-calc(100% - 4px);width: -moz-calc(100% - 4px);height:100%;height:calc(100% - 4px);width: -webkit-calc(100% - 4px);width: -moz-calc(100% - 4px);background: white;margin-left: auto;margin-right: auto;}
+			.mymapPageTop{position: absolute;    bottom: 12px;    right: 10px;    height: 135px; padding-top: 8px; width: 105px;    background:rgba(255, 255, 255, 0.8);    border-radius: 0px;    box-shadow: 0px 0px 5px rgba(0,0,0,.1);border-top-left-radius: 5px;}
+    		.mymapPageTop>.glyphicon{padding: 3px 10px;position: relative;margin: 5px auto;letter-spacing: .1em;}
+    		.mymapPageTop>.glyphicon:before{color: red;margin-right:5px;}
+    		.mymapPageTop>.colorA:before{color: blue;margin-right:5px;}
+    		.mymapPageTop>.colorB:before{color: limegreen;margin-right:5px;}
+    		.mymapPageTop>.colorC:before{color: orange;margin-right:5px;}
+			.panel_Top{width:100%;height:32px;}
+			.panel_Top span{position: relative;float: left;display: inline-block;height:inherit;}
+			.panel_Top .panel_TL{background:url(img/panel_Top_i.png) 0px 0px; width: 8px; height:32px;}
+			.panel_Top .panel_TC{background:url(img/panel_Top_i.png) 0px -41px repeat-x;line-height:32px;white-space:normal; font-weight:600;position: relative;float: left;height:32px;width:90%; width: calc(100% - 16px);width: -webkit-calc(100% - 16px);width: -moz-calc(100% - 16px);  color: #fff;font-size:14px;letter-spacing:2px;}
+			.panel_Top .panel_TC span{background: url(img/t_map_gis.png) no-repeat;margin-right:10px; background-position-y: 5px;display: inline-block;height:32px;width: 24px;line-height: 32px;}
+			.panel_Top .panel_TR{background:url(img/panel_Top_i.png) 0px -82px no-repeat;;width: 8px; height: 32px;}
+			.panel_content{width: 100%; height:90%;height:calc( 100% - 32px);height: -webkit-calc(100% - 32px);height: -moz-calc(100% - 32px);margin-left: auto;margin-right: auto;}
+			
+			/*右侧收缩按钮*/
+			.panel_Top .panel_TR .r_toggleMin{background: url(img/t_r_minOrmax10_13.png) no-repeat;margin-left: -10px;margin-top: 8px; background-position-y:-13px;;display: inline-block;height:13px;width: 10px;line-height: 32px;}
+			.panel_Top .panel_TR .r_toggleMin:hover{background-position-y:-0px;}
+			.panel_Top .panel_TR .r_toggleMin:active{background-position-y:-26px;}
+			.panel_Top .panel_TR .r_toggleMax{background: url(img/t_r_minOrmax10_13.png) no-repeat;margin-left: -10px;margin-top:8px; background-position-y:-52px;;display: inline-block;height:13px;width: 10px;line-height: 32px;}
+			.panel_Top .panel_TR .r_toggleMax:hover{background-position-y:-39px;}
+			.panel_Top .panel_TR .r_toggleMax:active{background-position-y:-65px;}
+			 #vehicle_info{overflow-y:hidden;}
+			/* 左侧树列表的收缩按钮样式 */
+			.panel_Top .panel_TR .l_toggleMin{background: url(img/t_l_minOrmax10_13.png) no-repeat;margin-left: -10px;margin-top: 8px; background-position-y:-52px;;display: inline-block;height:13px;width: 10px;line-height: 32px;}
+			.panel_Top .panel_TR .l_toggleMin:hover{background-position-y:-39px;}
+			.panel_Top .panel_TR .l_toggleMin:active{background-position-y:-65px;}
+			.panel_Top .panel_TR .l_toggleMax{background: url(img/t_l_minOrmax10_13.png) no-repeat;margin-left: -10px;margin-top:8px; background-position-y:-13px;;display: inline-block;height:13px;width: 10px;line-height: 32px;}
+			.panel_Top .panel_TR .l_toggleMax:hover{background-position-y:-0px;}
+			.panel_Top .panel_TR .l_toggleMax:active{background-position-y:-26px;} 
+			.leftTree_container .panel_Top .panel_TC span{background: url(img/t_group_listTree.png) no-repeat;margin-right:10px; background-position-y: 5px;}
+			.leftTree_container,
+			.leftTree_container .panel_Top .panel_TL,
+			.leftTree_container .panel_Top .panel_TC,
+			.leftTree_container .panel_Top .panel_TR{background:#faffe2 !important;color: #333;}
+			#treegroup_c_t .main_container{background:#faffe2 !important;}
+			/* 底部报警的收缩按钮样式 */
+			.panel_Top .panel_TR .b_toggleMin{background: url(img/t_b_minOrmax10_13.png) no-repeat;margin-left: -13px;margin-top: 8px; background-position-y:-13px;;display: inline-block;height:13px;width: 13px;line-height: 32px;}
+			.panel_Top .panel_TR .b_toggleMin:hover{background-position-y:-0px;}
+			.panel_Top .panel_TR .b_toggleMin:active{background-position-y:-26px;}
+			.panel_Top .panel_TR .b_toggleMax{background: url(img/t_b_minOrmax10_13.png) no-repeat;margin-left: -13px;margin-top: 8px; background-position-y:-52px;;display: inline-block;height:13px;width: 13px;line-height: 32px;}
+			.panel_Top .panel_TR .b_toggleMax:hover{background-position-y:-39px;}
+			.panel_Top .panel_TR .b_toggleMax:active{background-position-y:-65px;}
+			
+			/*右侧车辆表格*/
+			#r_table_a td{padding: 5px;text-align: center;vertical-align: middle;line-height:20px;height:20px;min-height:20px;border: 1px #dddddd solid;border-bottom-color:#DDDDDD;border-top-color:#ffffff;border-left-color:#dddddd;vertical-align: top;align-items: center;border-collapse:separate;}
+			#r_table_a{width:90%;width: calc(100% - 10px); width: -webkit-calc(100% - 10px);width: -moz-calc(100% - 10px);  font-size: 12px;letter-spacing:1px;margin-top:5px;margin-left: auto; margin-right:auto; height: 117px;border-width: 1px;border-style:solid;border-bottom-color:#DDDDDD;border-top-color:#DDDDDD;border-left-color:#dddddd;border-right-color:#dddddd;vertical-align: top;align-items: center;border-collapse:separate;}
+			#r_table_b td{padding: 5px;;text-align: center;vertical-align: middle;line-height: 24px;height: 24px;min-height:24px;border: 1px #dddddd solid;border-bottom-color:#DDDDDD;border-top-color:#ffffff;border-left-color:#ffffff;border-right-color:#dddddd;vertical-align: top;align-items: center;border-collapse:separate;}
+			#r_table_b{width:90%;width: calc(100% - 10px);width: -webkit-calc(100% - 10px);width: -moz-calc(100% - 10px); font-size: 12px;letter-spacing:1px;margin-top:5px;margin-left: auto; margin-right:auto; height: 247px;border-width: 1px;border-style:solid;border-bottom-color:#DDDDDD;border-top-color:#DDDDDD;border-left-color:#dddddd;border-right-color:#dddddd;vertical-align: top;align-items: center;border-collapse:separate;}
+			.td_title_color{background: #f5f6fb;vertical-align: middle;}
+			.td_value_color{color: #267bef;}
+			
+			/* 视频接入 toggle btn   style*/
+			.togMid{width:100%;height: 28px;float: left;	text-shadow: 1px 1px 0px #66d1dd;	line-height: 32px;	vertical-align: top;margin-top: -33px;}
+			.togright{	background: url(img/getOrstop_bar.png) left bottom;	width: 9px;	height: 32px;	float: left;}
+			#stick_back {	width: auto;	height: 24px;	float: right;	margin: 3px auto;}
+			#stick_backL {	background: url(img/gOs_bar.png) left top;	width: 13px;	height: 24px;	float: left;}
+			#stick_backM {	background: url(img/gOs_bar.png) left center;	width: 89px;	height: 24px;	float: left;}
+			#stick_backR {background: url(img/gOs_bar.png) left bottom;	width: 13px;	height: 24px;	float: left;}
+			.state_on {	float: left;	cursor:default;	color: #fff;	text-shadow: 0px -1px 0 rgba(0,0,0,.5); 	vertical-align: middle;	font-size: 12px;	text-align: center;}
+			.state_off {letter-spacing:0px;float: right;margin-right:5px; width: 24px;  	height: 20px;  	line-height:20px;  	vertical-align:middle;   	padding-top:2px;   	cursor:default;   	color: #155259;       	font-size: 12px;    	text-shadow:0px 1px 0 #fff;    }  
+			.toggle_sec{float: left;	width:0px;	height: 20px;	margin-top: 2px;	margin-left: 3px;	position: relative;}
+			.toggle_sectext{float: left;	width:115px;	height: 20px;	line-height:20px;	margin-top: 2px;	margin-left: 3px;	font-size:12px;	position: absolute;}
+			.toggle_sectext div{float: right; }
+			.toggle_sec_red {position: absolute;width: 60px;margin-left:-115px;}
+			.toggle_sec_red .toggle_secB_l {background: url(img/stop_mid.png) left top;	width: 10px;	height: 20px;	float: left;}
+			.toggle_sec_red .toggle_secB_m {background: url(img/stop_mid.png) left center;width: 40px;height: 20px;float: left; line-height: 20px;vertical-align: middle;}
+			.toggle_sec_red .toggle_secB_r {background: url(img/stop_mid.png) left bottom;width: 10px;height: 20px;float: left;}
+			.toggle_sec_greeen { position: absolute;width: 60px;margin-left:-115px;}
+			.toggle_sec_greeen .toggle_secB_l {	background: url(img/start_mid.png) left top;	width: 10px;	height: 20px;	float: left;}
+			.toggle_sec_greeen .toggle_secB_m {	background: url(img/start_mid.png) left center;	width: 40px;	height: 20px;	float: left; 	line-height: 20px;	vertical-align: middle;}
+			.toggle_sec_greeen .toggle_secB_r {	background: url(img/start_mid.png) left bottom;	width: 10px;	height: 20px;	float: left;}
+			
+			
+			#warning_tab ul li a:hover{background: #fff3ba;}
+			#warning_tab ul li a:active{background:#e7e7e7;}
+			#warning_tab ul li .select_lia{background:#fff3ba ;text-align: right;padding-right: 18px;border-right: solid 2px dodgerblue;}
+			
+			.info{border: solid 2px #1a96ef; border-radius:5px;}
+			.info-middle a{display: block;font-weight: 600;color:#333333; width:120px;height:30px;top: 0px; margin: 2px 8px; padding-left: 5px;    padding-top: 2px;line-height: 30px;text-decoration: none;}
+			.info-middle a:hover{color:white;background: #9999aa;}
+			.info-middle a:active{color:#333333;background: #888888;}  
+			.info-middle a span{display:inline-block; pointer-events:none;line-height: 10px;letter-spacing: 5px;text-align: center;vertical-align:middle;margin-top: -23px;margin-left:5px;}
+			.info-middle a .icon_info{display:inline-block;pointer-events:none;width: 21px;height: 30px;;line-height:30px;background: url(img/vehicle_info_icoN.png) 0px 3px no-repeat;}
+			.info-middle a:hover .icon_info{background: url(img/vehicle_info_icoO.png) 0px 3px no-repeat;}
+			.info-middle a:active .icon_info{background: url(img/vehicle_info_icoN.png) 0px 3px no-repeat;}
+			/*.info-middle a*/
+			.info-middle a .icon_warn{display:inline-block;pointer-events:none;width: 21px;height: 30px;;line-height:30px;background: url(img/vehicle_warning_icoN.png) 0px 3px no-repeat;}
+			.info-middle a:hover .icon_warn{background: url(img/vehicle_warning_icoO.png) 0px 3px no-repeat;}
+			.info-middle a:active .icon_warn{background: url(img/vehicle_warning_icoN.png) 0px 3px no-repeat;}
+		</style>
+		 <style >
+		 	.panel_Top{height:24px;}
+			.panel_content{height:90%;height:calc( 100% - 24px);height:-webkit-calc(100% - 24px);height: -moz-calc(100% - 24px); } 
+			.panel_Top .panel_TL{height:24px;}
+			.panel_Top .panel_TC span{height:24px;background-position-y:2px;}
+			.panel_Top .panel_TC{height:24px;line-height: 24px;}
+			.panel_Top .panel_TR{height:24px;}
+			.panel_Top .panel_TR .b_toggleMax{margin-top: 5px;}
+			.panel_Top .panel_TR .b_toggleMin{margin-top: 5px;}
+			.panel_Top .panel_TR .r_toggleMin{margin-top: 5px;} 
+		 </style>
+		 <style>
+		 	#vehicleInfo_c_t .panel_Top .panel_TC{width: 14px;} 
+		 	.right_container .panel_Top .panel_TC span,.bottom_container .panel_Top .panel_TC span{background: url(img/t_roadInfo.png) no-repeat;top: 3px;}
+		 	
+		 	
+		 	
+			 
+			.bkgd_tabPCons{
+				width: 99% !important;
+			    margin: 0 .5% 0 !important;
+			    padding: 0; 
+			    height: 100%;
+			    position: relative;
+			    top: 0px;
+			    left: 0px;
+			    border: 1px solid #cccccc;
+			    background: #ffffff;
+			    border-top-width: 0px;
+			    border-radius: 0 0 5px 5px;
+			} 
+			.choicebox.handnavbar {
+			    padding-top: 0px;
+			}
+			.choicebox {
+			    display: block;
+			    padding: 5px;
+			    width: 100%;
+			    width: calc( 100% - 0px );
+			    width: -webkit-calc( 100% - 0px );
+			    width: -moz-calc( 100% - 0px );
+			    height: 90%;
+			    height: calc( 100% - 28px);
+			    height: -webkit-calc( 100% - 28px);
+			    height: -moz-calc( 100% - 28px);
+			    overflow: hidden;
+			    overflow-y: scroll;
+			} 
+			.table_container {
+			    height: 100%;
+			    /*height: calc(100% - 61px);
+			    height: -moz-calc(100% - 61px);
+			    height: -webkit-calc(100% - 61px);*/
+			}
+			
+			table.tablesorter {
+			    margin-bottom: 0px;
+			    text-align: center;
+			    width: 100%;
+			    background: #e8e8e8;
+			} 
+			.table_container table.tablesorter thead tr {
+			     
+			}
+			.table_container table thead tr {
+			    line-height: 35px;
+			    height: 35px;
+			}
+			.table_container table.tablesorter thead tr th{ 
+			    border-right: 1px solid #d2cfcf;
+			    border-bottom: 1px solid #d2cfcf;
+			}
+			.table_container table.tablesorter tbody tr td{
+			    border-left: none;
+			    border-right: 1px solid #e6e6e6;
+			    border-bottom: 1px solid #e6e6e6;
+			    background: none;
+			    text-overflow: ellipsis;
+			    overflow: hidden;
+			    white-space: nowrap;
+			    max-width: 152px;
+			}
+			.table_container table.tablesorter thead tr th:first-child,.table_container table.tablesorter tbody tr td:first-child{
+				border-left: 1px solid #d2cfcf; 
+			}
+			.table_container table.tablesorter tr th, .table_container table.tablesorter tr td {
+			    height: 100%;
+			}
+			table th, table td {
+			    text-align: center;
+			    cursor: pointer;
+			}
+			.table_container table.tablesorter tbody tr:nth-child(odd) {
+			    background: #ffffff;
+			}
+			.table_container table.tablesorter tbody tr, .table_container table.tablesorter tbody tr td {
+			    height: 28px;
+			    max-height: 28px;
+			}
+			
+		 </style>
+		<script type="text/javascript">
+			var page_r_p_open=false
+			var page_b_p_open=false;
+			var appVersionisie8=false;
+			function initdemoHW(w_,h_){ 
+				var partR_W=parseInt($("#vehicleInfo_c_t").width());
+				var partL_W=parseInt($("#treegroup_c_t").width());
+				var partB_H=parseInt($("#warning_c_t").height());
+				
+				$("#pageleftpart").css({"width":(w_-partR_W-1)+"px"});
+				$("#warning_c_t").css({"width":(w_-partR_W-1)+"px"});
+				$("#warning_c_t").find(".panel_Top .panel_TC").css({"width":(w_-partR_W-1-16)+"px"});
+				 $("#vehicleInfo_c_t").find(".panel_Top .panel_TC").css({"width":(partR_W-16)+"px"});
+				$("#vehicleInfo_c_t").find(".panel_content").css({"height":(h_-25)+"px"});
+				 $("#vehicle_info").css({"width":(partR_W-4)+"px"});
+				 
+				 $("#warning_c_t").find(".panel_content").css({"height":(partB_H-25)+"px"});
+				 $("#warning_c_t").find(".main_container").css({"width":(w_-partR_W-1-4)+"px"});
+				 
+				$("#mapPart").css({"width":(w_-partR_W-2-partL_W)+"px","height":(h_-partB_H-1)+"px"})
+				$("#mapPart").find(".panel_Top .panel_TC").css({"width":(w_-partR_W-2-16-partL_W)+"px"})
+				$("#mapPart").find(".panel_content").css({"height":(h_-25-partB_H)+"px"})
+				$("#mapPart").find(".main_container").css({"width":(w_-partR_W-4-partL_W)+"px"})
+				$(".mapandTreePart").css({"height":(h_-partB_H-1)+"px"}); 
+			}
+			var fullW = document.documentElement.clientWidth;
+			var fullH = document.documentElement.clientHeight;
+			$(window).resize(function(){
+	            fullW = document.documentElement.clientWidth; //$(document.body).clientWidth
+	            fullH = document.documentElement.clientHeight;
+	            initdemoHW(fullW, fullH);
+         	}); 
+			$(window).ready(function(){
+				
+				if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/8./i) == "8."|| navigator.appVersion.match(/7./i) == "7."|| navigator.appVersion.match(/6./i) == "6.") {
+					
+					appVersionisie8=true;
+					initdemoHW(fullW, fullH); 
+				}
+				//  右侧收缩按钮切换
+				$(".panel_TR .r_toggleMin").click(
+					function(){
+						var w1,w2;
+						var this_=$(this);
+						if(this_.hasClass("r_toggleMax")){
+							if(appVersionisie8){
+								w1="90%";w2="90%";
+							}else{
+								w1="calc(100% - 281px)";w2="calc(100% - 4px)";
+							}
+							page_r_p_open=true;
+							this_.removeClass("r_toggleMax");
+							$("#vehicleInfo_c_t").css({"width":"280px"});
+							this_.parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"0px","margin-left":"0px"})
+							$("#pageleftpart").css({"width":w1});
+							$("#vehicle_info").css({"visibility":"visible","width":w2});
+						}else{
+							if(appVersionisie8){
+								w1="90%"; 
+							}else{
+								w1="calc(100% - 31px)"
+							}
+							this_.addClass("r_toggleMax");   
+							//使面板缩小
+							page_r_p_open=false;
+							$("#vehicleInfo_c_t").css({"width":"30px"});
+							$("#pageleftpart").css({"width":w1});
+							this_.parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"50px","margin-left":"-5px"})
+							$("#vehicle_info").css({"visibility":"hidden","width":"30px"});
+							 
+						}
+						initdemoHW(fullW, fullH);
+						return false;
+					}
+				);
+				
+				
+				//  左侧树列表收缩按钮切换
+				$(".panel_TR .l_toggleMin").click(
+					function(){
+						var this_=$(this);
+						var w1,w2;
+						if(this_.hasClass("l_toggleMax")){
+							if(appVersionisie8){
+								w1="90%";w2="90%";
+							}else{
+								w1="calc(100% - 4px)";w2="calc(100% - 211px)";
+							}
+							
+							this_.removeClass("l_toggleMax");
+							$("#treegroup_c_t").css({"width":"210px"});
+							this_.parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"0px","margin-left":"0px"})
+							$("#grouplist_Container").css({"visibility":"visible","width":w1});
+							$("#mapPart").css({"width":w2});
+							$("#treegroup_c_t").find(".panel_Top .panel_TC").css({"width":"194px"}) 
+						}else{
+							if(appVersionisie8){
+								w1="90%";
+							}else{
+								w1="calc(100% - 33px)";
+							}
+							this_.addClass("l_toggleMax");   
+							//使面板缩小
+							$("#treegroup_c_t").css({"width":"32px"});
+							this_.parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"50px","margin-left":"-5px"})
+							$("#grouplist_Container").css({"visibility":"hidden"});
+							$("#mapPart").css({"width":w1});
+							$("#treegroup_c_t").find(".panel_Top .panel_TC").css({"width":"14px"})  
+						}
+						initdemoHW(fullW, fullH);
+						return false;
+					}
+				);
+				//  底部报警收缩按钮切换
+				$(".panel_TR .b_toggleMin").click(
+					function(){
+						var h1;
+						var this_=$(this);
+						if(this_.hasClass("b_toggleMax")){
+							if(appVersionisie8){
+								h1="90%";
+							}else{
+								h1="calc(100% - 181px)";
+							}
+							page_b_p_open=true;
+							this_.removeClass("b_toggleMax");
+							$("#warning_c_t").css({"height":"180px"});
+							$(".mapandTreePart").css({"height":h1});
+							 
+						}else{
+							this_.addClass("b_toggleMax");
+							//使面板缩小
+							if(appVersionisie8){
+								h1="90%";
+							}else{
+								h1="calc(100% - 25px)";
+							}
+							page_b_p_open=false;
+							$("#warning_c_t").css({"height":"24px"});
+							$(".mapandTreePart").css({"height":h1});
+							 
+						}
+						initdemoHW(fullW, fullH);
+						return false;
+					}
+				); 
+				// 右侧视频接入按钮切换
+				var secBarissec=true;
+				$(".toggle_sec").click(function(){
+							var dsdsdds = $(".toggle_sec").find(".toggle_sec_red").css("margin-left")
+									.replace("px", "");
+							if (dsdsdds<-65) {
+								$(".state_off").css({"float":"left","margin-left":"8px"})
+									$(".state_off").html("暂停");
+								$(".state_on").html("正接收");
+									$(".toggle_sec_red").animate({"margin-left":"-65px"},"fast", function(){			
+										$(".toggle_sec_red").addClass("toggle_sec_greeen")
+										secBarissec = false;
+										$("#video_container").html("开始接收……")
+										return secBarissec ;
+									})
+							} else {
+								$(".state_off").css({"float":"right","margin-right":"5px"})
+								$(".state_off").html("接收");
+								$(".state_on").html("已暂停");
+								$(".toggle_sec_red").animate({"margin-left":"-115px"},"fast",function(){			
+									$(".toggle_sec_red").removeClass("toggle_sec_greeen")
+									secBarissec = true;
+									$("#video_container").html("停止接收……")
+									return secBarissec ;})
+							}})
+				
+				
+				//报警切换
+				$("#warning_tab ul li").click(function(i,item){
+					var i=$(this).index();
+					$(this).siblings("li").find("a").removeClass("select_lia");
+					$(this).find("a").addClass("select_lia");
+					$(".chars_item").eq(i).css({"visibility":"visible"}).siblings().css({"visibility":"hidden"});
+				})
+			})
+			 
+			/*
+			 * page_r_p_open_ 为true  打开右侧道路列表   */
+			function showVehicleInfo(page_r_p_open_){
+					var w1,w2,w3;
+					if(appVersionisie8){
+								w1="90%";w2="90%";w3="90%";
+							}else{
+								w1="calc(100% - 281px)";w2="calc(100% - 4px)";w3="calc(100% - 31px)";
+							}
+					if(page_r_p_open_){
+						
+						$(".r_toggleMin").removeClass("r_toggleMax");
+						$("#vehicleInfo_c_t").css({"width":"280px"});
+						$("#pageleftpart").css({"width":w1});
+						$(".r_toggleMin").parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"0px","margin-left":"0px"})
+						$("#vehicle_info").css({"visibility":"visible","width":w2});
+					}else{
+						$(".r_toggleMin").addClass("r_toggleMax");   
+						$("#vehicleInfo_c_t").css({"width":"30px"});
+						$("#pageleftpart").css({"width":w3});
+						$(".r_toggleMin").parent(".panel_TR").siblings(".panel_TC").find("span").css({"margin-top":"50px","margin-left":"-5px"})
+						$("#vehicle_info").css({"visibility":"hidden","width":"30px"});
+					}
+					initdemoHW(fullW, fullH);
+					return false;
+				}
+			/*
+			 *  page_b_p_open_ 为true  打开底部详情*/
+			function showRoadInfo(page_b_p_open_){
+				var w1,w2;
+					if(appVersionisie8){
+								w1="90%";w2="90%";
+							}else{
+								w1="calc(100% - 181px)";w2="calc(100% - 25px)";
+							}
+					if(page_b_p_open_){
+						$(".b_toggleMin").removeClass("b_toggleMax");
+						$("#warning_c_t").css({"height":"180px"});
+						$(".mapandTreePart").css({"height":w1});
+					}else{
+						$(".b_toggleMin").addClass("b_toggleMax"); 
+						$("#warning_c_t").css({"height":"24px"});
+						$(".mapandTreePart").css({"height":w2});
+					}
+					initdemoHW(fullW, fullH);
+					return false;
+				} 
+		</script>
+		 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=980aa3c043e6f347df9c36abfaa3ecb4&plugin=AMap.Autocomplete,AMap.Geocoder"></script>
+		<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+		<script type="text/javascript">
+	    	var map,marker;
+	    	$(function(){ 
+	    	    //初始化地图对象，加载地图
+	        	map= new AMap.Map("map", {
+	    	        resizeEnable: true,
+	    	        center: [116.397428, 39.90923],//地图中心点
+	    	        zoom: 11 //地图显示的缩放级别
+	       		});
+	        
+	    	    //为地图注册click事件获取鼠标点击出的经纬度坐标
+	    	    var clickEventListener = map.on('click', function(e) {
+	    	    	$("#longitude").val(e.lnglat.getLng());
+	    	    	$("#latitude").val(e.lnglat.getLat());
+	    	    	//添加标记点
+	            	addMarker(e.lnglat);
+	            	regeocoder(e.lnglat);
+	    	    });
+	    	    //自动补全
+	    	    var auto = new AMap.Autocomplete({
+	    	    	city: "北京", //城市，默认全国
+	    	        input: "tipinput"
+	    	    });
+	    	   // AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发  
+	    	    
+//	    	    initMarker(); 
+	    	    //initAddress();
+	    	}); 
+		</script>
+	</head>
+	<body>
+		<div id="top_mainpage_c" style="position: absolute; width: 100%; height: 100%;background:#2144a9;overflow:hidden;">
+			<!--左侧部分-->
+			<div id="pageleftpart" style="position: relative;float:left;width:95%; width: calc(100% - 31px);width:-webkit-calc(100% - 31px);width: -moz-calc(100% - 31px); height: 100%;margin-right: 1px;">
+				<!--左侧上部部分-->
+				<div class="mapandTreePart" style="position:relative;float:left;height:95%;height:calc(100% - 25px);height:-webkit-calc(100% - 25px);height:-moz-calc(100% - 25px); margin-bottom:1px;width:100%;">
+					<!--左侧树列表容器部分-->
+					<!--<div id="treegroup_c_t" style="position: relative;float:left;height:100%; width:210px;">
+						<div class="leftTree_container">
+							<div class="panel_Top">
+								<span class="panel_TL"></span>
+								<span class="panel_TC"><span></span>组织机构</span>
+								<span class="panel_TR"><span class="l_toggleMin "></span></span>
+							</div>
+							<div class="panel_content" >
+								<div class="main_container" id="grouplist_Container">
+									<!-左侧树列表部分->
+								</div>
+							</div>
+						</div>
+					</div>-->
+					<!--中部GIS容器部分-->
+					<div id="mapPart" style="position: relative;float:left;height:100%; margin-left:1px;width:99.8%;width:calc(100% - 1px);width:-webkit-calc(100% - 1px);width: -moz-calc(100% - 1px); ">
+						<div class="map_container">
+							<div class="panel_Top">
+								<span class="panel_TL"></span>
+								<span class="panel_TC"><span></span>GIS信息</span>
+								<span class="panel_TR"></span>
+							</div>
+							<div class="panel_content">
+								<div class="main_container" >
+									<!--地图部分-->
+									<!--<input type="button" name="dakai" value="打开右侧车辆信息" style="position:absolute;left: 60px;top: 80px;" onclick="showVehicleInfo(1)" />
+									<input type="button" name="dakai" value="关闭右侧车辆信息" style="position:absolute;left: 60px;top: 110px;" onclick="showVehicleInfo(0)" />
+									<input type="button" name="dakai" value="打开底部报警" style="position:absolute;left: 60px;top: 150px;" onclick="showRoadInfo(1)" />
+									<input type="button" name="dakai" value="关闭底部报警" style="position:absolute;left: 60px;top: 180px;" onclick="showRoadInfo(0)" />
+											<div style="position: absolute; bottom:90px; left:150px;">
+												<div class="amap-info-contentContainer">
+													<div class="info" >
+														<div class="info-top" style="background: #1a96ef;">
+															<div style="display: inline-block;margin-left: 10px;height: 30px;line-height: 30px;color: #ffffff;font-weight: 600;">京ADT889</div><img style="float: right;margin-top: 8px;margin-right: 8px;" src="img/info_topclose.png"></div>
+														<div class="info-middle" style="background-color: white;padding-bottom:10px;">
+															<a href="javascript:void(0)" onclick="detailByHref('/getVideo.do?carNo=14150458800&amp;carPlateNumbers=京ADT889','视频',660,500)" ><i class="icon_info"></i><span>车辆详情</span></a>
+															<a href="javascript:void(0)" onclick="detailByHref('/roadclean/toDetail.do?carPlateNumbers=京ADT889','详情',600,400)" ><i class="icon_warn"></i><span>车辆报警</span></a>
+														</div>
+														<div class="info-bottom" style="position: relative;  top: 0px; margin: 0px auto;height: 0px;width: 100%;clear: both;text-align: center;"><img src="img/sharp.png" ></div>
+													</div>
+												</div>
+											</div>
+								-->
+								<!--嵌入地图-->
+								<div style="width:100%;height:100%;float:left;padding:5px;border:0px dotted #ff0000;margin:0px;background:#ffffff;">
+									<div id="map" tabindex="0" style="width:100%;height:100%; min-width:90%;min-height:90%;text-align:center;">
+									</div>
+									<div id="myPageTop" class="mymapPageTop">
+										<!--<input type="text" placeholder="请输入关键字进行搜索"  style="color:red;">-->
+										<div class="glyphicon colorA glyphicon-stop">常规道路</div>	
+										<div class="glyphicon colorB glyphicon-stop">常规道路</div>	
+										<div class="glyphicon colorC glyphicon-stop">常规道路</div>	
+										<div class="glyphicon glyphicon-stop ">常规道路</div>	
+									</div>
+									
+								</div>
+								
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左侧底部报警部分-->
+				<div id="warning_c_t" style=" bottom: 0px;float:left;height:24px; width:100%;">
+					<!--报警信息容器-->
+					<div id="tabledata" class="bottom_container">
+							<div class="panel_Top">
+								<span class="panel_TL"></span>
+								<span class="panel_TC"><span></span>道路详细信息</span>
+								<span class="panel_TR"><span class="b_toggleMin b_toggleMax"></span></span>
+							</div>
+							<div class="panel_content container">
+								<div class="dateOform2 form-inline row table_container"> 
+									<!--tab页签子容器-->
+							     	<div  class="bkgd_tabPCons  clo-lg-12 col-md-12 col-sm-12 col-xs-12">  
+								     	<div class="choicebox table_container handnavbar  clo-lg-12 col-md-12 col-sm-12 col-xs-12" id="div_0" >
+								     	    <table id="table_container" class="tablesorter">
+												<thead>
+													<tr class="taitou"> 
+														<th>道路名称</th>
+														<th>道路等级</th>
+														<th>工作日期</th>
+														<th>实扫遍次/应扫遍次</th>
+														<th>实扫里程/应扫里程（米）</th>
+														<th>空驶里程（米）</th>
+														<th>报警里程（米）</th>
+														<th>完成率</th> 
+													</tr>
+												</thead>
+												<tbody id="table_jinliao_body">
+													 <tr class="taitou"> 
+														<td>{{currentRoad.cnName}}</td>
+														<td>{{currentRoad.leaveT}}</td>
+														<td>{{currentRoad.datetime}}</td>
+														<td>{{currentRoad.curr_CNun}}&nbsp;/&nbsp;{{currentRoad.total_CNun}}</td>
+														<td>{{currentRoad.travel_mileage}}&nbsp;/&nbsp;{{currentRoad.total_mileage}}</td>
+														<td>{{currentRoad.nowork_mileage}}</td>
+														<td>{{currentRoad.warning_mileage}}</td>
+														<td>{{Math.round(currentRoad.travel_mileage/currentRoad.total_mileage * 10000) / 100.00 + "%"}}</td> 
+													</tr>
+												</tbody>
+												<tfoot>
+													<tr>
+														<td colspan="13">
+															<div class="tbottom"  >
+																<div class="pageTag" id="jinLiaoPage">
+																	<!--<ul>
+																		<li><input type="number" name=""   value="" title="输入行数，回车跳转"/>行/页</li>
+																		<li><span  >0</span>/<span id="">0</span>页</li>
+																		<li><span   class="glyphicon glyphicon-step-backward" title="首页"></span>
+																			<span   class="glyphicon glyphicon-triangle-left"  title="前一页"></span>
+																			<span class="glyphicon glyphicon-triangle-right" title="后一页"></span>
+																			<span class="glyphicon glyphicon-step-forward" title="尾页"></span>
+																		</li>
+																		<li>跳转至<input type="number" name=""  value="" max="6" title="输入页数，回车跳转"/>页</li>
+																	</ul>-->
+																</div>
+															</div>
+														</td>
+													</tr>
+												</tfoot>
+											</table>
+								     	</div>
+							   		</div>
+								</div>
+							</div>
+					</div>
+					<script>
+						var vmtable=new Vue({
+							el:"#tabledata",
+							data:{	
+								currentRoad:{
+										"id":"null",
+										"typely":"defaultRoad",
+										"cnName":"未选定道路",
+										"leaveT":"未选定道路",
+										"datetime":"未选定道路",
+										"total_CNun":NaN,
+										"curr_CNun":NaN,
+										"total_mileage":NaN,
+										"travel_mileage":NaN,
+										"nowork_mileage":NaN,
+										"warning_mileage":NaN
+									} 
+							},
+							methods:{
+								change_handler(bl){
+									if(bl==this.rselected){return;}else{
+										this.rselected=event.currentTarget.id;
+									}
+								},
+								togglethisroad(){
+									//切换当前点击道路是否存在于 显示 数组中
+									var r=event.currentTarget.id;
+									var arr=this.arrRselected;
+//												if(arr.indexOf(r)!= -1){
+//													for (var i = 0; i < arr.length; i++) { 
+//														if (arr[i] == r){
+//															this.arrRselected.splice(i,1);
+//														}
+//													} 
+//												}else{
+//													this.arrRselected.push(r);
+//													showroadout(r);   //调用  vmtable  外部 接口   控制  id为“r” 的道路在地图上的显示  以及详情等
+//												}
+									//以下为单选形式；以上为多选形式；
+									if(arr.length!=0){
+										if(arr.indexOf(r)!= -1){
+											arr=[]
+											this.arrRselected=[]
+											showRoadInfo(false);//打开底部详情 
+										}else{
+											arr=[]
+											this.arrRselected=[]
+											var this_=this
+											axios.get('road_aa_info.json',{params: {ID: r}}).then(function(response){
+										      	  this_.arrRselected.push(r);
+											      showroadout(r);//打开底部详情
+										      }).catch(function (error) { 
+										      	// 请求失败处理
+										        console.log(error); 
+										      });
+										}
+									}else if(arr.length==0){
+										 
+										this.arrRselected.push(r);
+										axios.get('road_aa_info.json',{params: {ID: r}})    //应post？
+									    .then(function(response){
+										      	showroadout(r);//打开底部详情
+									      	})
+									    .catch(function (error) { 
+									      	// 请求失败处理
+									        console.log(error); 
+									     });
+									} 
+									console.log("ca");
+								},
+								returnClass(id){
+									//  返回 列表中  道路 按钮 的 class  样式；
+									var class_=['col-lg-12','btn','btn-default','glyphicon','glyphicon-eye-close',{'glyphicon-eye-open':((this.arrRselected.indexOf(id)!=-1)?1:0)}]
+									return class_;
+								}
+							},
+							computed:{
+								getdefaultR(){
+									var arr=[];
+								 	var allroad=this.arrAllroad;
+									for(i=0;i<allroad.length;i++){
+										var its=allroad[i]; 
+										if(its.typely==="defaultRoad"){
+											arr.push(allroad[i]);
+										} 
+									}
+									this.defaultRoad=arr
+									return arr;
+								},
+								getemeR(){
+									var arr=[];
+								 	var allroad=this.arrAllroad;
+									for(i=0;i<allroad.length;i++){
+										var its=allroad[i]; 
+										if(its.typely==="emeRoad"){
+											arr.push(allroad[i]);
+										} 
+									}
+									this.emeR=arr
+									return arr;
+								}
+							},
+							watch:{
+								'vmtable.arrAllroad':{
+									handler(newValue, oldValue){
+										vmtable.arrAllroad=newValue; 
+										
+									},
+							　　　　   deep: true
+								}
+							}
+						})
+					</script>
+				</div>
+			</div>
+			<!--右侧车辆信息部分-->
+			<div id="vehicleInfo_c_t"  style="position: relative;float:right;width:30px; height: 100%;">
+				<div class="right_container">
+						<div class="panel_Top">
+							<span class="panel_TL"></span>
+							<span class="panel_TC"><span style="margin-top:50px; margin-left:-5px"></span>道路查询信息</span>
+							<span class="panel_TR"><span class="r_toggleMin r_toggleMax"></span></span>
+						</div>
+						<div class="panel_content" >
+							<div class="main_container" id="vehicle_info" style="visibility:hidden;">
+								 <!--道路详情-->
+								 <div id="rightroadList" class="container-fluid"> 
+									<div class="row searchfilterBar">
+										<div class="col-lg-12">
+											<input type="date" class="form-control form-inline" placeholder="请选择日期" autocomplete="off">
+										</div>
+										<div class="col-lg-12">
+											<div class="input-group">
+												<input type="text" class="form-control" aria-label="..." placeholder="请选择级别">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-default dropdown-toggle glyphicon glyphicon-triangle-bottom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										        </button>
+													<ul class="dropdown-menu dropdown-menu-right">
+														<li>
+															<a href="#">一级</a>
+														</li>
+														<li>
+															<a href="#">二级</a>
+														</li>
+														<li role="separator" class="divider"></li>
+														<li>
+															<a href="#">应急路段</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="input-group">
+												<input id="tipinput" type="text" class="form-control" placeholder="请输入道路名称">
+												<span class="input-group-btn">
+										        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+										      </span>
+											</div>
+										</div>
+									</div>
+									<div class="row roadlist">
+										<div id="defaR" :class="['col-lg-12','roaddefault',{'selected':('defaR'==rselected)}]" @click="change_handler(event.currentTarget.id)">
+											<div class="col-lg-12 btn"><span class="title">常规路段</span></div>
+											<div class="col-lg-12 btn-group-vertical">
+												<div v-for="item in getdefaultR" :key="item.id" :id="item.id" :class="returnClass(item.id)"  @click="togglethisroad">{{item.cnName}}</div>
+												<!--<div id="ra1" :class="returnClass('ra1')"  @click="togglethisroad">A路段路段路段路段路段路段路段路段</div>
+												<div id="ra2" :class="returnClass('ra2')"  @click="togglethisroad">B路段路段路段路段路段路段路段路段路</div>
+												<div id="ra3" :class="returnClass('ra3')"  @click="togglethisroad">B路段路段路段路段路段路段路段路段路</div>-->
+											</div>
+										</div>
+										<div id="ememR" :class="['col-lg-12','roadHoteme',{'selected':('ememR'==rselected)}]" @click="change_handler(event.currentTarget.id)">
+											<div class="col-lg-12 btn"><span class="title">应急路段</span></div>
+											<div class="col-lg-12 btn-group-vertical">
+												<div v-for="item in getemeR" :key="item.id" :id="item.id" :class="returnClass(item.id)"  @click="togglethisroad">{{item.cnName}}</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<script>
+									var vm=new Vue({
+										el:"#rightroadList",
+										data:{				
+											arrAllroad:[],
+											defaultRoad:[{
+														"id":"null",
+														"typely":"defaultRoad",
+														"cnName":"无相关常规道路"
+													}],
+											emeR:[{
+														"id":"null",
+														"typely":"defaultRoad",
+														"cnName":"无相关应急道路"
+													}],
+											rselected:"defaR",
+											arrRselected:[]
+										},
+										created(){
+										    axios
+										    .get('ajax_info.json',{ params: {ID: 12345}})
+										    .then(function(response){
+										      	vm.arrAllroad=response.data;
+										      	console.log(this.arrAllroad)
+										      	})
+										    .catch(function (error) { 
+										      	// 请求失败处理
+										        console.log(error); 
+										      });
+									    },
+										methods:{
+											change_handler(bl){
+												if(bl==this.rselected){return;}else{
+													this.rselected=event.currentTarget.id;
+												}
+											},
+											togglethisroad(){
+												//切换当前点击道路是否存在于 显示 数组中
+												var r=event.currentTarget.id;
+												var arr=this.arrRselected;
+//												if(arr.indexOf(r)!= -1){
+//													for (var i = 0; i < arr.length; i++) { 
+//														if (arr[i] == r){
+//															this.arrRselected.splice(i,1);
+//														}
+//													} 
+//												}else{
+//													this.arrRselected.push(r);
+//													showroadout(r);   //调用  vm  外部 接口   控制  id为“r” 的道路在地图上的显示  以及详情等
+//												}
+												//以下为单选形式；以上为多选形式；
+												if(arr.length!=0){
+													if(arr.indexOf(r)!= -1){
+														arr=[]
+														this.arrRselected=[]
+														showRoadInfo(false);//打开底部详情 
+													}else{
+														arr=[]
+														this.arrRselected=[]
+														var this_=this
+														axios.get('road_aa_info.json',{params: {ID: r}}).then(function(response){
+													      	  this_.arrRselected.push(r);
+														      showroadout(r);//打开底部详情
+														      vmtable.currentRoad=response.data;
+//														      {
+//																"id":"ra1",
+//																"typely":"defaultRoad",
+//																"cnName":"无名道路ra1",
+//																"leaveT":"市属二级",
+//																"datetime":"2019年09月18日",
+//																"total_CNun":3,
+//																"curr_CNun":1,
+//																"total_mileage":6890,
+//																"travel_mileage":3008,
+//																"nowork_mileage":309,
+//																"warning_mileage":108 
+//																}
+													      }).catch(function (error) { 
+													      	// 请求失败处理
+													        console.log(error); 
+													      });
+													}
+												}else if(arr.length==0){
+													 
+													this.arrRselected.push(r);
+													axios.get('road_aa_info.json',{params: {ID: r}})    //应post？
+												    .then(function(response){
+													      	showroadout(r);//打开底部详情
+												    		vmtable.currentRoad=response.data;
+//												    		{
+//																"id":"ra1",
+//																"typely":"defaultRoad",
+//																"cnName":"无名道路ra1",
+//																"leaveT":"市属二级",
+//																"datetime":"2019年09月18日",
+//																"total_CNun":3,
+//																"curr_CNun":1,
+//																"total_mileage":6890,
+//																"travel_mileage":3008,
+//																"nowork_mileage":309,
+//																"warning_mileage":109 
+//															}
+												      	})
+												    .catch(function (error) { 
+												      	// 请求失败处理
+												        console.log(error); 
+												     });
+												} 
+												console.log("ca");
+											},
+											returnClass(id){
+												//  返回 列表中  道路 按钮 的 class  样式；
+												var class_=['col-lg-12','btn','btn-default','glyphicon','glyphicon-eye-close',{'glyphicon-eye-open':((this.arrRselected.indexOf(id)!=-1)?1:0)}]
+												return class_;
+											}
+										},
+										computed:{
+											getdefaultR(){
+												var arr=[];
+											 	var allroad=this.arrAllroad;
+												for(i=0;i<allroad.length;i++){
+													var its=allroad[i]; 
+													if(its.typely==="defaultRoad"){
+														arr.push(allroad[i]);
+													} 
+												}
+												this.defaultRoad=arr
+												return arr;
+											},
+											getemeR(){
+												var arr=[];
+											 	var allroad=this.arrAllroad;
+												for(i=0;i<allroad.length;i++){
+													var its=allroad[i]; 
+													if(its.typely==="emeRoad"){
+														arr.push(allroad[i]);
+													} 
+												}
+												this.emeR=arr
+												return arr;
+											}
+										},
+										watch:{
+											'vm.arrAllroad':{
+												handler(newValue, oldValue){
+													vm.arrAllroad=newValue; 
+													
+												},
+										　　　　   deep: true
+											}
+										}
+									})
+								</script>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</body>
+</html>

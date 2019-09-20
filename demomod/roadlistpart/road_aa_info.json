@@ -1,0 +1,14 @@
+{
+	"id":"ra1",
+	"typely":"defaultRoad",
+	"cnName":"无名道路ra1",
+	"leaveT":"市属二级",
+	"datetime":"2019年09月18日",
+	"total_CNun":3,
+	"curr_CNun":2,
+	"total_mileage":6890,
+	"travel_mileage":3008,
+	"nowork_mileage":312,
+	"warning_mileage":107
+} 
+
