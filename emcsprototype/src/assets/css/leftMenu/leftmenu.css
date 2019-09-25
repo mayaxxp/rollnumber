@@ -51,12 +51,14 @@ html,body{
 	background-color: #1d63ad;
 	background-position-y: bottom;
 	margin-top: -4px;
-	height:90%;
+	height:86%;
 	height:calc(100% - 94px);
 	height:-webkit-calc(100% - 94px);
 	height:-moz-calc(100% - 94px);
 	width:180px;
 	overflow: hidden; 
+	position: relative;
+    float: left;
 }
 .hes {
 	color: #e2f3ff;
@@ -161,7 +163,7 @@ html,body{
 }
 .subNav:hover{
 	color: #f8f17b;
-	background-position: left center;
+	background-position: left -33px;
 	background-image: url(../../images/leftMenu/left_list_back.png);
 }
 .subNav a{
@@ -188,12 +190,12 @@ html,body{
 .currentDt{
 	background-image: url(../../images/leftMenu/left_list_back.png);
 	color: #FFFFFF;cursor: pointer;
-	background-position: left bottom;
+	background-position: left -66px;
 }
 .currentDt:hover{
 	background-image: url(../../images/leftMenu/left_list_back.png);
 	color: #FFFFFF;
-	background-position: left bottom;
+	background-position: left -33px;
 }
 .hwd {
 	background-image: url(../../images/leftMenu/t2ss.jpg);
@@ -246,7 +248,17 @@ html,body{
 	background-image: url(../../images/leftMenu/ww2ss.jpg);
 	color: #002f5c;
 }
-
+.subNav>ul li{
+	background: #4f4f7d;
+    padding-left: 30px;
+}
+.subNav>ul li:hover{
+	background: #5b5b94;
+}
+.subNav>ul li:active{
+	background: #4f4f7d;
+}
+.selectedLi{background: #5b5b94;}
 .botdg {
 	/*background-image: url(../../images/leftMenu/ew2ss.jpg);*/
 	height: 1px;

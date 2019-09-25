@@ -1,8 +1,7 @@
 <template>
 	<div class="leftjia">
 			<h3 class="hes">道路清洁车调度</h3>
-			<div class="subNavBox"> 
-				
+			<div class="subNavBox">
 				<!--{
 					id:'GLBJCDD_MONITOR,'
 					cnName:'作业状态监控',
@@ -10,181 +9,22 @@
 					topageData:'/toMonitorMain.do?menusId=GLBJCDD_MONITOR',
 					beselected:true
 				}-->
-				
-				<div class="subNav" v-for="(item,index) in dataMenusNewdata" :key="item.id" >
+				<div class="subNav" v-for="(item,index) in dataMenusNewdata" :key="item.id" :class="{'currentDt':item.beselected}">
 					<div class="ertt">
 						<img :src="item.icoUrl" >
 					</div>
-					<a :id="item.id"  href="javascript:void(0)" onclick="getRightContent(item.id,item.topageData)">
+					<a :id="item.id"  href="javascript:void(0)" @click="getRightContent(item.id,index,item.topageData)">
 						{{item.cnName}}
 					</a>
-					<ul :id="(item.id + ul)" class="navContent margin0">
+					<ul :id="(item.id + 'ul')"   :class="{'navContent':!item.beselected,'margin0':true}">
+						<li v-for="itemc in item.childs" :key="itemc.id" >{{itemc.cnName}}</li>
 					</ul>
 				</div>
-			<!--<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/monitor.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_SSJK" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_SSJK','/roadclean/toMain.do?menusId=GLBJCDD_SSJK')">
-						道路清洁实时监控
-					</a>
-				</div>
-				<ul id="GLBJCDD_SSJK" class="navContent margin0">
-				</ul>
-				
-				
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/assignment.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_ROAD" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_ROAD','/toSectionList.do?menusId=GLBJCDD_ROAD')">
-						作业任务管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_ROAD" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/plan.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_PLAN" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_PLAN','/toPlanListMain.do?menusId=GLBJCDD_PLAN')">
-						调度计划管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_PLAN" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/05.png" width="24" height="20">
-					</div>
-					<a id="ROAD_WORK_REP" href="javascript:void(0)" onclick="getRightContent('ROAD_WORK_REP','/listRoadcleanPlanExecution.do?menusId=ROAD_WORK_REP')">
-						调度计划完成情况
-					</a>
-				</div>
-				
-				<ul id="ROAD_WORK_REP" class="navContent margin0">
-				</ul>
-	
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/monitor.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_MONITOR" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_MONITOR','/toMonitorMain.do?menusId=GLBJCDD_MONITOR')">
-						作业状态监控
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_MONITOR" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/track.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_GJHF" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_GJHF','/toTrackPlay.do?carWorkType=8&amp;menusId=GLBJCDD_GJHF')">
-						车辆轨迹管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_GJHF" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/worklistG.png" width="24" height="20">
-					</div>
-					<a id="GLBJCD_CAR_WORK" href="javascript:void(0)" onclick="getRightContent('GLBJCD_CAR_WORK','/roadclean/toCarWorkList.do?menusId=GLBJCD_CAR_WORK')">
-						作业历史管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCD_CAR_WORK" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/work_state_hist.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_STATUS" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_STATUS','/toRoadCleanCarStatusList.do?menusId=GLBJCDD_STATUS')">
-						作业状态历史
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_STATUS" class="navContent margin0">
-				</ul>
-	
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/garbage_truck_alarm.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_CLBJ" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_CLBJ','/toJSCarAlarm.do?flag=1&amp;menusId=GLBJCDD_CLBJ')">
-						车辆报警管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_CLBJ" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/garbage_truck_alarm.png" width="24" height="20">
-					</div>
-					<a id="GLBJ_DLZYQK" href="javascript:void(0)" onclick="getRightContent('GLBJ_DLZYQK','/queryPageWorkMileList.do?menusId=GLBJ_DLZYQK')">
-						道路作业情况
-					</a>
-				</div>
-				
-				<ul id="GLBJ_DLZYQK" class="navContent margin0">
-				</ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/water.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_WATER" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_WATER','/toWaterList.do?menusId=GLBJCDD_WATER')">
-						加水点管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_WATER" class="navContent margin0">
-				</ul>
-	
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/voice.png" width="24" height="20">
-					</div>
-					语音播报管理
-				</div>
-				<ul id="GLBJCDD_YYBB" class="navContent">
-					<li><a id="BJC_LSBB" href="javascript:void(0)" onclick="getRightContent('BJC_LSBB','/GLVoice/toVoice.do?flag=1&amp;menusId=BJC_LSBB');">语音播报</a></li><li><a id="BJC_YYMB" href="javascript:void(0)" onclick="getRightContent('BJC_YYMB','/queryRoadCleanVoiceTempletList.do?flag=1&amp;menusId=BJC_YYMB');">语音模板</a></li>
-
-				 </ul>
-				
-				<div class="subNav">
-					<div class="ertt">
-						<img src="../assets/images/leftMenu/dlqj/video_display.png" width="24" height="20">
-					</div>
-					<a id="GLBJCDD_ZS" href="javascript:void(0)" onclick="getRightContent('GLBJCDD_ZS','/GlVideoDisplay/toVideoDisplay.do?flag=1&amp;menusId=GLBJCDD_ZS')">
-						视频/图片管理
-					</a>
-				</div>
-				
-				<ul id="GLBJCDD_ZS" class="navContent margin0">
-				</ul>-->
-			
-			
-			
-			
-				
+			  
 				<div class="gsf"></div>
 			</div>
 			<div class="botdg"></div>
-			
+			<router-view name="mainpartare"></router-view>
 		</div>
 </template>
 
@@ -197,59 +37,37 @@
 				menulist:[]
 			}
 		},
-		props: {
-			dataMenus:{
-		      type: Array,
-		      default: [
-			    {
-					id:'GLBJCDD_SSJK',
-					cnName:'未获取到功能菜单',
-					icoUrl:require('../assets/images/leftMenu/dlqj/monitor.png'),
-					topageData:'/roadclean/toMain.do?menusId=GLBJCDD_SSJK',
-					beselected:false
-				}
-		      
-		      ]
-		    }
-			
-		},
-		created (){  //加载完成之前，执行。执行顺序:父组件-子组件
-		   	this.menulist=this.dataMenus; 
-			
-		   console.log("【left_dataMenus】："+this.dataMenus);
-	    },
-		
-		mounted(){ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
-				this.dataMenus=this.$store.store.secendmenu;
+		created (){  
+			//加载完成之前，执行。执行顺序:父组件-子组件
+			 
+	   }, 
+		mounted(){ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件 
+			this.menulist=this.dataMenusNewdata;
 				var parthW=1024//this.$refs.wrapbox.clientWidth;
 				this.mlistlength=parseInt(parthW/75);  
 		},
 		methods:{
-			getRightContent(mCode,mUrl){
+			getRightContent(eveid,index,toUrl){
 				/*获得右侧内容*/ 
-//				$(".navContent li a").removeClass("xuanz");//删除其他选中状态样式
-//				$("#"+ mCode).addClass("xuanz");//增加选中状态样式
-//				if(mCode=='YJZH_DDT'){
-//					//alert('调度台子系统!');
-//					window.open('//www.airtalking.com');//暂时写死
-//				}else if(mCode=='XNC_SS'){
-//					window.open('/emcs' + mUrl);//暂时写死
-//				}else{
-//					$('#Right', window.parent.document).attr('src', path + mUrl);//右边内容页跳转
-//				}
+				for(var i=0; i<this.menulist.length; i++){
+				 		   this.menulist[i].beselected=false; 
+					}
+				var selnum=this.menulist[index];
+				selnum.beselected=true;
+				
 				return false;
 			}
 		},
 		computed:{
 			dataMenusNewdata(){ 
+//				this.menulist=this.dataMenusNewdata;
 				return (this.$store.state.secendmenu);
 			}
 		},
 		watch:{
 			'$store.state.secendmenu':{
 				handler(newValue, oldValue){
-					// 监听是为了把更改后的样式及时保存到arr.styles里,最后arr是要提交的 
-					 this.dataMenusNewdata=newValue
+					// 监听是为了把更改后的样式及时保存到arr.styles里,最后arr是要提交的  
 		　　　　},
 		　　　　deep: true
 			}

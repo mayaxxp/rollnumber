@@ -18,91 +18,118 @@ const store= new Vuex.Store({
 																cnName:'道路清洁实时监控',
 																icoUrl:require('./assets/images/leftMenu/dlqj/monitor.png'),
 																topageData:'/roadclean/toMain.do?menusId=GLBJCDD_SSJK',
-																beselected:true
+																beselected:true,
+																childs:[
+																		{
+																			id:'GLBJCDD_SSJKa',
+																			cnName:'道路清洁实时监控',
+																			icoUrl:require('./assets/images/leftMenu/dlqj/monitor.png'),
+																			topageData:'/roadclean/toMain.do?menusId=GLBJCDD_SSJK',
+																			beselected:true
+																		},{
+																			id:'GLBJCDD_SSJKb',
+																			cnName:'道路清洁实时监控',
+																			icoUrl:require('./assets/images/leftMenu/dlqj/monitor.png'),
+																			topageData:'/roadclean/toMain.do?menusId=GLBJCDD_SSJK',
+																			beselected:true
+																		}
+																	]
 															},
 															{
 																id:'GLBJCDD_ROAD',
 																cnName:'作业任务管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/assignment.png'),
 																topageData:'/toSectionList.do?menusId=GLBJCDD_ROAD',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_PLAN',
 																cnName:'调度计划管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/plan.png'),
 																topageData:'/toPlanListMain.do?menusId=GLBJCDD_PLAN',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'ROAD_WORK_REP',
 																cnName:'调度计划完成情况',
 																icoUrl:require('./assets/images/leftMenu/dlqj/05.png'),
 																topageData:'/listRoadcleanPlanExecution.do?menusId=ROAD_WORK_REP',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_MONITOR',
 																cnName:'作业状态监控',
 																icoUrl:require('./assets/images/leftMenu/dlqj/monitor.png'),
 																topageData:'/toMonitorMain.do?menusId=GLBJCDD_MONITOR',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_GJHF',
 																cnName:'车辆轨迹管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/track.png'),
 																topageData:'/toTrackPlay.do?carWorkType=8&amp;menusId=GLBJCDD_GJHF',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCD_CAR_WORK',
 																cnName:'作业历史管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/worklistG.png'),
 																topageData:'/roadclean/toCarWorkList.do?menusId=GLBJCD_CAR_WORK',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_STATUS',
 																cnName:'作业状态历史',
 																icoUrl:require('./assets/images/leftMenu/dlqj/work_state_hist.png'),
 																topageData:'/toRoadCleanCarStatusList.do?menusId=GLBJCDD_STATUS',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_CLBJ',
 																cnName:'车辆报警管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/garbage_truck_alarm.png'),
 																topageData:'/toJSCarAlarm.do?flag=1&amp;menusId=GLBJCDD_CLBJ',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJ_DLZYQK',
 																cnName:'道路作业情况',
 																icoUrl:require('./assets/images/leftMenu/dlqj/garbage_truck_alarm.png'),
 																topageData:'/queryPageWorkMileList.do?menusId=GLBJ_DLZYQK',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_WATER',
 																cnName:'加水点管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/water.png'),
 																topageData:'/toWaterList.do?menusId=GLBJCDD_WATER',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_YYBB',
 																cnName:'语音播报管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/voice.png'),
 																topageData:'/GLVoice/toVoice.do?flag=1&amp;menusId=BJC_LSBB',
-																beselected:true
+																beselected:false,
+																childs:[]
 															},
 															{
 																id:'GLBJCDD_ZS',
 																cnName:'视频/图片管理',
 																icoUrl:require('./assets/images/leftMenu/dlqj/video_display.png'),
 																topageData:'/GlVideoDisplay/toVideoDisplay.do?flag=1&amp;menusId=GLBJCDD_ZS',
-																beselected:true
+																beselected:false,
+																childs:[]
 															}
 												]
 										},
