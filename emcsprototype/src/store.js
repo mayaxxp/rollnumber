@@ -256,7 +256,8 @@ const store= new Vuex.Store({
 	        	secendmenu:[]
 	        }
         },
-        secendmenu:[]
+        secendmenu:[],
+        tirtedmenu:[]
   },
   mutations: {
       add(state,n){
@@ -275,12 +276,16 @@ const store= new Vuex.Store({
       },
       changeLeftMenu(state,list){
       	state.secendmenu=list
+      },
+      changeThirdtmenu(state,list){
+      	state.tirtedmenu=list
       }
   },
-  actions: {
+  actions:{
     addFun(context,n){context.commit('add',n)},
     reductionFun(context,t){context.commit('reduction',t)},
-    changeLeftMenuFun(context,leftmenulist){context.commit('changeLeftMenu',leftmenulist)}
+    changeLeftMenuFun(context,leftmenulist){context.commit('changeLeftMenu',leftmenulist)},
+    changerightMenuFun(context,thirdmenulist){context.commit('changeThirdtmenu',thirdmenulist)}
   }
 })
 export default store;

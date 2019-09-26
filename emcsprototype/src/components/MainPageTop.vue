@@ -63,6 +63,9 @@
 				var parthW=this.$refs.wrapbox.clientWidth;
 				var defaultlist=(this.dataMenus)[0].childs;
 				this.$store.dispatch('changeLeftMenuFun',defaultlist);
+				if(defaultlist[0].childs){
+					this.$store.dispatch('changerightMenuFun',(defaultlist[0].childs));					
+				}
 				this.menulistlength=parseInt(parthW/75);  
 		},
 		methods:{  //监听方法click事件等   事件方法执行。

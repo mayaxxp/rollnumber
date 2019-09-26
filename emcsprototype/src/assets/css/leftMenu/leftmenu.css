@@ -253,14 +253,15 @@ html,body{
     padding-left: 30px;
 }
 .subNav>ul li:hover{
-	background: #5b5b94;
+	background: #5a5a90;
 }
 .subNav>ul li:active{
 	background: #4f4f7d;
 }
-.selectedLi{background: #5b5b94;}
-.botdg {
-	/*background-image: url(../../images/leftMenu/ew2ss.jpg);*/
+.subNav>ul .selectedLi{background: #5b5b94;}
+.subNav>ul .selectedLi:before{content:"\e7bc";}
+.botdg{
+  /*background-image: url(../../images/leftMenu/ew2ss.jpg);*/
 	height: 1px;
 	width: 179px;
 	display: inline;
