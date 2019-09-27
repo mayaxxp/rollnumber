@@ -162,9 +162,8 @@ html,body{
 	width: 100%; 
 }
 .subNav:hover{
-	color: #f8f17b;
-	background-position: left -33px;
-	background-image: url(../../images/leftMenu/left_list_back.png);
+	color: #f8f17b; 
+	/*background: url(../../images/leftMenu/left_list_back.png) left -33px no-repeat;*/
 }
 .subNav a{
 	color:#e1eff9;
@@ -193,9 +192,8 @@ html,body{
 	background-position: left -66px;
 }
 .currentDt:hover{
-	background-image: url(../../images/leftMenu/left_list_back.png);
-	color: #FFFFFF;
-	background-position: left -33px;
+	background: url(../../images/leftMenu/left_list_back.png) left -66px no-repeat;
+	color: #FFFFFF; 
 }
 .hwd {
 	background-image: url(../../images/leftMenu/t2ss.jpg);
@@ -219,10 +217,10 @@ html,body{
 	margin-bottom: 0px;
 }
 .navContent.first{
-	display:block;
+	/*display:block;*/
 }
 .navContent li {
-	background-image: url(../../images/leftMenu/1.jpg);
+	/*background-image: url(../../images/leftMenu/1.jpg);*/
 	background-repeat: no-repeat;
 	background-position: center bottom;
 }
@@ -241,29 +239,32 @@ html,body{
 }
 
 
-.navContent li a:hover{
-	background-image: url(../../images/leftMenu/wwss.jpg);
-}
-.navContent li a.xuanz {
-	background-image: url(../../images/leftMenu/ww2ss.jpg);
-	color: #002f5c;
-}
+ 
 .subNav>ul li{
-	background: #4f4f7d;
-    padding-left: 30px;
+	background: #4f4f7d; padding-right: 8px;text-align: right;color: #DFE4ED;
 }
 .subNav>ul li:hover{
+	background-image:none;
 	background: #5a5a90;
 }
 .subNav>ul li:active{
 	background: #4f4f7d;
 }
-.subNav>ul .selectedLi{background: #5b5b94;}
-.subNav>ul .selectedLi:before{content:"\e7bc";}
+.subNav>ul .selectedLi{background:#1d63ad;background-image:none; color: #F5F7FA;}
+.subNav>ul .selectedLi:hover{background:#5a5a90;}
+.subNav>ul .selectedLi:before{content:"\e7bc";background:none;margin-right: 8px;}
 .botdg{
-  /*background-image: url(../../images/leftMenu/ew2ss.jpg);*/
 	height: 1px;
 	width: 179px;
 	display: inline;
 	float: left;
+}
+.el-icon-iconName{
+	font-family: element-icons!important;
+    line-height:33px !important;
+    padding: 0; 
+    display: block !important;
+    vertical-align: baseline; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

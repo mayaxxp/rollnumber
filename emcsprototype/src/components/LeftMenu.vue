@@ -17,7 +17,7 @@
 						{{item.cnName}}
 					</a>
 					<ul :id="(item.id + 'ul')"   :class="{'navContent':!item.beselected,'margin0':true}">
-						<li v-for="(itemc,index) in item.childs" :key="itemc.id"  :class="{'selectedLi':itemc.beselected,'el-icon-iconName':itemc.beselected}" @click.stop="getRightContentChild(itemc.id,index,itemc.topageData)">{{itemc.cnName}}</li>
+						<li v-for="(itemc,indexc) in item.childs" :key="itemc.id"  :class="{'el-icon-iconName':itemc.beselected,'selectedLi':itemc.beselected}" @click.stop="getRightContentChild(itemc.id,indexc,itemc.topageData)">{{itemc.cnName}}</li>
 					</ul>
 				</div>
 			  
@@ -35,7 +35,7 @@
 		data(){
 			return {
 				menulist:[],
-				childlist:[]
+				childList:[]
 			}
 		},
 		created (){  
@@ -58,7 +58,7 @@
 					this.$store.dispatch('changerightMenuFun',selnum.childs); 
 					var len=(selnum.childs).length;
 					for(var i=0; i<len; i++){
-					 		   (selnum.childs)[i].beselected=false; 
+					 	(selnum.childs)[i].beselected=false; 
 					}
 					this.childList=selnum.childs;
 				}else{
@@ -70,7 +70,7 @@
 				/*获得右侧内容*/ 
 				var len=(this.childList).length;
 				for(var i=0; i<len; i++){
-				 		   (this.childList)[i].beselected=false; 
+				 	(this.childList)[i].beselected=false; 
 				}
 				var selnum=(this.childList)[index];
 				selnum.beselected=true;
