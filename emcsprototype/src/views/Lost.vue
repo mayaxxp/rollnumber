@@ -4,14 +4,14 @@
   </div>
 </template>
 <script >
-	 
+
 export default {
   name: 'Lost',
-  components: { 
+  components: {
   },
-  methods:{
-  	loginHander:()=>{ 
-  		window.location.href='/first'
+  methods: {
+  	loginHander: () => {
+  		window.location.href = '/first'
   	}
   }
 }
@@ -21,14 +21,14 @@ export default {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #FFFFFF; 
+    color: #FFFFFF;
     background: red;
     width: 100%;
     height: 100%;
   }
   .lostpage>h1{
   	width: auto;
-  	text-align: center; 
+  	text-align: center;
     display:block;
     margin-left: auto;
     position: relative;

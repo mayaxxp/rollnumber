@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-  	<div class="topline"></div> 
+  	<div class="topline"></div>
     <div class="pageBackground">
 			<div class="titlelogo">
 				<img src="../assets/images/loginpage/titlelogo.jpg" width="100%"/>
@@ -34,26 +34,26 @@
 						<div class="shurfff" style="height:34px;">
 							<input type="text" id="verificatCode" name="verificationCode" maxlength="4" class="ggg" style="width: 115px;position:relative;float:left;"   placeholder="请输入验证码">
 							<div class="hjwq" style="width:80px;position:relative;float:left;padding-left: 5px;padding-top: 1px;">
-								<img src="http://123.56.210.163//common/image.jsp" id="randImage" width="80" height="30" class="yjmtp" onclick="loadimage()">
-							</div> 
+								<img src="http://123.56.210.163/common/image.jsp" id="randImage" width="80" height="30" class="yjmtp" onclick="loadimage()">
+							</div>
 						</div>
 					 	<div class="shurff">
-							<router-link to="/home/first" tag="el-button"  >登录</router-link> 
+							<router-link to="/home/first" tag="el-button"  >登录</router-link>
 						 </div>
-					 	
+
 					</form>
-					
+
 					<div class="appEwmAC"  >
 						<div class="appEwmBC">
 							<div class="appEwmCC">
 									<div class="appEwmDC"></div>
 							</div>
-						</div> 
+						</div>
 						<span class="erweimaLable">安卓端App下载</span>
 					</div>
 				</div>
 				<div v-if="showTost" class="{findtop:showTost selfold }"><h3>{{tostText}}</h3></div>
-				
+
 			</div>
 		</div>
     <div class="bottomline">版权所有：北京市海淀区城市管理委员会　 技术支持：北京北科光大信息技术股份有限公司 (010)-82652766</div>
@@ -62,52 +62,52 @@
 <script type="text/javascript">
 	 import '../assets/css/loginpage/loginpage.less'
 	 import '../assets/css/loginpage/animate.min.css'
-	   
+
 export default {
-  name: 'Login', 
-  data(){
+  name: 'Login',
+  data () {
   	return {
-        show:false,
-        user:"username",
-        pasword:"edkej3mk432k5",
-        showTost:false,
-        tostText:""
-       }
+      show: false,
+      user: 'username',
+      pasword: 'edkej3mk432k5',
+      showTost: false,
+      tostText: '登录成功'
+    }
   },
   components: {
-  	 
+
   },
-  methods:{
-  		loginHander:function(){ 
-		   console.log("form loginHander");
-		   this.prop.showTost=true;
-		}
+  methods: {
+  		loginHander: function () {
+		   console.log('form loginHander')
+		   this.prop.showTost = true
+    }
   },
   computed: {
-      reversedMessage: function () {
-        return this.pasword.split('').reverse().join('')
-      }
-	},
-	beforeRouteLeave(to, from, next,){
-//			 if(to.name==="Firstpage"){    //访问路径正确
-//			 		this.tostText="访问路径正确～  去验证去～";
-//			 		this.showTost=true;
-//			 		setTimeout(function(){next();},1500) ;
-//			 }else{
-//			 		this.tostText="访问路径错误～  去404去～";
-//		 			this.showTost=true;
-//					setTimeout(function(){next();},1500)
-//			 };
-		next();
-	},
-	beforeRouteEnter(to, from, next){
-    	// alert("欢迎登入");
-    	next((vm)=>{console.log('showTost:'+vm.showTost)});
-	},
-	beforeRouteUpdate(to, from, next){
-    	alert("dfdf");
-    	next();
-	}
+    reversedMessage: function () {
+      return this.pasword.split('').reverse().join('')
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    //			 if(to.name==="Firstpage"){    //访问路径正确
+    //			 		this.tostText="访问路径正确～  去验证去～";
+    //			 		this.showTost=true;
+    //			 		setTimeout(function(){next();},1500) ;
+    //			 }else{
+    //			 		this.tostText="访问路径错误～  去404去～";
+    //		 			this.showTost=true;
+    //					setTimeout(function(){next();},1500)
+    //			 };
+    next()
+  },
+  beforeRouteEnter (to, from, next) {
+      	 alert("欢迎登入");
+    	next((vm) => { console.log('showTost:' + vm.showTost) })
+  },
+  beforeRouteUpdate (to, from, next) {
+    	alert('dfdf')
+    	next()
+  }
 }
 </script>
 <style>
@@ -142,9 +142,9 @@ export default {
 	background:#00d1e9;
 	border: 1px solid #218bb1;}
  .shurff .el-button span{padding-left: 2.5em;}
-.findtop{color: red;} 
+.findtop{color: red;}
 .selfold{color: #64ef1f;
     position: absolute;
     top: 50%;
-    left: 50%;}				 
+    left: 50%;}
 </style>

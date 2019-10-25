@@ -13,18 +13,18 @@
 												<div class="kwg"><img :src="item.imgUrl"></div>
 												<div class="wef">{{item.cnName}}</div>
 											</a>
-										</li> 
+										</li>
 								</ul>
-							</div> 
+							</div>
 							<a id="right1" class="prev icon btn" @click="addFun"></a>
 							<a id="left1" class="next icon btn" @click="reductionFun"></a>
-							 
+
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="kuaij">
-				<div class="toHome"> 
+				<div class="toHome">
 					<router-link to="/home/first" class="routelink"  ><i></i></router-link>
 				</div>
 			</div>
@@ -32,130 +32,153 @@
 </template>
 
 <script>
-	export default {
-		name: 'MainPageTop',
-		props: {
-			dataMenus:{
+export default {
+  name: 'MainPageTop',
+  props: {
+    dataMenus: {
 		      type: Array,
 		      default: [{
-						id:"id",
-						cnName:"无菜单",
-						imgUrl:require("../assets/images/mainTopbanner/e5.png"),
-						beselected:true,
-						childs:[]
-					}]
+        id: 'id',
+        cnName: '无菜单',
+        imgUrl: require('../assets/images/mainTopbanner/e5.png'),
+        beselected: true,
+        childs: []
+      }]
 		    }
-			
-		},
-		data(){
-			return {
-				menulist:[],
-				translateNumX:{},
-				menulistlength:Number
-			}
-		}, 
-		created () {  //加载完成之前，执行。执行顺序:父组件-子组件
-		   this.menulist=this.dataMenus; 
-		   console.log("【menulist】："+this.menulist); // 空值
-		   console.log("【dataMenus】："+this.dataMenus);
+
+  },
+  data () {
+    return {
+      menulist: [],
+      translateNumX: {},
+      menulistlength: Number
+    }
+  },
+  created () { // 加载完成之前，执行。执行顺序:父组件-子组件
+		   this.menulist = this.dataMenus
+		   console.log('【menulist】：' + this.menulist) // 空值
+		   console.log('【dataMenus】：' + this.dataMenus)
 	    },
-		mounted(){ //页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
-				var parthW=this.$refs.wrapbox.clientWidth;
-				var defaultlist=(this.dataMenus)[0].childs;
-				this.$store.dispatch('changeLeftMenuFun',defaultlist);
-				if(defaultlist[0].childs){
-					this.$store.dispatch('changerightMenuFun',(defaultlist[0].childs));					
-				}
-				this.menulistlength=parseInt(parthW/75);  
-		},
-		methods:{  //监听方法click事件等   事件方法执行。
-			backHome(){
-				 if(this.dataMenus){
-				 	console.log(this.dataMenus);
+  mounted () { // 页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
+    var parthW = this.$refs.wrapbox.clientWidth
+    var defaultlist = (this.dataMenus)[0].childs
+    this.$store.dispatch('changeLeftMenuFun', defaultlist)
+    if (defaultlist[0].childs) {
+      this.$store.dispatch('changerightMenuFun', (defaultlist[0].childs))
+
+      // 默认中心主页面
+      var defaultlistPage = (defaultlist[0].childs)[0]
+      defaultlistPage.beselected = true
+      this.$store.dispatch('changerightPagesFun', { topageData: defaultlistPage.topageData, topageDemo: defaultlistPage.topageDemo })
+    }
+
+    this.menulistlength = parseInt(parthW / 75)
+  },
+  methods: { // 监听方法click事件等   事件方法执行。
+    backHome () {
+				 if (this.dataMenus) {
+				 	console.log(this.dataMenus)
 				 }
-			},
-			getLeftMenu(ID,index,childs){ 
-					for(var i=0; i<this.menulist.length; i++){
-				 		   this.menulist[i].beselected=false; 
-					}
-					var selnum=this.menulist[index];
-					selnum.beselected=true;
-					this.$store.dispatch('changeLeftMenuFun',childs)
-					console.log(selnum); 
-				
-			},
-			movetoadde(num){ 
-				if(this.menulist){
-					var mjsld=this.menulist[num];
-					console.log(mjsld);
-				}
-			},
-			showlengthFun(){
-				return;
-			},
-			addFun(){
-				this.$store.dispatch('addFun',375)
-			},
-			reductionFun(){ 
-				var minLeft=this.menuListWidth;
-				this.$store.dispatch('reductionFun',{step:375, minLeft})    //步进 375, 
-			}
-		},
-		computed:{
-			menuListWidth(){
-				
-				let showlength=this.menulistlength;
-				var menulength=(this.dataMenus.length-showlength)*-75-50;
-				return menulength;
-			},
-			diyConTitleStyle:function(){
-				var num_=this.$store.state.jjcount;
-				var dt={
-					'-webkit-transform':'translateX('+num_+'px)',
-					'-moz-transform':'translateX('+num_+'px)',
-					'transform':'translateX('+num_+'px)',
-					'-webkit-transition': 'transform 0.8s',
-					'-moz-transition': 'transform 0.8s',
-					'transition': 'transform 0.8s'
-				}
-				return dt;
-			}
-		},
-		watch:{  //去监听一个值的变化，然后执行相对应的函数
-			'$store.state.jjcount':{
-				handler(newValue, oldValue){
-					// 监听是为了把更改后的样式及时保存到arr.styles里,最后arr是要提交的
-					this.translateNumX=function(){
-							return {
-								'-webkit-transform':'translateX('+newValue+'px)',
-								'-moz-transform':'translateX('+newValue+'px)',
-								'transform':'translateX('+newValue+'px)'
-							}
-					}; 
-					// this.styles.left=this.$store.state.jjcount,
-		　　　　},
-		　　　　deep: true
-			},
-			'this.$refs.wrapbox.clientWidth':{
-				handler(newValue, oldValue){
-					console.log("newValue::"+newValue);
-					this.menulistlength=parseInt(newValue/75); 
-				},
-		　　　　deep: true
-			}
-		}
-	}
+    },
+    getLeftMenu (ID, index, childs) {
+      for (var i = 0; i < this.menulist.length; i++) {
+				 		   this.menulist[i].beselected = false
+      }
+      var selnum = this.menulist[index]
+      selnum.beselected = true
+
+      // 重设 默认左侧菜单选中状态
+      for (var j = 0; j < childs.length; j++) {
+        childs[j].beselected = false
+        for (var i = 0; i < (childs[j].childs).length; i++) {
+					 		   (childs[j].childs)[i].beselected = false
+        }
+      }
+      childs[0].beselected = true
+      // 重设 默认中心主页面
+      if ((childs[0].childs).length > 0) {
+        var defaultlistPage = (childs[0].childs)[0]
+      } else {
+        var defaultlistPage = childs[0]
+      }
+      defaultlistPage.beselected = true
+
+      this.$store.dispatch('changeLeftMenuFun', childs) // 改变 左侧菜单
+      this.$store.dispatch('changerightPagesFun', { topageData: defaultlistPage.topageData, topageDemo: defaultlistPage.topageDemo })
+
+      console.log(selnum)
+    },
+    movetoadde (num) {
+      if (this.menulist) {
+        var mjsld = this.menulist[num]
+        console.log(mjsld)
+      }
+    },
+    showlengthFun () {
+
+    },
+    addFun () {
+      this.$store.dispatch('addFun', 375)
+    },
+    reductionFun () {
+      var minLeft = this.menuListWidth
+      this.$store.dispatch('reductionFun', { step: 375, minLeft }) // 步进 375,
+    }
+  },
+  computed: {
+    menuListWidth () {
+      let showlength = this.menulistlength
+      var menulength = (this.dataMenus.length - showlength) * -75 - 50
+      return menulength
+    },
+    diyConTitleStyle: function () {
+      var num_ = this.$store.state.jjcount
+      var dt = {
+        '-webkit-transform': 'translateX(' + num_ + 'px)',
+        '-moz-transform': 'translateX(' + num_ + 'px)',
+        'transform': 'translateX(' + num_ + 'px)',
+        '-webkit-transition': 'transform 0.8s',
+        '-moz-transition': 'transform 0.8s',
+        'transition': 'transform 0.8s'
+      }
+      return dt
+    }
+  },
+  watch: { // 去监听一个值的变化，然后执行相对应的函数
+    '$store.state.jjcount': {
+      handler (newValue, oldValue) {
+        // 监听是为了把更改后的样式及时保存到arr.styles里,最后arr是要提交的
+        this.translateNumX = function () {
+          return {
+            '-webkit-transform': 'translateX(' + newValue + 'px)',
+            '-moz-transform': 'translateX(' + newValue + 'px)',
+            'transform': 'translateX(' + newValue + 'px)'
+          }
+        }
+        // this.styles.left=this.$store.state.jjcount,
+      },
+      deep: true
+    },
+    'this.$refs.wrapbox.clientWidth': {
+      handler (newValue, oldValue) {
+        console.log('newValue::' + newValue)
+        this.menulistlength = parseInt(newValue / 75)
+      },
+      deep: true
+    }
+  }
+}
 </script>
 
 <style>
 	.top_banner{
-		margin: 0;  width: 100%; height: 94px;  display:inline-block; 
+		margin: 0;  width: 100%; height: 94px;  display:inline-block;
 		 /* float: left; */
 			    background-image: url(../assets/images/mainTopbanner/bj1.jpg);
 			    background-position: left top;
 			    background-repeat: repeat-x;
 			    font-family: "微软雅黑";}
-    
+
 	.kwg{height: 55%;}
 	.kwg img {
 	    padding: 0px;
@@ -171,17 +194,17 @@
 	    margin-top: 0px;
 	    margin-right: 11px;
 	    margin-bottom: 0px;
-	    margin-left: 11px; 
+	    margin-left: 11px;
 		}
     .wef {
 		position: absolute;
 	    margin: 0px !important;
 	    padding: 0px !important;
 	    line-height: 15px;
-	    text-align: center; 
+	    text-align: center;
 	    height:auto;
 	    color: #FFF;
-	    font-size: 13px;  
+	    font-size: 13px;
 	    width: 68px;
 		white-space: normal
 }
@@ -190,7 +213,7 @@
 	.toHome a:hover i{background: url(../assets/images/mainTopbanner/toHomeO.png) 0px 0px no-repeat;cursor:hand;}
 	.toHome a:active i{background: url(../assets/images/mainTopbanner/toHomeD.png) 0px 0px no-repeat;cursor:hand;}
 	.kuaij{width:100px;}
-	
+
 .rowE .count{width:auto;height: 100%;padding: 0px;top:0px;overflow:hidden;white-space: nowrap;display: inline-block;padding-inline-start:17px;position: absolute;left: 0px;}
 .rowE .count  a {
 	position: relative;
@@ -199,7 +222,7 @@
 	height: 86px;
 	padding-top: 5px;
 	text-align: center;
-	font-weight: normal; 
+	font-weight: normal;
 	line-height: 36px;
 	font-size: 13px;
 	letter-spacing: .1em;
@@ -247,12 +270,12 @@
 	line-height: 37px;
 	color: #333;
 	z-index: 99999;
-	position: absolute; 
+	position: absolute;
 	right: 100px;
 }
- 
+
 /**/
- 
+
 .wrapBox{
 		height:90px !important;position: relative;
 		width: 100%;
@@ -265,7 +288,7 @@
 .rowE .warp-pic-list{
 	position: relative;
 	width: calc( 100% - 0px);
-	height: 80px; 
+	height: 80px;
 	padding-right: 35px;
 	padding-left: 35px;
 }
@@ -300,9 +323,6 @@
 	background:url("../assets/images/mainTopbanner/rowEbtnD.png") left bottom;
 }
 
-
-
-
 .kuaij {
 	height: 66px;
 	width: 131px;
@@ -327,7 +347,7 @@
 	font-family: Arial, "微软雅黑";
 	margin-right: 4px;
 }
-.eedd .hjks { 
+.eedd .hjks {
 	background-repeat: no-repeat;
 	height: 8px;
 	width: 8px;
@@ -357,8 +377,7 @@
     position: relative;}
     .kuaij .toHome .routelink:hover i{background: url(../assets/images/mainTopbanner/toHomeO.png) 0px 0px no-repeat;}
 	.kuaij .toHome .routelink:active i{background: url(../assets/images/mainTopbanner/toHomeN.png) 0px 0px no-repeat;}
-	
-	
+
 	.icon {
 	    background-image: url(../assets/images/mainTopbanner/icon.png);
 	    background-repeat: no-repeat;
@@ -383,5 +402,5 @@
 	.rowE .prev:ACTIVE{
 		background-position: left top;
 	}
-	
+
 </style>

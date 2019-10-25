@@ -1,17 +1,18 @@
 <template>
-  <div id="app"> 
+  <div id="app">
+		 <!--<Home></Home>-->
 		 <router-view></router-view>
   </div>
 </template>
 <script type="text/javascript">
-	 import Home from './views/Home.vue' 
+	 import Home from './views/Home.vue'
 	 import '@/assets/css/loginpage/loginpage.css'
 export default {
   name: 'app',
   components: {
   	Home
-  }, 
-  methods:{ 
+  },
+  methods: {
   }
 }
 </script>

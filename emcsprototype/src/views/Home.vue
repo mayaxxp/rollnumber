@@ -1,21 +1,21 @@
 <template>
-  <div id="homepage"> 
-      <router-view></router-view> 
+  <div id="homepage">
+      <router-view></router-view>
       <p>技术支持：北科光大北京科技股份有限公司</p>
-  </div> 
+  </div>
 </template>
 
-<script> 
-import Firstpage from './Firstpage'
-  export default {
-    name: 'Home',
-    components: { 
-      Firstpage
-    }
+<script>
+import Firstpage from './Firstpage'   
+export default {
+  name: 'Home',
+  components: {
+    Firstpage
   }
+}
 </script>
 <style>
-#homepage{ 
+#homepage{
 	position:absolute;
   background:#25598e;
   color: #FFFFFF;

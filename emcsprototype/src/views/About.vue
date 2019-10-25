@@ -4,14 +4,14 @@
   </div>
 </template>
 <script >
-	 
+
 export default {
   name: 'About',
-  components: { 
+  components: {
   },
-  methods:{
-  	loginHander:()=>{ 
-  		window.location.href='/first'
+  methods: {
+  	loginHander: () => {
+  		window.location.href = '/first'
   	}
   }
 }

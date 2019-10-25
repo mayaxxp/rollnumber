@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/simple-calendar.css"/>
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+		<style type="text/css">
+			html,body{width: 100%;height: 100%;}
+			.sc-item .day {
+			    font-size: 1.25em;
+			    margin-top: -16px;
+			}
+			.sc-item-small{font-size: 15px!important;}
+			.sc-today {
+			    background-color: #1af36e;
+			    color: #fff;
+			    border:1px solid #31e00e;
+			    border-width: 0 0 1px 1px;
+			}
+			.sc-mark {
+			    background-color: #ff8f33;
+			    color: #fffa18;
+			    border: 1px solid #ffb61a;
+			    border-width: 0 0 1px 1px;
+			}
+			.sc-selected:before{
+				content: "";
+				border:4px red solid;
+				display: block;
+				width:4px;height: 8px; 
+			    margin-top: 14px;
+			    margin-left: 24px; 
+			    border-color: transparent #fffe1f #fffc24 transparent;
+				-webkit-transform: rotateZ(45deg);
+  				transform: rotateZ(45deg);
+			}
+			.sc-item.sc-selected:before{ 
+				border-color: transparent #ff8f33 #ff8f33 transparent;
+			}
+			.sc-mark.sc-selected:before{ 
+			    border-color: transparent #fffe1f #fffc24 transparent; 
+			}
+			.sc-today.sc-selected:before{ 
+			    border-color: transparent #ffffff #ffffff transparent; 
+			}
+			.sc-selected .day {
+				margin-top: -46px;
+			}
+		</style>
+		<script type="text/javascript" src="js/simple-calendar.js" ></script>
+	</head>
+	<body>
+		<input type="datetime" id="datemi"/>
+		<div id="calendar"></div>
+	</body>
+	<script>
+			
+	   		var mark_={
+			        '2019-10-10': '标记','2019-10-11': '标记2'
+			      }
+	   		var options = {
+			      width: '100%',
+			      height: '340px',
+			      language: 'CH', //语言
+			      showLunarCalendar: false, //阴历
+			      showHoliday: true, //休假
+			      showFestival: true, //节日
+			      showLunarFestival: false, //农历节日
+			      showSolarTerm: true, //节气
+			      showMark: true, //标记
+			      timeRange: {
+			        startYear: 1900,
+			        endYear: 2049
+			      },
+			      mark:mark_,
+			      theme: {
+			        changeAble: false,
+			        weeks: {
+			          backgroundColor: '#FBEC9C',
+			          fontColor: '#4A4A4A',
+			          fontSize: '20px',
+			        },
+			        days: {
+			          backgroundColor: '#ffffff',
+			          fontColor: '#565555',
+			          fontSize: '24px'
+			        },
+			        todaycolor: 'orange',
+			        activeSelectColor: 'orange',
+			      }
+		    }
+	   		
+	   		var myCalendar = new SimpleCalendar('#calendar',options);
+	   		var onSelectedDay=function (){
+	   			console.log(myCalendar.getSelectedDay())
+	   			document.getElementById("datemi").value=myCalendar.getSelectedDay()
+	   		}
+	</script>
+</html>
