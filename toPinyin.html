@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/toChinesePinyin.js"></script>
+		<script src="js/vue.min.js"></script> 
+	</head>
+	<body  >
+		<div id="piny" style="position: relative;width:518px;height: 518px;background: url(./px/face.png);">
+			<div   :style="istyle"  ></div>
+			<input   ref="fromtext"  @keyup.enter="changeText" style="position: absolute;width:200px;height:40px;bottom:10px;" />
+		</div>
+	</body>
+	<script>
+		var vm=new Vue({
+			el:"#piny",
+			data(){
+				return {			
+					sptext:''
+					,coXing:'M'
+					,istyle:{ }
+				}
+			},
+			created(){
+			    
+		    },
+		    mounted() {
+		    	this.inuoSpeak("我们都有一个家名字叫中国")
+		    }
+		    ,methods:{ 
+		    	changeText:function(event){
+		    		//var cvn=event||window.event;
+		    		if(event.keyCode==13) { 
+		    			console.log(this.$refs.fromtext)
+		    			var newt=this.$refs.fromtext.value
+				        this.sptext=newt;
+				        this.inuoSpeak(newt)
+			        }
+		    	}
+				,inuoSpeak:function(str){  
+					
+			        var t = str || "我们是中国人";  
+			        var result = chineseToPinYin(t);   
+			        var tospan=document.getElementById("piny")
+//			        var reg = /[a-z]+/g; 
+//			        result=result.replace(reg,'').split('') 
+			        result=result.split('') 
+					var i=0;
+					var that=this;
+					var jsq=setInterval(function(){
+//						tospan.innerText=result[i];
+						var zm=result[i]
+					 
+						switch (zm){
+							case "A":
+							case "H":
+							case "I":
+							case "e":
+							case "i":
+								that.coXing='AeHiI.png';
+							 	break;
+							case "C":
+							case "a":
+							case "c":
+							case "w":
+								that.coXing='acCw.png';
+							 	break;
+							case "B":
+							case "M":
+							case "P":
+							case "b":
+							case "m":
+							case "p":
+								that.coXing='bmp.png';
+							 	break; 
+							case "D":
+							case "T":
+								that.coXing='TD.png';
+							 	break;
+							case "E":
+								that.coXing='E.png';
+							 	break;
+							case "F":
+							case "V":
+							case "v":
+								that.coXing='Fv.png';
+							 break;
+							case "G":
+							case "K":
+							case "k":
+								that.coXing='Gk.png';
+							 	break;
+							case "j":
+								that.coXing='j.png';
+							 	break;
+							case "S":
+							case "Z":
+							case "J":
+								that.coXing='JSZ.png';
+							 	break; 
+							case "N":
+							case "R":
+							case "Y":
+								that.coXing='rNy.png';
+							 	break;
+							case "O":
+							case "Q": 
+							case "W":
+							case "X":
+							case "L":
+							case "o":
+							case "u":
+								that.coXing='ouW.png';
+							 	break;
+							case "U":
+							case "w": 
+								that.coXing='Uw.png';
+								break;
+							default:
+							 	break;
+						}
+						
+						
+						
+						if(i<result.length){
+							i++
+						}else{
+							i=0;
+							that.coXing='bmp.png';
+							clearInterval(jsq);
+						}
+					},120)
+			    }
+			},
+			computed:{ 
+			},
+			watch:{
+				'coXing':{
+					handler(newValue, oldValue){
+						vm.istyle={
+								'position':'relative'
+								,'top':'336px'
+								,'left':'211px'
+								,'width':'114px'
+								,'height':'67px'
+								,'background':'url(./px/'+newValue+')'
+						} 
+						console.log(vm.istyle)
+					},
+			　　　　   deep: true
+ 
+				},
+				'sptext':{
+					handler(newValue, oldValue){
+						this.inuoSpeak(newValue)
+					},
+			　　　　  deep: true
+				}
+			}
+		})
+	</script>
+</html>
