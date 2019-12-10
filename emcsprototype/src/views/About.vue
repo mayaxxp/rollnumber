@@ -4,15 +4,11 @@
   </div>
 </template>
 <script >
-
 export default {
   name: 'About',
   components: {
   },
-  methods: {
-  	loginHander: () => {
-  		window.location.href = '/first'
-  	}
+  methods: { 
   }
 }
 </script>

@@ -2,26 +2,30 @@
   <div id="app">
 		 <!--<Home></Home>-->
 		 <router-view></router-view>
+		 <p>技术支持：北科光大北京科技股份有限公司</p>
   </div>
 </template>
 <script type="text/javascript">
-	 import Home from './views/Home.vue'
+	  import Calendar from 'vue-mark-calendar';
+	import 'vue-mark-calendar/lib/vue-mark-calendar.css'
 	 import '@/assets/css/loginpage/loginpage.css'
 export default {
   name: 'app',
   components: {
-  	Home
   },
-  methods: {
+  created(){
+  }
+  ,methods: {
   }
 }
 </script>
 <style>
+	
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: navajowhite;
+  background:#25598e;
   color: #FFFFFF;
   width: 100%;
   height: 100%;
@@ -38,4 +42,30 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+#app>p{position:absolute;width: 100%;letter-spacing: .1em; bottom: 2px;color: #8fd0c4;font-size:.8em;text-align: center;}
+
+/*带标记的 日历 */
+	.wh_container >>> .mark1 .wh_item_date_text{
+	  background-color: #0fc37c;
+	  color: #fff;
+	} 
+	.wh_container >>> .mark2 .wh_item_date_text{
+	  background-color: #ad4a95;
+	  color: #fff;
+	}
+	
+	
+.el-loading-spinner{margin-top: -59px;}
+.el-loading-spinner .el-loading-text{font-size: 1.5em;color: white;white-space:pre-line;}
+.el-loading-spinner>i{font-size: 2em;color: #40edff;}
+.el-message{
+	border: 1px solid rgba(45, 73, 93, 0.7);
+	box-shadow: 0 0 5px rgba(0,0,0,.8);
+	background:rgba(45, 73, 93, 0.83);top:150px !important; height: 60px;text-align: center; 
+		font-weight: 600;
+		transition: opacity .3s,bottom .3s,-webkit-transform .3s;
+}
+.el-message>i{display: block; }
+.el-message>i:before{color:#F0F2F5;}
+.el-message>p{width: 80%;display: block;}
 </style>

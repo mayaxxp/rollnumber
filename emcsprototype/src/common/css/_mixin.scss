@@ -1,0 +1,34 @@
+
+// rem 基准
+$screen-width: 37.5;
+
+@function Rem($px) {
+  	@return $px / $screen-width * 1rem;
+}
+
+// 背景图
+@mixin bgImg($path,$type){
+	background:url($path) no-repeat center center; 
+	background-size: $type;
+}
+
+// 相对定位居中
+@mixin relativeCenter($x,$y){
+	position: relative;
+	top:50%;
+	transform:translate($x,$y)
+}
+
+// 绝对定位居中
+@mixin absoluteCenter($x,$y){
+	position: absolute;
+	top:50%;
+	transform:translate($x,$y)
+}
+
+@mixin leftCenter($x,$y){
+	position: absolute;
+	left:50%;
+	transform:translate($x,$y)
+}
+ 

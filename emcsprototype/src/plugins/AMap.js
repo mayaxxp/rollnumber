@@ -14,9 +14,14 @@ return new Promise((resolve, reject) => {
       console.log(reject)
     }
     window.initAMap = () => {
+    	
       resolve(window.AMap)
     }
-})
+}).then(
+	function(res){
+		console.log(res)
+	}
+)
 }
  
 //    'http://webapi.amap.com/maps?v=1.4.8&key=5223b5cb275676fa965a09bef4122d4a&plugin=AMap.Autocomplete,AMap.Geocoder,AMap.GraspRoad,AMap.Driving'

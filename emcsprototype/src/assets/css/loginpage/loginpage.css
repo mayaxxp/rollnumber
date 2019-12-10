@@ -94,7 +94,7 @@ html,body{
 .clound4{position:absolute;background:url(../../images/loginpage/clound4.png) no-repeat;width:58px;height:56px;top:200px; left:80px;animation-delay: 0.9s;}
 .clound5{position:absolute;background:url(../../images/loginpage/clound5.png) no-repeat;width:74px;height:70px;top:0px; left:0px;animation-delay: 1.4s;}
 .login_Box form{
-	width: 300px;
+	width: 203px;
     height: 210px;
     margin-left: -300px;
     margin-top: 20px;
@@ -108,7 +108,7 @@ input{width: 200px; height: 30px;margin-bottom:8px;border:0px; border-bottom:rgb
 	
 }
 .login_Box form{
-	width: 300px;
+	width: 203px;
     height: 210px;
     margin-left:100px;
     margin-top: 20px;

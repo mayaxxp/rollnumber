@@ -7,11 +7,11 @@
 						<div id="sca1" class="warp-pic-list">
 							<div id="wrapBox1" class="wrapBox" ref="wrapbox">
 								<!---webkit-transform:translateX(translateNumX);-moz-transform:translateX(translateNumX);transform:translateX(translateNumX);-->
-							 	<ul id="count1" class="count clearfix"  :style="diyConTitleStyle">
-										<li v-for="(item,index) in dataMenus" :key="item.id" >
-											<a  :class="{'teg':false,'tegBeselected':item.beselected}"       :id="item.id" href="javascript:void(0)" @click="getLeftMenu(item.id,index,item.childs)">
-												<div class="kwg"><img :src="item.imgUrl"></div>
-												<div class="wef">{{item.cnName}}</div>
+							 	<ul id="count1" class="count clearfix"  :style="translateNumX">
+										<li v-for="item in menulist" :key="item.menuCode" >
+											<a  :class="{'teg':false,'tegBeselected':(item.menuCode==beslcFirstmenu)}"  :id="item.menuCode" href="javascript:void(0)" @click="getLeftMenu(item.menuCode,item.menuName)">
+												<div class="kwg"><img :src="item.imageUrl"></div>
+												<div class="wef">{{item.menuName}}</div>
 											</a>
 										</li>
 								</ul>
@@ -25,148 +25,159 @@
 			</div>
 			<div class="kuaij">
 				<div class="toHome">
-					<router-link to="/home/first" class="routelink"  ><i></i></router-link>
+					<div   class="routelink"  @click="tofirstPage" ><i></i></div>
 				</div>
 			</div>
 </div>
 </template>
 
 <script>
+//	import deepClone from '@/plugins/Duplicate'
 export default {
   name: 'MainPageTop',
   props: {
     dataMenus: {
 		      type: Array,
-		      default: [{
-        id: 'id',
-        cnName: '无菜单',
-        imgUrl: require('../assets/images/mainTopbanner/e5.png'),
-        beselected: true,
-        childs: []
-      }]
-		    }
+		      default:()=>{
+		      	return []
+		      }
+    }
 
   },
   data () {
     return {
       menulist: [],
-      translateNumX: {},
-      menulistlength: Number
+      translateNumX:{},
+      menulistlength: Number,
+      beslcFirstmenu:""
     }
   },
-  created () { // 加载完成之前，执行。执行顺序:父组件-子组件
-		   this.menulist = this.dataMenus
-		   console.log('【menulist】：' + this.menulist) // 空值
-		   console.log('【dataMenus】：' + this.dataMenus)
-	    },
-  mounted () { // 页面初始化方法   加载完成后执行。执行顺序:子组件-父组件
-    var parthW = this.$refs.wrapbox.clientWidth
-    var defaultlist = (this.dataMenus)[0].childs
-    this.$store.dispatch('changeLeftMenuFun', defaultlist)
-    if (defaultlist[0].childs) {
-      this.$store.dispatch('changerightMenuFun', (defaultlist[0].childs))
-
-      // 默认中心主页面
-      var defaultlistPage = (defaultlist[0].childs)[0]
-      defaultlistPage.beselected = true
-      this.$store.dispatch('changerightPagesFun', { topageData: defaultlistPage.topageData, topageDemo: defaultlistPage.topageDemo })
-    }
-
-    this.menulistlength = parseInt(parthW / 75)
+  created () { // 加载完成之前，执行。执行顺序:父组件-子组件 
+  },
+  mounted () { 
+	this.init()
+    let parthW = this.$refs.wrapbox.clientWidth;
+    this.menulistlength = (this.$refs.wrapbox.clientWidth)?parseInt(parthW / 75):9;
   },
   methods: { // 监听方法click事件等   事件方法执行。
-    backHome () {
-				 if (this.dataMenus) {
-				 	console.log(this.dataMenus)
-				 }
+  	init(){
+  		let beSlecfirstMenuId = window.sessionStorage.getItem("beSlecfirstMenuId"); 
+  		let title_=this.$store.state.secendtitle;   
+		this.getLeftMenu(beSlecfirstMenuId,title_);
+		console.log(beSlecfirstMenuId+"="+title_);
+  	},
+  	getRealign(){ 
+  		return this.$store.state.allMenuRealign;
+  	},
+    getLeftMenu(id_,title_){
+      	// 一级菜单的  选中样式切换   
+      	let allmenu=this.$store.state.allMenuRealign   //this.menulist;
+	  	for(let item of allmenu){
+			 for(let kn in item){
+			 	if(kn==='beselected'){
+			 		item.beselected=false; 
+			 	}
+			 	if(kn==='menuCode'){
+			 		if(item.menuCode==id_){
+			 			this.beslcFirstmenu=id_;
+			 		} 
+			 	} 
+			 } 
+		} 
+		this.$store.dispatch('changeUserallMenuFun', allmenu);
+		window.sessionStorage.setItem("reSlecfirstMenuId",id_)
+		this.$store.dispatch('setLeftTitlenameFun',title_) 
+		 
     },
-    getLeftMenu (ID, index, childs) {
-      for (var i = 0; i < this.menulist.length; i++) {
-				 		   this.menulist[i].beselected = false
-      }
-      var selnum = this.menulist[index]
-      selnum.beselected = true
-
-      // 重设 默认左侧菜单选中状态
-      for (var j = 0; j < childs.length; j++) {
-        childs[j].beselected = false
-        for (var i = 0; i < (childs[j].childs).length; i++) {
-					 		   (childs[j].childs)[i].beselected = false
-        }
-      }
-      childs[0].beselected = true
-      // 重设 默认中心主页面
-      if ((childs[0].childs).length > 0) {
-        var defaultlistPage = (childs[0].childs)[0]
-      } else {
-        var defaultlistPage = childs[0]
-      }
-      defaultlistPage.beselected = true
-
-      this.$store.dispatch('changeLeftMenuFun', childs) // 改变 左侧菜单
-      this.$store.dispatch('changerightPagesFun', { topageData: defaultlistPage.topageData, topageDemo: defaultlistPage.topageDemo })
-
-      console.log(selnum)
-    },
-    movetoadde (num) {
-      if (this.menulist) {
-        var mjsld = this.menulist[num]
-        console.log(mjsld)
+    movetoadde (num){
+      if (this.menulist){
+         var mjsld = this.menulist[num] 
       }
     },
     showlengthFun () {
 
     },
-    addFun () {
-      this.$store.dispatch('addFun', 375)
+    addFun (){
+      this.$store.dispatch('addFun', 375);
     },
     reductionFun () {
+    	 var parthW = this.$refs.wrapbox.clientWidth;
+    	 this.menulistlength = (this.$refs.wrapbox.clientWidth)?parseInt(parthW / 77):9;
+      
       var minLeft = this.menuListWidth
       this.$store.dispatch('reductionFun', { step: 375, minLeft }) // 步进 375,
     }
-  },
-  computed: {
-    menuListWidth () {
-      let showlength = this.menulistlength
-      var menulength = (this.dataMenus.length - showlength) * -75 - 50
-      return menulength
-    },
-    diyConTitleStyle: function () {
-      var num_ = this.$store.state.jjcount
-      var dt = {
-        '-webkit-transform': 'translateX(' + num_ + 'px)',
-        '-moz-transform': 'translateX(' + num_ + 'px)',
-        'transform': 'translateX(' + num_ + 'px)',
-        '-webkit-transition': 'transform 0.8s',
-        '-moz-transition': 'transform 0.8s',
-        'transition': 'transform 0.8s'
-      }
-      return dt
+    ,tofirstPage(){
+    	window.sessionStorage.removeItem("beSlecfirstMenuId") 
+    	window.sessionStorage.removeItem("reSlecfirstMenuId") 
+    	window.sessionStorage.removeItem("store")
+    	this.$router.push({path:'/home/first'}) 
     }
-  },
-  watch: { // 去监听一个值的变化，然后执行相对应的函数
-    '$store.state.jjcount': {
-      handler (newValue, oldValue) {
-        // 监听是为了把更改后的样式及时保存到arr.styles里,最后arr是要提交的
-        this.translateNumX = function () {
-          return {
-            '-webkit-transform': 'translateX(' + newValue + 'px)',
-            '-moz-transform': 'translateX(' + newValue + 'px)',
-            'transform': 'translateX(' + newValue + 'px)'
-          }
-        }
-        // this.styles.left=this.$store.state.jjcount,
-      },
-      deep: true
-    },
-    'this.$refs.wrapbox.clientWidth': {
-      handler (newValue, oldValue) {
-        console.log('newValue::' + newValue)
-        this.menulistlength = parseInt(newValue / 75)
-      },
-      deep: true
-    }
-  }
+	}, 
+	updated(){
+//		console.log("【MainPageTop】updated") 
+	},
+  	computed: {
+	    menuListWidth () {
+	      var showlength = this.menulistlength
+	      var menulength = (this.menulist.length - showlength) * -75 - 50
+	      return menulength
+	    },
+	    diyConTitleStyle(){
+	      var num_ = this.$store.state.jjcount
+	      var dt = {
+	        '-webkit-transform': 'translateX(' + num_ + 'px)',
+	        '-moz-transform': 'translateX(' + num_ + 'px)',
+	        'transform': 'translateX(' + num_ + 'px)',
+	        '-webkit-transition': 'transform 0.8s',
+	        '-moz-transition': 'transform 0.8s',
+	        'transition': 'transform 0.8s'
+	      }
+	      return dt
+	    }
+  	},
+  	watch: { // 去监听一个值的变化，然后执行相对应的函数
+	    '$store.state.jjcount': {
+	      handler (newValue, oldValue) { 
+	        this.translateNumX = function () {
+	          return {
+	            '-webkit-transform': 'translateX(' + newValue + 'px)',
+	            '-moz-transform': 'translateX(' + newValue + 'px)',
+	            'transform': 'translateX(' + newValue + 'px)',
+		        '-webkit-transition': 'transform 0.8s',
+		        '-moz-transition': 'transform 0.8s',
+		        'transition': 'transform 0.8s'
+	          }
+	        }
+	        // this.styles.left=this.$store.state.jjcount,
+	        this.translateNumX=this.diyConTitleStyle
+	      },
+	      deep: true
+	    },
+	    'this.$refs.wrapbox.clientWidth': {
+	      handler (newValue, oldValue) { 
+	      	alert("chage");
+	        this.menulistlength = parseInt(newValue / 75)
+	      },
+	      deep: true
+	    },
+	    '$store.state.ownerAllMenu': {
+	      handler (newValue, oldValue) {
+	      		this.menulist=newValue;
+//	      		this.init();
+	      }
+	      ,deep:true
+	    }
+	    ,'$store.state.allMenuRealign':{
+	    	handler (newValue, oldValue) {
+	      		this.menulist=newValue;
+//	      		this.init()
+	        }
+	        ,deep:true
+	    }
+	    
+	    
+	}
 }
 </script>
 
@@ -174,7 +185,7 @@ export default {
 	.top_banner{
 		margin: 0;  width: 100%; height: 94px;  display:inline-block;
 		 /* float: left; */
-			    background-image: url(../assets/images/mainTopbanner/bj1.jpg);
+			    background: url("../assets/images/mainTopbanner/bj1.jpg");
 			    background-position: left top;
 			    background-repeat: repeat-x;
 			    font-family: "微软雅黑";}
@@ -209,9 +220,9 @@ export default {
 		white-space: normal
 }
 	.toHome a{display: block;width:56px;height:56px;float:right;margin-right:20px;}
-	.toHome a i{background: url(../assets/images/mainTopbanner/toHomeN.png) 0px 0px no-repeat;pointer-events:none;width:56px;height:56px;display:block;position:relative;}
-	.toHome a:hover i{background: url(../assets/images/mainTopbanner/toHomeO.png) 0px 0px no-repeat;cursor:hand;}
-	.toHome a:active i{background: url(../assets/images/mainTopbanner/toHomeD.png) 0px 0px no-repeat;cursor:hand;}
+	.toHome a i{background: url("../assets/images/mainTopbanner/toHomeN.png") 0px 0px no-repeat;pointer-events:none;width:56px;height:56px;display:block;position:relative;}
+	.toHome a:hover i{background: url("../assets/images/mainTopbanner/toHomeO.png") 0px 0px no-repeat;cursor:hand;}
+	.toHome a:active i{background: url("../assets/images/mainTopbanner/toHomeD.png") 0px 0px no-repeat;cursor:hand;}
 	.kuaij{width:100px;}
 
 .rowE .count{width:auto;height: 100%;padding: 0px;top:0px;overflow:hidden;white-space: nowrap;display: inline-block;padding-inline-start:17px;position: absolute;left: 0px;}
@@ -231,30 +242,30 @@ export default {
 }
 
 .rowE .count a:hover{
-	background-image: url(../assets/images/mainTopbanner/w13O.png);
+	background: url("../assets/images/mainTopbanner/w13O.png");
 	background-repeat: no-repeat;
     background-position: 0px 0px;
 	}
 
 .rowE .count .teg {
-	background-image: url(../assets/images/mainTopbanner/w13.png);
+	background: url("../assets/images/mainTopbanner/w13.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 }
 
 .rowE .count .teg:hover {
-	background-image: url(../assets/images/mainTopbanner/w13O.png);
+	background: url("../assets/images/mainTopbanner/w13O.png");
 }
 .rowE .count .teg:ACTIVE {
-	background-image: url(../assets/images/mainTopbanner/w13.png);
+	background: url("../assets/images/mainTopbanner/w13.png");
 }
 .rowE .count .tegBeselected {
-	background-image: url(../assets/images/mainTopbanner/w13.png);
+	background: url("../assets/images/mainTopbanner/w13.png");
 }
 
 .count li{display: inline-block;  list-style: none;margin-right: 4px;margin-top: 2px;}
 .logo {
-    background-image: url(../assets/images/mainTopbanner/logo.jpg);
+    background: url("../assets/images/mainTopbanner/logo.jpg");
     position: absolute;
     height: 94px;
     width: 430px;
@@ -332,7 +343,7 @@ export default {
 	line-height: 28px;
 	padding-right: 6px;
 	z-index: 922;
-	/*background-image: url(../assets/images/mainTopbanner/xian8.jpg);*/
+	/*background: url(../assets/images/mainTopbanner/xian8.jpg);*/
 	background-repeat: no-repeat;
 	background-position: left;
 }
@@ -369,17 +380,17 @@ export default {
     height: 56px;
     float: right;
     margin-right: 20px;}
-    .kuaij .toHome .routelink i{background: url(../assets/images/mainTopbanner/toHomeN.png) 0px 0px no-repeat;
+    .kuaij .toHome .routelink i{background: url("../assets/images/mainTopbanner/toHomeN.png") 0px 0px no-repeat;
     pointer-events: none;
     width: 56px;
     height: 56px;
     display: block;
     position: relative;}
-    .kuaij .toHome .routelink:hover i{background: url(../assets/images/mainTopbanner/toHomeO.png) 0px 0px no-repeat;}
-	.kuaij .toHome .routelink:active i{background: url(../assets/images/mainTopbanner/toHomeN.png) 0px 0px no-repeat;}
+    .kuaij .toHome .routelink:hover i{background: url("../assets/images/mainTopbanner/toHomeO.png") 0px 0px no-repeat;}
+	.kuaij .toHome .routelink:active i{background: url("../assets/images/mainTopbanner/toHomeN.png") 0px 0px no-repeat;}
 
 	.icon {
-	    background-image: url(../assets/images/mainTopbanner/icon.png);
+	    background: url("../assets/images/mainTopbanner/icon.png");
 	    background-repeat: no-repeat;
 	    background-position: 0 0;
 	}

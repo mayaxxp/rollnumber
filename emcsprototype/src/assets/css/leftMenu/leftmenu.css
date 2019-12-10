@@ -62,7 +62,7 @@ html,body{
 }
 .hes {
 	color: #e2f3ff;
-	background-image: url(../../images/leftMenu/h3.jpg);
+	background: url(../../images/leftMenu/h3.jpg);
 	display: inline;
 	float: left;
 	height: 39px;
@@ -89,7 +89,7 @@ html,body{
 	color: #e2f3ff;
 	line-height: 33px;
 	background-position: -5px 0px;
-	background-image: url(../../images/leftMenu/t2.jpg);
+	background: url(../../images/leftMenu/t2.jpg);
 	background-repeat: no-repeat;
 	width: 155px; 
 }
@@ -114,7 +114,7 @@ html,body{
 }
 
 .gsf {
-	background-image: url(../../images/leftMenu/qwess.png);
+	background: url(../../images/leftMenu/qwess.png);
 	height: 13px;
 	width: 179px;
 	display: inline;
@@ -123,7 +123,7 @@ html,body{
 }
 .hes {
 	color: #ffffff;
-	background-image:url(../../images/leftMenu/h3ss.jpg);
+	background:url(../../images/leftMenu/h3ss.jpg);
 	display:inline;
 	float:left;font-weight:600;
 	height: 39px;
@@ -157,7 +157,7 @@ html,body{
 	color: #e2f3ff;
 	line-height: 33px;
 	background-position: left top;
-	background-image: url(../../images/leftMenu/left_list_back.png);
+	background: url(../../images/leftMenu/left_list_back.png);
 	background-repeat: no-repeat;
 	width: 100%; 
 }
@@ -187,7 +187,7 @@ html,body{
 	color: #142491;
 }
 .currentDt{
-	background-image: url(../../images/leftMenu/left_list_back.png);
+	background: url(../../images/leftMenu/left_list_back.png);
 	color: #FFFFFF;cursor: pointer;
 	background-position: left -66px;
 }
@@ -196,7 +196,7 @@ html,body{
 	color: #FFFFFF; 
 }
 .hwd {
-	background-image: url(../../images/leftMenu/t2ss.jpg);
+	background: url(../../images/leftMenu/t2ss.jpg);
 	height: 33px;
 	width: 179px;
 	background-position: -5px;
@@ -220,7 +220,7 @@ html,body{
 	/*display:block;*/
 }
 .navContent li {
-	/*background-image: url(../../images/leftMenu/1.jpg);*/
+	/*background: url(../../images/leftMenu/1.jpg);*/
 	background-repeat: no-repeat;
 	background-position: center bottom;
 }
@@ -233,7 +233,7 @@ html,body{
 	line-height: 27px;
 	color: #b8e9fe;
 	text-decoration: none;
-	background-image: url(../../images/leftMenu/ww1ss.jpg);
+	background: url(../../images/leftMenu/ww1ss.jpg);
 	padding-left: 43px;
 	background-position: -12px;
 }
@@ -252,7 +252,7 @@ html,body{
 }
 .subNav>ul .selectedLi{background:#1d63ad;background-image:none; color: #F5F7FA;}
 .subNav>ul .selectedLi:hover{background:#5a5a90;}
-.subNav>ul .selectedLi:before{content:"\e7bc";background:none;margin-right: 8px;}
+.subNav>ul .selectedLi:before{background:none;margin-right: 8px;}
 .botdg{
 	height: 1px;
 	width: 179px;

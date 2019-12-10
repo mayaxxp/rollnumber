@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="login" :class="{'login':true,'loginMin':toMinstyle}">
   	<div class="topline"></div>
     <div class="pageBackground">
 			<div class="titlelogo">
@@ -22,24 +22,27 @@
 					</div>
 				</div>
 				<div class="login_Box">
-					<form action="http://123.56.210.163/login.do" id="login_form" method="post" class="animated fadeInRight ">
+					<form   id="login_form" method="post" class="animated fadeInRight ">
 						<input type="hidden" id="accountPassWord" name="accountPassWord">
 						<div class="loginico animated fadeInLeft bounce"></div>
 						<div class="shur">
-							<input type="text" id="account" name="account" v-model="user" class="username ggg" placeholder="请输入用户名">
+							<el-input type="text" id="account" name="account" ref="nameInput" v-model="user" :class="{'username':true,'ggg':true,'errfocus':(errObj=='username')}"  @keyup.native.enter="loginHander"  placeholder="请输入用户名" clearable>
+							</el-input>
 						</div>
 						<div class="shurff">
-							<input id="accountPassWordView" name="accountPassWordView" v-model="pasword" type="password" class="password ggg pwd" placeholder="请输入密码">
+							<el-input id="accountPassWordView" name="accountPassWordView" ref="passInput" v-model="pasword" type="password" :class="{'password':true,'ggg':true,'pwd':true,'errfocus':(errObj=='password')}"  @keyup.native.enter="loginHander"  placeholder="请输入密码" clearable>
+							</el-input>
 						</div>
 						<div class="shurfff" style="height:34px;">
-							<input type="text" id="verificatCode" name="verificationCode" maxlength="4" class="ggg" style="width: 115px;position:relative;float:left;"   placeholder="请输入验证码">
+							<el-input type="text" id="verificatCode" name="verificationCode" ref="codeInput" v-model="code" maxlength="4" :class="{'ggg':true,'errfocus':(errObj=='code')}" style="width: 115px;position:relative;float:left;"  @keyup.native.enter="loginHander"  placeholder="请输入验证码" clearable></el-input>
 							<div class="hjwq" style="width:80px;position:relative;float:left;padding-left: 5px;padding-top: 1px;">
-								<img src="http://123.56.210.163/common/image.jsp" id="randImage" width="80" height="30" class="yjmtp" onclick="loadimage()">
+								<img   id="randImage" width="82" height="32" class="yjmtp" ref="loadimg" @click="loadimage">
+								<!--<img src="http://192.168.20.58:9007/code/image" id="randImage" width="80" height="30" class="yjmtp" ref="loadimg" @click="loadimage">-->
 							</div>
 						</div>
-					 	<div class="shurff">
-							<router-link to="/home/first" tag="el-button"  >登录</router-link>
-						 </div>
+					 	<div class="shurff"> 
+							<el-button @click="loginHander">登录</el-button>
+						</div>
 
 					</form>
 
@@ -52,66 +55,149 @@
 						<span class="erweimaLable">安卓端App下载</span>
 					</div>
 				</div>
-				<div v-if="showTost" class="{findtop:showTost selfold }"><h3>{{tostText}}</h3></div>
+				 
 
 			</div>
 		</div>
     <div class="bottomline">版权所有：北京市海淀区城市管理委员会　 技术支持：北京北科光大信息技术股份有限公司 (010)-82652766</div>
   </div>
 </template>
-<script type="text/javascript">
+<script type="text/javascript"> 
 	 import '../assets/css/loginpage/loginpage.less'
-	 import '../assets/css/loginpage/animate.min.css'
+	 import '../assets/css/loginpage/animate.min.css' 
 
 export default {
   name: 'Login',
   data () {
   	return {
-      show: false,
-      user: 'username',
-      pasword: 'edkej3mk432k5',
-      showTost: false,
-      tostText: '登录成功'
+      show: false
+      ,errObj:""
+      ,code:''
+      ,user: ''
+      ,pasword: ''
+      ,toMinstyle: false
+      ,baseURL:''
     }
   },
   components: {
 
   },
-  methods: {
-  		loginHander: function () {
-		   console.log('form loginHander')
-		   this.prop.showTost = true
-    }
+  created(){ 
+ 				window.sessionStorage.clear();
   },
+  mounted () {
+     	this.loadimage()
+     	this.$refs.nameInput.focus()
+	}
+  ,methods: {
+  		loadimage:function(){  //获取更新验证码图片 
+				this.$refs.loadimg.src = this.axios.defaults.baseURL+"/code/image?"+ Math.random();  
+  		}
+  		,showTostinfo:function(str){
+						const h = this.$createElement;
+				      this.$message({
+				        message: h('p', {style:'color:white'},[
+				          h('h3', null, str),
+				          h('i', { style: 'color:yellow' }, 'Again!')
+				        ])
+				      }); 
+  		}
+  		,loginHander: function () {
+		   				 let that=this
+			   if(this.user==""){ 
+							that.showTostinfo("请输入用户名")
+							this.errObj='username'
+							this.$refs.nameInput.focus()
+			   		 return; 
+			   }else if(this.pasword==""){ 
+						 that.showTostinfo('请输入密码')
+						this.errObj='password'	
+						that.$refs.passInput.focus()
+			   		 return ;
+			   }else if(this.code==""){ 
+							that.showTostinfo('请输入验证码');
+							this.errObj='code'
+							this.$refs.codeInput.focus()
+			   		 return ;
+			   }else if(this.user!=""&&this.pasword!=""&&this.code!==""){
+			   		  this.errObj=''
+							let objlogin = {
+									"code":this.code,
+									"username": this.user,
+									"password": this.pasword
+							}; 
+					 
+			   		let self=this
+			   		let that=this
+			   			this.axios.post("/login", objlogin).then((data) => {     //服务器登录
+ 									if(typeof(data.data)!=='undefined'&& data.data!==null){
+ 										switch (data.code){
+ 											case 200: 
+ 												sessionStorage.setItem("token", data.data.token); 
+ 												
+												if(data.data.type=="gw"){
+													self.$router.push({ path: "/first"})
+												}
+ 												break;
+											case 4000:
+												this.showTostinfo('登录名或密码不对哦～')
+ 												break;
+											case 4001:
+												this.showTostinfo('验证码不对哦～')
+												this.loadimage()
+ 												break;
+											case 4002:
+												this.showTostinfo('该用户已经在别处登录～')
+ 												break;
+ 											default: 
+ 												break;
+ 										}
+ 									}
+									
+									
+							  }) 
+//			   			sessionStorage.setItem("token", "123");
+//			   			self.$router.push({ path: "/first"})  
+	    	}
+	   }
+	},
   computed: {
     reversedMessage: function () {
       return this.pasword.split('').reverse().join('')
     }
   },
   beforeRouteLeave (to, from, next) {
-    //			 if(to.name==="Firstpage"){    //访问路径正确
-    //			 		this.tostText="访问路径正确～  去验证去～";
-    //			 		this.showTost=true;
-    //			 		setTimeout(function(){next();},1500) ;
-    //			 }else{
-    //			 		this.tostText="访问路径错误～  去404去～";
-    //		 			this.showTost=true;
-    //					setTimeout(function(){next();},1500)
-    //			 };
-    next()
-  },
-  beforeRouteEnter (to, from, next) {
-      	 alert("欢迎登入");
-    	next((vm) => { console.log('showTost:' + vm.showTost) })
-  },
-  beforeRouteUpdate (to, from, next) {
-    	alert('dfdf')
+			let that=this;
+			 
+			let prmis = new Promise(
+				() => {
+					if(to.name==="first"){    
+			 				that.toMinstyle=true; 
+			 				console.log("1miao")
+					 }else{
+					 		that.toMinstyle=false;  
+					 		console.log("2miao")
+					};
+					setTimeout(function(){
+						
+						next()
+					},450)
+				}
+			) 
+},
+beforeRouteEnter(to, from, next) {
+		next((vm) => {
+			console.log('showTost:' + vm.showTost)
+		})
+	},
+	beforeRouteUpdate(to, from, next) {
+		 
     	next()
   }
 }
 </script>
 <style>
-#login {
+.login {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -119,7 +205,37 @@ export default {
   width: 100%;
   height: 100%;
   background: #FFFFFF;
+    transition: opacity .3s,top .3s ,left .3s ,width .3s ,height .3s ; 
+    -moz-transition: opacity .3s,top .3s ,left .3s ,width .3s ,height .3s ; 
+    -webkit-transition: opacity .3s,top .3s ,left .3s , width .3s ,height .3s; 
+    transition-delay: .2s;
+    -moz-transition-delay: .2s;
+    -webkit-transition-delay: .2s;
+    
+  /*transition: opacity .3s,top .3s ,left .3s,width .3s,height .3s*/
+ /* -webkit-transform .3s;*/
+  
+  /*transform:rotate(-45deg);
+  -ms-transform:rotate(45deg); 
+  -moz-transform:rotate(45deg);  
+  -webkit-transform:rotate(45deg);  
+  -o-transform:rotate(45deg); */
 }
+.loginMin{width:140%;
+    height:120%;
+    /*margin-left: -20%;
+    margin-top: -10%;*/
+    position: absolute;
+    opacity:0;}
+.pageBackground{transition: opacity .3s ,top .3s ,left .3s ; 
+    -moz-transition: opacity .3s,top .3s ,left .3s  ; 
+    -webkit-transition: opacity .3s,top .3s ,left .3s ; }
+.loginMin>.pageBackground{ 
+	    top: 15%;
+	    opacity: 0;
+    }
+    
+    
 #nav {
   padding: 30px;
 }
@@ -132,7 +248,17 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
+.el-input>input{height: 32px;}
+.el-input>.el-input__suffix{margin-top:-4px;}
+.errfocus{ 
+	border:1px solid orange;
+	box-shadow: 0 0 7px inset orange;
+	border-radius: 5px; 
+	margin-bottom: 8px;
+}
+.errfocus>input{  
+	margin: 0px !important;
+}
 .shurff .el-button{
 	width: 200px;color: rgb(65, 86, 182);letter-spacing: 1.5em;text-align: center;
 	background:#ffffff;padding-left: .3em;
@@ -147,4 +273,5 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;}
+
 </style>
