@@ -1,6 +1,6 @@
 <template>
 	<div class="firstPage">
-		<Darkmap></Darkmap>
+		<Darkmap   ref="ibmap"></Darkmap>
 		<div class="f_top_banner">
 			<div class="f_top_banner_lContiner">
 				<div id="portMenuBar" class="portMenuBar">
@@ -194,27 +194,10 @@
 					</div>
 		 		</div>
 		 		<div id="warningInfoPool" class="warningInfoPool"  >
-		 			<div v-for="alarm in carAlarmliist" :id="alarm.id" class="warning_item" onclick="inMapPoint('queryJSCarAlarmMapPoint.do','778e55171a6011eab4ae6c92bf4deb00','2019-12-09 16:45:15','roadclean_gps')">
+		 			<div v-for="alarm in carAlarmliist" :id="alarm.id" :key="alarm.id" class="warning_item" @click="dingweibaojing" >
 		 				<span class="spanblock">{{alarm.plateNumber}}{{alarm.alarmTypeCode}}</span>
 		 				<span class="spanblock">{{alarm.alarmTime}}</span> 
 		 			</div>
-		 			<!--<div class="warning_item">
-		 				<span class="spanblock">紫竹院路XXX卫生间保洁时常异常</span>
-		 				<span class="spanblock">2019-12-09 16:45:15</span>
-		 			</div>
-		 			<div class="warning_item">
-		 				<span class="spanblock">紫竹院路XXX卫生间保洁时常异常</span>
-		 				<span class="spanblock">2018.11.18 11：05：12</span>
-		 			</div>
-		 			<div class="warning_item">
-		 				<span class="spanblock">紫竹院路XXX卫生间保洁时常异常</span>
-		 				<span class="spanblock">2018.11.18 11：05：12</span>
-		 			</div>
-		 			<div class="warning_item">
-		 				<span class="spanblock">紫竹院路XXX卫生间保洁时常异常</span>
-		 				<span class="spanblock">2018.11.18 11：05：12</span>
-		 			</div>-->
-		 		 
 		 		</div>
 		 	</div> 
 		 	<div class="rightMiddleTb"  >
@@ -297,33 +280,31 @@
 <script>
 	// @ is an alias to /src
 	import Darkmap from '@/components/homeparts/Darkmap'
-	import rollingnum from '@/components/rollingnumber/RollingNum'
-	import Popwindow from '@/components/rollingnumber/Popwindow' //弹出框
+	import rollingnum from '@/components/rollingnumber/RollingNum' 
 	import Ihcharts from '@/components/homeparts/Ihcharts'
 	import { getGCBJopition, getLajiCZoption,getRoadTotaloption,getRoadtypeOption,getRubbComple} from '@/common/js/hchartsOptions'
 
-	//import Highcharts from 'highcharts' 
 	import Highcharts from 'highcharts/highstock'
 	import HighchartsMore from 'highcharts/highcharts-more'
 	import SolidGauge from 'highcharts/modules/solid-gauge'
-	import Exporting from 'highcharts/modules/exporting'
-	import ExportData from 'highcharts/modules/export-data'
-	import Data from 'highcharts/modules/data'
 	import DarkUnica from 'highcharts/themes/dark-unica'
 	//import HighchartsDrilldown from 'highcharts/modules/drilldown'
 	//import Highcharts3D from 'highcharts/highcharts-3d'
 	//import Highmaps from 'highcharts/modules/map' 
+	//	import Highcharts from 'highcharts' 
+	//	import Exporting from 'highcharts/modules/exporting'
+	//	import ExportData from 'highcharts/modules/export-data'
+	//	import Data from 'highcharts/modules/data'
 	HighchartsMore(Highcharts)
 	SolidGauge(Highcharts)
+	DarkUnica(Highcharts)
 	//Exporting(Highcharts)
 	//ExportData(Highcharts)
 	//Data(Highcharts)
-	DarkUnica(Highcharts)
-
 	//HighchartsDrilldown(HighCharts)
 	//Highcharts3D(HighCharts)
 	//Highmaps(HighCharts)
-
+	import {Popwindow} from '@/plugins/pagesCostom'
 	import '@/assets/css/animal/animal.css'
 	export default {
 		name: 'Firstpage',
@@ -398,7 +379,7 @@
 					  alarmTime: "报警時間2",
 					  alarmTypeCode: "报警种类2",
 					  carNo: "车辆编号2",
-					  id: "idididid",
+					  id: "idididid2",
 					  orgCode: "组织编号",
 					  orgName: "组织名",
 					  plateNumber: "京999999"
@@ -406,9 +387,9 @@
 				]
 			}
 		},
-		created() { // 加载完成之前，执行。执行顺序:父组件-子组件 
-
-		},
+		created(){
+  		
+  		},
 		mounted() {
 			this.getMenu();
 			this.initCityljd(); //综合指数
@@ -423,9 +404,6 @@
 			getMenu(){  
 				let that_ = this;
 				
-				
-				
-				
 				this.axios.get("/queryWelcomeMenu.do").then((data) => {
 					console.log("menu1")
 					let jsond = JSON.stringify(data.data)
@@ -434,31 +412,20 @@
 					}
 				}).catch((error) => {
 					console.log(error)
-//					if((error.message).indexOf("timeout") > -1) {
-//						that_.$router.push({
-//							path: '/loginTip',
-//							query: {
-//								'msn': '请重新登录'
-//							}
-//						});
-//					} 
+					if((error.message).indexOf("timeout") > -1) {
+						that_.$showTostinfo('长时间未操作无响应请重新登录',that_)
+						that_.$router.push({
+							path: '/loginTip',
+							query: {
+								'msn': '请重新登录'
+							}
+						});
+					} 
 				}); 
 			},
 			changePassword() {},
-			logOutSys() {
-				if(sessionStorage.getItem("token")) {
-					let obj = {}
-					let that = this;
-					this.axios.post("/logout", obj).then((data) => {
-						if(data.code == 200) {
-							window.sessionStorage.clear();
-							that.$router.push({
-								path: '/login'
-							});
-							//						that.$store.commit("clearLoginInterval")
-						}
-					})
-				}
+			logOutSys(){
+				 this.$store.dispatch('logoutState') 
 			},
 			getoWner() {
 				return(this.$store.state.ownerAllMenu);
@@ -506,8 +473,7 @@
 			},
 			showOrclosePopwindowHander(data) {
 				if(data) {
-					this.dataInfo = data
-					console.log(data)
+					this.dataInfo = data 
 				}
 				this.showPopwin = !this.showPopwin;
 			},
@@ -596,8 +562,7 @@
 				let that = this
 				//公厕保洁start
 				 
-				Highcharts.chart('gcbj', ptionGcbj,function callback(){
-					console.log(ptionGcbj)
+				Highcharts.chart('gcbj', ptionGcbj,function callback(){ 
 //					let kpg="M 28.9 28.65 Q 27.85 30.5 26.85 31.15 25.85 31.85 23.85 32 L 7.6 31.95 Q 6.45 31.95 5.9 31.7 5.25 31.45 5.05 30.8 4.95 30.15 5.2 29.45 5.6 28.8 6.45 28.1 7.8 27.1 8.4 26.15 9.15 25.1 9.1 23.75 L 9.1 20.45 Q 9.1 19.15 9.75 18.6 10.35 18.05 11.75 18.05 L 16.15 18.05 16.15 8.3 Q 16.15 6.95 17.1 5.95 18.05 5 19.35 5 20.65 5 21.55 5.95 22.4 6.95 22.4 8.3 L 22.4 18.05 27.45 18.05 Q 29 18.05 29.45 18.35 30 18.75 30 20.1 L 30 22.75 Q 30 23.6 29.7 24.15 29.2 24.75 28.35 24.75 L 13.55 24.75"
 //					let nkpg=kpg.replace(/\s/g,",").replace(/M/g,"'M'").replace(/Q/g,"'Q'").replace(/L/g,"'L'")
 // 					console.log(nkpg)
@@ -641,6 +606,9 @@
 				})
 				//公厕清抽End
 			}
+			,dingweibaojing(){
+				this.$refs.ibmap.inMapPoint("wqqe","idd","time", "table")
+			}
 		},
 		computed: {},
 		watch: {
@@ -650,18 +618,9 @@
 					this.portMenu = newValue;　　　　
 				},
 				　　　　deep: true
-			},
-			'$store.state.loginstate': {
-				handler(newValue, oldValue) {
-					if(newValue == false) {
-						this.logOutSys()
-					}
-				},
-				deep: true
-			}
+			} 
 			,'retMap':{
-				handler(newValue,oldValue){
-					console.log(newValue)
+				handler(newValue,oldValue){ 
 					this.initRoad();
 				},
 				deep:true
@@ -1631,9 +1590,6 @@
 			top: -32px!important;
 		}
 		/*.firstTj_city2 .sectitleN{visibility: none !important; display:none !important;color: red !important;}*/
-		#popwindow_content {
-			margin-top: 90px !important;
-		}
 	}
 	
 	@media (min-width: 1366px) and (max-width: 1440px) {
@@ -1686,9 +1642,7 @@
 		#portMenuBar img {
 			margin-left: -430px!important;
 		}
-		#popwindow_content {
-			margin-top: 90px !important;
-		}
+		
 	}
 	
 	@media (min-height: 605px) and (max-height:663px) {

@@ -144,7 +144,8 @@ router.beforeEach((to, from, next) => { // 全局 跳转验证   ；局部路由
 //		next(); 
   let needAuth = to.matched.some(item => item.meta.login);
   let isLogin = sessionStorage.token ? true : false; 
-  console.log('【isLogin】：'+isLogin)
+//console.log('【isLogin】：'+isLogin)
+//console.log('【要验证？】' + needAuth + '::') 
   switch (to.path) {
     	case '/':
 	    case '/index':
@@ -159,7 +160,6 @@ router.beforeEach((to, from, next) => { // 全局 跳转验证   ；局部路由
 			next();
 	      break;
 	}
-  	console.log('【要验证？】' + needAuth + '::') 
 })
 
 

@@ -14,14 +14,52 @@ export default {
   components: {
   },
   created(){
+ 			if(window.sessionStorage.getItem("token")){
+ 				//在页面刷新时将vuex里的信息保存到sessionStorage里 
+	  		let that=this
+  			window.addEventListener("beforeunload",()=>{
+		  			window.sessionStorage.setItem("store",JSON.stringify(that.$store.state)) 
+	  		}) 
+	  		window.unload=()=>{ 
+				    // 加载完成之前，执行。执行顺序:父组件-子组件
+					  if(window.sessionStorage.getItem("store") ) { 
+								that.$store.replaceState(Object.assign({}, that.$store.state,JSON.parse(sessionStorage.getItem("store")))) 
+								window.sessionStorage.removeItem("store")
+								that.$store.dispatch('loginingStateChange',new Date().getTime().toString())
+					  } 
+	  		}
+ 			}
   }
   ,methods: {
+  },
+  watch:{
+  	'$store.state.loginstate': {
+				handler(newValue, oldValue) {
+					let that=this;
+					if(newValue == false) {
+						new Promise((resolve)=>{
+							let tmo=setTimeout(function(){
+								that.$showTostinfo('长时间未操作无响应即将退出',that)
+								resolve(tmo)								
+							},1000)
+						}).then((res)=>{
+								clearTimeout(res)
+								that.$store.dispatch('logoutState')
+						})
+						
+					}
+				},
+				deep: true
+		}
   }
 }
 </script>
 <style>
 	
 #app {
+	/*filter: grayscale(100%);*/
+	/*filter:hue-rotate(331deg); filter: brightness(150%);*/
+	/*filter:progid:DXImageTransform.Microsoft.BasicImage(Grayscale='100%');*/
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

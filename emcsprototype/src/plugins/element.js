@@ -155,3 +155,13 @@ Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
+
+Vue.prototype.$showTostinfo=(str,this_)=>{
+		const icreateElement = window.$vm.$createElement;
+ 		Message({
+ 					message: icreateElement('p', {style:'color:white'},[
+				          icreateElement('h3', null, str),
+				          icreateElement('i', { style: 'color:yellow' }, 'Again!')
+				        ])
+				      }); 
+  		}

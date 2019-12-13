@@ -76,7 +76,7 @@ export default {
       ,user: ''
       ,pasword: ''
       ,toMinstyle: false
-      ,baseURL:''
+      ,baseURL:'' 
     }
   },
   components: {
@@ -91,40 +91,56 @@ export default {
 	}
   ,methods: {
   		loadimage:function(){  //获取更新验证码图片 
-				this.$refs.loadimg.src = this.axios.defaults.baseURL+"/code/image?"+ Math.random();  
-  		}
-  		,showTostinfo:function(str){
-						const h = this.$createElement;
-				      this.$message({
-				        message: h('p', {style:'color:white'},[
-				          h('h3', null, str),
-				          h('i', { style: 'color:yellow' }, 'Again!')
-				        ])
-				      }); 
-  		}
+//				this.$refs.loadimg.src = this.axios.defaults.baseURL+ 
+				let url_="/code/image?_="+ Math.random(); 
+				this.axios.get(url_,{responseType: 'arraybuffer'}).then((rep)=>{  
+					let imgurl = 'data:image/png;base64,' + btoa(new Uint8Array(rep.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+					this.$refs.loadimg.src =imgurl
+					try{ 
+						let verifytoken_=rep.headers.verifytoken
+						window.sessionStorage.setItem("verifyToken", verifytoken_); 
+					}catch(err){
+						console.log(err)
+					}
+ 			}).catch((err)=>{
+ 					console.log(err)
+ 			})
+ }
+//		, showTostinfo: function(str) {
+//				 		const h = this.$createElement;
+//				 		this.$message({
+//				 					message: h('p', {style:'color:white'},[
+//								          h('h3', null, str),
+//								          h('i', { style: 'color:yellow' }, 'Again!')
+//								        ])
+//								      }); 
+//		}
   		,loginHander: function () {
 		   				 let that=this
 			   if(this.user==""){ 
-							that.showTostinfo("请输入用户名")
+							that.$showTostinfo("请输入用户名",this)
 							this.errObj='username'
 							this.$refs.nameInput.focus()
 			   		 return; 
 			   }else if(this.pasword==""){ 
-						 that.showTostinfo('请输入密码')
+						 that.$showTostinfo('请输入密码',this)
 						this.errObj='password'	
 						that.$refs.passInput.focus()
 			   		 return ;
 			   }else if(this.code==""){ 
-							that.showTostinfo('请输入验证码');
+							that.$showTostinfo('请输入验证码',this);
 							this.errObj='code'
 							this.$refs.codeInput.focus()
+							this.loadimage()
 			   		 return ;
 			   }else if(this.user!=""&&this.pasword!=""&&this.code!==""){
-			   		  this.errObj=''
+			   		  this.errObj='' 
+			   		  let verifyToken_=window.sessionStorage.getItem("verifyToken")
 							let objlogin = {
-									"code":this.code,
-									"username": this.user,
-									"password": this.pasword
+									"code":this.code
+									,"username": this.user
+									,"password": this.pasword
+									,"verifyToken":verifyToken_
 							}; 
 					 
 			   		let self=this
@@ -133,21 +149,25 @@ export default {
  									if(typeof(data.data)!=='undefined'&& data.data!==null){
  										switch (data.code){
  											case 200: 
- 												sessionStorage.setItem("token", data.data.token); 
+ 												window.sessionStorage.setItem("token", data.data.token); 
  												
 												if(data.data.type=="gw"){
 													self.$router.push({ path: "/first"})
 												}
  												break;
 											case 4000:
-												this.showTostinfo('登录名或密码不对哦～')
+												this.$showTostinfo('登录名或密码不对哦～',this)
  												break;
 											case 4001:
-												this.showTostinfo('验证码不对哦～')
+												this.$showTostinfo('验证码不对哦～',this)
+												this.loadimage()
+ 												break;
+											case 500:
+												this.$showTostinfo('验证码过期～',this)
 												this.loadimage()
  												break;
 											case 4002:
-												this.showTostinfo('该用户已经在别处登录～')
+												this.$showTostinfo('该用户已经在别处登录～',this)
  												break;
  											default: 
  												break;
@@ -156,7 +176,7 @@ export default {
 									
 									
 							  }) 
-//			   			sessionStorage.setItem("token", "123");
+//			   			window.sessionStorage.setItem("token", "123");
 //			   			self.$router.push({ path: "/first"})  
 	    	}
 	   }
@@ -167,31 +187,27 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-			let that=this;
-			 
-			let prmis = new Promise(
-				() => {
-					if(to.name==="first"){    
-			 				that.toMinstyle=true; 
-			 				console.log("1miao")
-					 }else{
-					 		that.toMinstyle=false;  
-					 		console.log("2miao")
-					};
-					setTimeout(function(){
-						
-						next()
-					},450)
-				}
-			) 
+//			let that=this; 
+//			let prmis = new Promise(
+//				() => {
+//					if(to.name==="first"){    
+//			 				that.toMinstyle=true; 
+//			 				console.log("1miao")
+//					 }else{
+//					 		that.toMinstyle=false;  
+//					 		console.log("2miao")
+//					};
+//					setTimeout(function(){
+//						next()
+//					},450)
+//				}
+//			) 
+	next()
 },
-beforeRouteEnter(to, from, next) {
-		next((vm) => {
-			console.log('showTost:' + vm.showTost)
-		})
+	beforeRouteEnter(to, from, next) {
+		next()
 	},
 	beforeRouteUpdate(to, from, next) {
-		 
     	next()
   }
 }

@@ -8,15 +8,15 @@ import {Loading} from 'element-ui'
 axios.defaults = Object.assign(axios.defaults, {
 //	baseURL:"http://127.0.0.1:3000"
 //  baseURL: "http://106.75.66.247:80"
-//   baseURL:"http://192.168.100.142:9007/emcs-admin" 
-    baseURL: "http://192.168.20.54:8888"
+     baseURL:"http://192.168.100.142:9007/emcs-admin" 
+//  	baseURL: "http://192.168.20.54:8888"
 	    ,timeout:3000
 	    ,responseType: "json"
 	    ,withCredentials:true
 	    ,crossDomain: true
 	    ,headers: {
 	        "Content-Type": "application/json"   //"application/x-www-form-urlencoded" 
-//	        ,"Cache-Control": "no-cache"
+//	        ,"Cache-Control": "no-cache" 
 	    }
 }); 
 let IShowToster = (str)=>{
@@ -81,13 +81,14 @@ axios.interceptors.request.use(
 			config.data=JSON.stringify(config.data)
 		}
         if (config.data && !config.data.token) { 
-            config.data.token = sessionStorage.getItem("token") || "";
+            config.data.token = sessionStorage.getItem("token") || ""; 
         }
         if(config.headers && !config.headers.token){ 
         	  config.headers.token = sessionStorage.getItem("token") || "";
-        } 
- 
-		console.log(config)
+        	  if(config.url.indexOf("code/image") > -1){ 
+        	  		config.headers["Access-Control-Allow-Headers"] = "verifyToken,token"
+        	  }
+        }  
         return config;
     },
     error => {
@@ -105,48 +106,61 @@ axios.interceptors.response.use(
     		window.$vm.$store.state.isloding=false
     	}
         if (response.status === 200){
-        	IShowLoad("数据请求成功",false)
-        	console.log(response)  
-        	let startTime=window.$vm.tool.formatData(response.data.time,'yyyy-MM-dd HH:mm:ss')
-        	let logintime=(new Date(startTime)).getTime()       // 登录时间存入store
-        	
+        	console.log(response)
+        	IShowLoad("数据请求成功",false)  
+        	let startTime=new Date();
+        	let logintime
+        	try{
+//      		startTime=window.$vm.tool.formatData(response.data.time,'yyyy-MM-dd HH:mm:ss')
+//      		startTime = startTime.split(/\s/g)
+//      		startTime = startTime[1].split(/\:/g);
+        		let thj=(new Date(startTime)).getTime()
+        		console.log(thj)
+        	}catch(err){
+        		console.log(err)
+        	}
+        	logintime=(new Date(startTime)).getTime().toString();       // 登录时间存入store
+        	console.log(logintime)
         	 
-            if (response.data) {
+            if (response.data){ 
                 switch (response.data.code) {
-                	case 4000:
-                		console.log(response)
+                	case 4000: 
                 		//用户名密码错误 
                         return response.data;
                     case 4001:
                     	console.log(response)
                     	//验证码错误
                         return response.data;
-                    case 4002:
-                    	console.log(response)
+                    case 4002: 
                         return response.data;
                     case 502:
                     		IShowToster(`~下线了~  \n (${error})`); 
                         return response.data;
                     case 200: // 正常
-                        	console.log("【操作成功 code200】:") 
-                        	console.log(response) 
-                        	if(response.config.url.indexOf("/logout")==-1){
-                        		console.log("非logout")
+                        	console.log("【操作成功 code200】:")
+                        	if(response.config.url.indexOf("/login")>-1){
+                        		console.log("/login")
                         		window.$vm.$store.dispatch('loginingStateChange',logintime)
                         	}
+                        	if(response.config.url.indexOf("/logout")==-1&&response.config.url.indexOf("code/image")==-1){
+                        		console.log("非logout")
+                        		window.$vm.$store.state.logintime = logintime
+                        	}
+                            return response.data;
+                    case 500: // 正常
+                        	console.log("【验证码verifyToken丢失 code500】:") 
+                        	IShowLoad(`~【验证码verifyToken丢失 ~  \n Again~`,false)  
                             return response.data;
                     case 5000:
                     	console.log("【系统异常 code5000】:"); 
-                    	IShowToster(`~系统异常~  \n 请稍后再试`) 
+                    	IShowLoad(`~系统异常~  \n 请稍后再试`,false)
                         return response.data;
                     default:
-                        // Toast(response.data.msg);
-                        return Promise.reject(response.data.msg);
-                }
-                console.log(response);
+                        return response;
+                      //return Promise.reject(response.data.msg);
+                } 
 				return response.data;
-            } else {
-            	console.log(response); 
+            } else { 
                 return response;
             }
         } else {
@@ -160,9 +174,9 @@ axios.interceptors.response.use(
     	} 
 //  	console.log(JSON.stringify(error.message));
 		if(error.code===5000){
-			IShowToster(`~服务器走神儿了  \n (${error})`) 
+			IShowLoad(`~服务器走神儿了  \n (${error})`,false) 
 		}else if(JSON.stringify(error.message).indexOf("timeout")>-1){ 
-			IShowToster(`~请求超时~  \n (${error})`)
+			IShowLoad(`~请求超时~  \n (${error})`,false) 
 		}else if(JSON.stringify(error.message).indexOf("Network Error")>-1){
 			IShowLoad(`网络错误!`,false) 
 			//IShowToster(`~网络故障~  \n (${error})`)

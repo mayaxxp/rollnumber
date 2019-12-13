@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import MapLoader from '@/plugins/AMap.js' 
-import AMapJS from "amap-js";
+	import AMapJS from "amap-js";
+	import MapLoader from '@/plugins/AMap.js' 
 export default {
 		  name: 'Lightmap',
 		  components: {},

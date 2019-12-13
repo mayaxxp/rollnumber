@@ -11,16 +11,17 @@
 import MainPageTop from '@/components/MainPageTop'
 import LeftMenu from '@/components/LeftMenu'
 import HelloWorld from '@/components/HelloWorld'
+import {Pageone,Pagetwo,Nonedata} from '@/plugins/pagesCostom'
 //	import '@/assets/css/mainTopbanner/index_sec.css'
 // @/ is an alias to /src
 export default {
   name: 'Secendpage',
   components: {
-  	MainPageTop: MainPageTop,
+  	MainPageTop:MainPageTop,
     LeftMenu:LeftMenu,
-  	Pageone: () => import('@/components/pages/Pageone'),
-  	Pagetwo: () => import('@/components/pages/Pagetwo'),
-  	Nonedata: () => import('@/components/pages/Nonedata')
+  	Pageone:Pageone,
+  	Pagetwo:Pagetwo,
+  	Nonedata:Nonedata
   },
   // poprs:Array,
   data:function () {
@@ -32,18 +33,7 @@ export default {
   		secchildtitle:""
   	}
   },
-  created(){
-  	//在页面刷新时将vuex里的信息保存到sessionStorage里 
-  	let that=this
-  	    window.addEventListener("beforeunload",()=>{
-	  			window.sessionStorage.setItem("store",JSON.stringify(that.$store.state))
-//	  			window.sessionStorage.clear();
-	  	}) 
-	    // 加载完成之前，执行。执行顺序:父组件-子组件
-		  if(window.sessionStorage.getItem("store") ) { 
-					that.$store.replaceState(Object.assign({}, that.$store.state,JSON.parse(sessionStorage.getItem("store")))) 
-					window.sessionStorage.removeItem("store")
-		  } 
+  created(){ 
   },
   mounted (){ 
 //		if(window.sessionStorage.getItem("reSlecfirstMenuId")){
