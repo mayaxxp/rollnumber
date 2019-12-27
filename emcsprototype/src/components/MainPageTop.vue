@@ -111,7 +111,15 @@ export default {
     	window.sessionStorage.removeItem("beSlecfirstMenuId") 
     	window.sessionStorage.removeItem("reSlecfirstMenuId") 
     	window.sessionStorage.removeItem("store")
-    	this.$router.push({path:'/home/first'}) 
+    	let usertype=window.sessionStorage.getItem("usertype")
+    	 if(usertype=="gw"){
+    	 	this.$router.push({path:'/welcomGW'})
+    	 }else if(usertype=="hwzx"){
+    	 	this.$router.push({path:"/welcomHwzx"})
+    	 }else{
+    	 	this.$router.push({path:'/home/first'})
+    	 }
+    	 
     }
 	}, 
 	updated(){

@@ -1,5 +1,5 @@
 <template> 
-	<div  class="rollingNum" >
+	<div  class="rollingNum" :title="pratitle">
 				<div class="partNum">
 					<div class="numbarCont floatL" @click="showPopWin('fgtpop','总出车量','http://127.0.0.1:8080/about', .6, .6)">
 						<div class="backg"  ><i class="roundA"></i></div>
@@ -59,13 +59,16 @@
 	import '@/components/rollingnumber/moduleNumRound.css'
 	export default {
 		name:"rollingNum"
-		,porp:{}
+		,porp:{
+			dataTitle:""
+		}
 		,data(){
 			return {
 				num1:"000000000",
 				num2:"000000000",
 				num3:"000000000",
-				num4:"000000000"
+				num4:"000000000",
+				pratitle:""
 			}
 		}
 		,created(){ 
@@ -130,6 +133,14 @@
 				this.$emit('closeThis',data)     //打开弹出框
 				
  			}
+		},
+		watch:{
+			'dataTitle':{
+				handler(newValue, oldValue){
+					this.pratitle=newValue;
+				},
+				deep:true
+			}
 		}
  	}
 </script>

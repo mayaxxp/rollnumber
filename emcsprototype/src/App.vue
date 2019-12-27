@@ -26,6 +26,8 @@ export default {
 								that.$store.replaceState(Object.assign({}, that.$store.state,JSON.parse(sessionStorage.getItem("store")))) 
 								window.sessionStorage.removeItem("store")
 								that.$store.dispatch('loginingStateChange',new Date().getTime().toString())
+								let logintime=(new Date()).getTime().toString()   //继续前端登录时长计时--获取上次时间
+          			that.$store.dispatch('loginingStateChange',logintime)   //继续前端登录时长计时
 					  } 
 	  		}
  			}

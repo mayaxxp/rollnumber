@@ -1,0 +1,202 @@
+@charset "utf-8";
+*{-ms-scrollbar-face-color:#37c8f2; -ms-scrollbar-shadow-color: #37c8f2; -ms-scrollbar-darkshadow-color: #37c8f2;scrollbar-arrow-color: #37c8f2; -ms-scrollbar-track-color:#045086;
+SCROLLBAR-FACE-COLOR: #37c8f2; 
+SCROLLBAR-SHADOW-COLOR: #045086; 
+SCROLLBAR-HIGHLIGHT-COLOR: #37c8f2; 
+SCROLLBAR-3DLIGHT-COLOR: #37c8f2; 
+SCROLLBAR-DARKSHADOW-COLOR: #92C0D1; 
+SCROLLBAR-TRACK-COLOR:#045086; 
+SCROLLBAR-ARROW-COLOR: #37c8f2; 
+}
+::-webkit-scrollbar
+{
+    width: 10px;
+    height: 6px;
+}
+::-webkit-scrollbar-track-piece
+{
+    background-color: #045086;
+    -webkit-border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:vertical
+{
+    height: 5px;
+    background-color: #37c8f2;
+    -webkit-border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:horizontal
+{
+    width:10px;
+    background-color: #045086;
+    -webkit-border-radius: 5px;
+}
+.bodyBG{width:100%;height:100%;position:absolute;margin:0px;padding:0px;min-width:1366px;min-height:900px;}
+.bodyBGFixed{width:80%;position:absolute;margin-left: 10%;margin-right: auto;bottom:35px;}
+
+.bottomline{height: 26px;line-height: 30px;background:#0e4980 !important;}
+.top_banner_cg{position:absolute;width: 100%;height: 94px;background: url(../../images/loginpage/childPrg_topReapeatX.jpg) repeat-x;min-width:1366px;}
+.top_banner_mid{width: 1000px;height: 94px;margin-left: auto;margin-right: auto;position: relative;float:none;display:block;}
+.top_banner_logotitle{width: 1000px;height: 94px;top:0px;}
+.top_banner_right{width: 0px;float: right;display: inline-block;position: fixed; top: 0px; right: 0px;z-index: 9999;}
+
+.center_contentbox{position:absolute; top:94px;min-width:1366px;min-height:600px;height:80%;height:calc( 100% - 94px);height: -webkit-calc(100% - 94px);height: -moz-calc(100% - 94px); background: rgba(0,0,0,.1); 
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr=#0000001a,EndColorStr=#0000001a)}
+.basic_Info{
+	font-size: .7em;
+	position:relative; 
+	width: 100%;height:200px;
+	background:#1e3b67;border-bottom: 2px solid #246fa4; 
+	display: block;
+	opacity:1;pointer-events: all;
+	transition: opacity .3s ease-out .2s,height .3s ease-in-out .0s; 
+}
+.tubiaoBox{position:relative;width: 90% ; margin-left:auto; margin-right:auto;   min-height:300px;  top: 0px;  -ms-scrollbar-face-color:#37c8f2; -ms-scrollbar-shadow-color: #37c8f2; -ms-scrollbar-darkshadow-color: #ffffff;scrollbar-arrow-color: #37c8f2; -ms-scrollbar-track-color:#045086; height:65%;height:calc(100% - 204px);height:-moz-calc(100% - 204px);height:-webkit-calc(100% - 204px);top: 5px;}
+.tubiaoBoxAdd{}
+ 
+#tableTubiao{position:absolute;height:100%;width:100%;display:inline-block !important; display:inline;overflow-y: auto;}
+.rowtubiao{position:relative;height: auto;width:100%;display:inline-block;display:inline;min-height: 190px;}
+
+#userBox{min-width:350px;width:24%;height: 100%;position: relative;float: left;display: inline;margin-left: 6%; text-shadow: 1px 1px black;}
+#userBox .userimg{width: 106px; height: 122px; position: relative;float: left;display: inline-block;margin-top: 39px;background: url(../../images/loginpage/user_dingjiao.png);}
+#userBox .userI{width: 106px; height: 122px; display: inline-block;position: relative;float: left;border-right:1px solid #0076c5;margin-top: 40px;margin-left:10px;color: #ffffff;text-align: center;}
+#userBox .userI span{width: 100%;display: block;font-size: 14px;text-align: left;}
+#userBox .left{text-align: left;margin-left:0px;padding-left:15px;border:none;border-left:1px solid #0099CC ;}
+#userBox .left .yellowcolor{color:#f8cf2b;}
+#userBox .userI a{cursor:pointer; color:#12AEDB;position: relative;width: 100%;display: block;font-size: 14px;text-align: left;height: 24px;line-height: 24px;margin-top:10px;}
+#userBox .userI a i{background: url(../../images/loginpage/changePassword.png) 0px 6px no-repeat;pointer-events: none;width: 11px;height:24px;display: inline-block;position: relative; margin-left:5px;float:left;line-height: 24px;}
+#userBox .userI a:hover i{background: url(../../images/loginpage/changePasswordO.png) 0px 6px no-repeat; }
+#userBox .userI a:active i{background: url(../../images/loginpage/changePassword.png) 0px 6px no-repeat;}
+#userBox .userI a span{letter-spacing: .4em;font-weight: 600; text-align: right;pointer-events: none;width: auto;height:24px;display: inline-block;position: relative;  float:right;line-height: 24px;}
+#wheatherBox{min-width:280px;width:280px;height: 100%;position: relative;display: inline;float: left;background: #00325d;} 
+
+
+
+#newsmenu{
+   height: 30px;
+   border-bottom: #0078bd 2px solid;
+}
+#newsmenu ul{
+    list-style: none;
+    margin-left: 10px;
+}
+#newsmenu li{
+    display: inline-block;
+    line-height: 30px;
+    height: 30px;
+    width: 100px;
+    margin-right: 2px;
+    text-align: center; 
+} 
+#newsmenu li:hover{background:#006899;cursor: pointer;}
+#newsmenu li:active{background:#007d99}
+
+#newsmenu .select_limenu{background:#22a8e2}
+#newsmenu .select_limenu:hover{background:#22a8e2;}
+
+.newsCenterBox{width:42%;width:calc(64% - 280px);width:-moz-calc(64% - 280px);width:-webkit-calc(64% - 280px);display: inline;height:100%;position: relative;float: left; padding:0px 0px 5px 0px;color: #ffffff;text-align: left;overflow-y:hidden;background:#00325d;}
+.beblocks{display: block !important; }
+#worksBox,#downloadCenter,#noticeInfos{width:100%; display: inline;height:160px;position: relative; color: #ffffff;text-align: left;display: none; }
+
+#worksBox ul{height:155px; margin:auto;width:95%; width: calc(100% - 20px);width:-moz-calc(100% - 20px);width:-webkit-calc(100% - 20px);overflow-y: auto;overflow-x: hidden;padding-right: 5px;}
+#worksBox ul li{list-style-type:none; height: 25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px dashed #3C9EE3;cursor: pointer;}
+#worksBox ul li:hover{background-color:#006494;background:rgba(0,77,255,.3);}
+#worksBox ul li:active{background-color:#0084c3;background:rgba(0,77,255,.7);}
+#worksBox ul li a{color:#ffffff;position: relative;float: left;display:inline-block; line-height: 25px;min-width: 105px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#worksBox ul li span{position: relative;float: left;display:inline-block;pointer-events: none;min-width: 105px;width:50%;width:calc(100% - 112px);width:-moz-calc(100% - 112px);width:-webkit-calc(100% - 112px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+#worksBox ul li a label{position: absolute;float: right;display: inline-block; pointer-events: none;}
+#worksBox ul li a i{background: url(../../images/loginpage/newsinfo.png) 0px 6px no-repeat;width: 11px;height:24px;display: inline-block;position: relative; margin-right:5px;float:left;line-height: 24px;}
+
+#downloadCenter ul{height:155px; margin:auto;width:95%; width: calc(100% - 20px);width:-moz-calc(100% - 20px);width:-webkit-calc(100% - 20px);overflow-y: auto;overflow-x: hidden;padding-right: 5px;}
+#downloadCenter ul li{list-style-type:none; height: 25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px dashed #3C9EE3;cursor: pointer;}
+#downloadCenter ul li:hover{background-color:#006494;background:rgba(0,77,255,.3);}
+#downloadCenter ul li:active{background-color:#0084c3;background:rgba(0,77,255,.7);}
+#downloadCenter ul li a{color:#ffffff;position: relative;float: left;display:inline-block;line-height: 25px; min-width: 105px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#downloadCenter ul li a span{position: relative;float: left;display:inline-block;pointer-events: none;min-width: 105px;width:50%;width:calc(100% - 112px);width:-moz-calc(100% - 112px);width:-webkit-calc(100% - 112px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#downloadCenter ul li a label{position: absolute;float: right;display: inline-block;pointer-events: none;}
+#downloadCenter ul li a i{background: url(../../images/loginpage/download.png) 0px 6px no-repeat;width: 11px;height:24px;display: inline-block;position: relative; margin-right:5px;float:left;line-height: 24px;}
+
+
+#noticeInfos ul{height:155px; margin:auto;width:95%; width: calc(100% - 20px);width:-moz-calc(100% - 20px);width:-webkit-calc(100% - 20px);overflow-y: auto;overflow-x: hidden;padding-right: 5px;}
+#noticeInfos ul li{list-style-type:none; height: 25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px dashed #3C9EE3;cursor: pointer;}
+#noticeInfos ul li:hover{background-color:#006494;background:rgba(0,77,255,.3);}
+#noticeInfos ul li:active{background-color:#0084c3;background:rgba(0,77,255,.7);}
+#noticeInfos ul li a{color:#ffffff;position: relative;float: left;display:inline-block;line-height: 25px;min-width: 105px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#noticeInfos ul li a span{position: relative;float: left;display:inline-block;pointer-events: none;min-width: 105px;width:50%;width:calc(100% - 112px);width:-moz-calc(100% - 112px);width:-webkit-calc(100% - 112px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#noticeInfos ul li a label{position: absolute;float: right;display: inline-block;pointer-events: none;}
+#noticeInfos ul li a i{background: url(../../images/loginpage/noticeInfos.png) 0px 6px no-repeat;width: 11px;height:24px;display: inline-block;position: relative; margin-right:5px;float:left;line-height: 24px;}
+
+
+
+
+.tubiaoContainer{height:33%;height:calc(50% - 150px);height:-webkit-calc(50% - 150px);height:-moz-calc(50% - 150px);height:190px;min-height: 190px;min-width: 300px;width: 33%; float: left; overflow: hidden;}
+.tubiaoBContainer{height:33%;height:calc(50% - 110px);height:-webkit-calc(50% - 110px);height:-moz-calc(50% - 110px);min-height: 220px;min-width: 300px; width: 33%; float: left; overflow: hidden;} 
+.menu_container{width:100%;height: 33%;min-height: 220px;min-width: 300px;visibility:visible;}
+.childPro_port{position:relative;width: 90%; margin-left:auto; margin-right:auto;  min-height:136px; top:0px;height:136px;overflow: hidden; }
+.childPro_itemGroup{width: 100%;min-height:136px; top:0px;height:136px;overflow: hidden;FLOAT: left;}
+.childPro_itemCox{position:relative;/*min-width:151px;width:14%;*/min-height:130px; margin-right:2px;display:inline-block !important; float: left; }
+.childPro_itemCox_S{width: 200%; height: 100%;margin: 0 auto 0 0; display: inline-block;}
+.childPro_item{min-width:150px;min-height:65px;cursor:pointer;background: yellowgreen;margin-top: 2px;border-radius: 4px;box-shadow: 1px 1px rgba(0,0,0,.3);text-align: right; vertical-align: bottom; color: #FFFFFF;}
+.childPro_item h3{position:relative;margin:0px; right: 10px; top:5px;line-height: 20px;font-size: 14px;}
+.childPro_itemB{display:inline-block;font-size:0.9em;min-width:150px;min-height:132px;cursor:pointer;background: yellowgreen;margin-top: 2px;border-radius: 4px; box-shadow: 1px 1px rgba(0,0,0,.3);text-align: center; vertical-align: bottom;color: #FFFFFF;}
+.childPro_itemB:hover{color:#ffffff;}
+.childPro_itemB h3{position:relative;margin:0px; top:25px;line-height: 20px;letter-spacing:.0em;margin-left: auto;margin-right: auto;display: block;}
+.childPro_itemB i{background-position-y: 0px;width: 56px; height: 56px;position:relative; top:15px;margin-left:auto;margin-right:auto;display:block;}
+.childPro_itemB:hover i{background-position-y: 56px;}
+.childPro_itemB:active i{background-position-y: 0px;}
+.childPro_item i{background-position-y: 0px; width: 42px; height: 37px;position:relative; top:5px;left: 10px;display:block; }
+.childPro_item:hover i{background-position-y: 37px;}
+.childPro_item:active i{background-position-y: 0px;}
+
+.hwzyIco{background:#49a924;} .hwzyIco:hover{background:#52c526;}
+.clbjIco{background:#e19105;} .clbjIco:hover{background:#f9a20b;}
+.rcgzIco{background:#12aedb;} .rcgzIco:hover{background:#14c1f3;}
+.spjgIco{background:#3d2bf1;} .spjgIco:hover{background:#5747f9;}
+.gcbjIco{background:#8246ed;} .gcbjIco:hover{background:#8c4cff;}
+.zdjgIco{background:#e57d0e;} .zdjgIco:hover{background:#e5910e;}
+.ljcddIco{background:#15c45b;} .ljcddIco:hover{background:#13e065;}
+.zykhIco{background:#8246ed;} .zykhIco:hover{background:#8c4cff;}
+.fbcddIco{background:#e84a19;} .fbcddIco:hover{background:#ff5d2b;}
+.yjzhIco{background:#cc1212;} .yjzhIco:hover{background:#ef2222;}
+.jccddIco{background:#5931ce;} .jccddIco:hover{background:#6c39ff;} 
+.zhtjIco{background:#12aedb;}  .zhtjIco:hover{background:#20c2f1;}
+.lajjyIco{background:#17ab3d;} .lajjyIco:hover{background:#00ca34;}
+.glbjIco{background:#12aedb;} .glbjIco:hover{background:#14c1f3;}
+.ddtIco{background:#e57d0e;} .ddtIco:hover{background:#e5910e;}
+
+.disabledBtn{background:#bbbbbb;cursor:not-allowed;}
+.disabledBtn:hover{background:#bbbbbb;}
+.disabledBtn h3{color: #eeeeee;}
+
+.hwzyIco i{background: url(../../images/loginpage/huanweiziyuan.png);}
+.clbjIco i{background: url(../../images/loginpage/cheliangbaojing.png);}
+.rcgzIco i{background: url(../../images/loginpage/richanggongzuo.png);}
+.spjgIco i{background: url(../../images/loginpage/shipinjianguan.png);}
+.gcbjIco i{background: url(../../images/loginpage/gongcebaojie.png);}
+.zdjgIco i{background: url(../../images/loginpage/zhongduanjianguan.png);}
+.ljcddIco i{background: url(../../images/loginpage/lajichediaodu.png);}
+.zykhIco i{background: url(../../images/loginpage/zuoyekaohe.png);}
+.fbcddIco i{background: url(../../images/loginpage/fenbianchediaodu.png);}
+.yjzhIco i{background: url(../../images/loginpage/yingjizhihui.png);}
+.jccddIco i{background: url(../../images/loginpage/jianchacheguanli.png);}
+.zhtjIco i{background: url(../../images/loginpage/zonghetongji.png);}
+.lajjyIco i{background: url(../../images/loginpage/lajijiyunguanli.png);}
+.glbjIco i{background: url(../../images/loginpage/ganlubaojie.png);}
+.ddtIco i{background: url(../../images/loginpage/diaodutai.png);}
+ 
+
+.tobottomBtn{width: 77px;height:37px; position: fixed;margin-left:46%;z-index: 9999;margin-right:auto;bottom:30px;background: url(../../images/loginpage/tobottomBtn.png);}
+.tobottomBtn:hover{background: url(../../images/loginpage/tobottomBtnO.png);}
+.tobottomBtn:active{background: url(../../images/loginpage/tobottomBtnD.png);}
+.totopBtn{background: url(../../images/loginpage/totopBtn.png);}
+.totopBtn:hover{background: url(../../images/loginpage/totopBtnO.png);}
+.totopBtn:active{background: url(../../images/loginpage/totopBtnD.png);}
+
+.toleftBtn{HEIGHT: 136px; WIDTH: 0px; POSITION: relative; FLOAT: left; DISPLAY: inline-block;}
+.toleftBtn i{width:37px;height:77px;position: fixed; display: inline-block; z-index: 9999;margin-left:-40px;margin-top:25px;background: url(../../images/loginpage/PctoLeftBtn.png);-ms-background-position-y: 0px; background-position-y: 0px; background-position: 0px 0px;}
+.toleftBtn i:hover{background: url(../../images/loginpage/PctoLeftBtn.png);-ms-background-position-y:77px; background-position-y: 77px; background-position: 0px 154px;}
+.toleftBtn i:active{background: url(../../images/loginpage/PctoLeftBtn.png);-ms-background-position-y: 154px; background-position-y: 154px; background-position: 0px 77px;}
+.toRightBtn{HEIGHT: 136px; WIDTH:0px; POSITION: relative; FLOAT: left; DISPLAY: inline-block;}
+.toRightBtn i{width:37px;height:77px;position: fixed; display: inline-block; z-index: 9999;margin-right:-40px;margin-top:25px;background: url(../../images/loginpage/PctoRightBtn.png);-ms-background-position-y: 0px; background-position-y: 0px; background-position: 0px 0px;}
+.toRightBtn i:hover{background: url(../../images/loginpage/PctoRightBtn.png);-ms-background-position-y:77px; background-position-y: 77px; background-position: 0px 154px;}
+.toRightBtn i:active{background: url(../../images/loginpage/PctoRightBtn.png);-ms-background-position-y: 154px; background-position-y: 154px; background-position: 0px 77px;}

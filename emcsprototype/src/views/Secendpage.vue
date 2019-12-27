@@ -33,7 +33,20 @@ export default {
   		secchildtitle:""
   	}
   },
-  created(){ 
+  created(){
+  	//在页面刷新时将vuex里的信息保存到sessionStorage里 
+  	let that=this
+  	    window.addEventListener("beforeunload",()=>{
+	  			window.sessionStorage.setItem("store",JSON.stringify(that.$store.state))
+//	  			window.sessionStorage.clear();
+	  	}) 
+	    // 加载完成之前，执行。执行顺序:父组件-子组件
+		  if(window.sessionStorage.getItem("store") ) { 
+					that.$store.replaceState(Object.assign({}, that.$store.state,JSON.parse(sessionStorage.getItem("store")))) 
+					window.sessionStorage.removeItem("store")
+					let logintime=(new Date()).getTime().toString()   //继续前端登录时长计时--获取上次时间
+  				that.$store.dispatch('loginingStateChange',logintime)   //继续前端登录时长计时
+		  } 
   },
   mounted (){ 
 //		if(window.sessionStorage.getItem("reSlecfirstMenuId")){
@@ -45,21 +58,16 @@ export default {
   	init(){ 
 			this.childlist = this.getinitData;
   			// beSlecfirstMenuId  为  在首页面  点击的 入口按钮  ID ；该按钮 应排列在第一位 
-			  let beSlecfirstMenuId = "";  
-			   
-			  if(window.sessionStorage.getItem("beSlecfirstMenuId")){ 
-				  	beSlecfirstMenuId = window.sessionStorage.getItem("beSlecfirstMenuId");
-				  	 
-				  	this.toSecpage(beSlecfirstMenuId)   
-				}  
+			  let beSlecfirstMenuId = window.sessionStorage.getItem("beSlecfirstMenuId")||"";  
+			  this.toSecpage(beSlecfirstMenuId) 
   	}
   	,toSecpage(id){ 
 				let arr_=[]
 				arr_= this.childlist
 				let that=this; 
   		  let leftSec=[];
-  		  
-  		  let index_=arr_.findIndex(item => item.menuCode === id)
+  		  console.log(id)
+  		  let index_=arr_.findIndex((item) =>{ return item.menuCode === id})
 				let finditem=(arr_.splice(index_,1))[0];
 				let relistArr=arr_.unshift(finditem);
 				console.log(finditem)

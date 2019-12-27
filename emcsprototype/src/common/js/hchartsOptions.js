@@ -548,5 +548,81 @@ const getRubbComple=(option_)=>{
 		   }]  
 		}
 }
-
-export {getGCBJopition,getLajiCZoption,getRoadTotaloption,getRoadtypeOption,getRubbComple}
+const getLajiFBoption=(option_)=>{
+	option_=option_||{
+		gpx:180,
+		ljx:260,
+		ljl:272,
+		xq:1470
+	}
+	return {
+			    chart: {
+				        type: 'pie',
+				        backgroundColor:'rgba(0,0,0,0)',
+				        margin: [0, 0, 30, 0]
+				    },
+				colors:[ 
+				               '#FF9900',//果皮箱
+				               '#66FF66',//垃圾箱
+				               '#C0C0C0',
+				               '#00CCFF'
+						   ], 
+			    title: {
+			        text: ''
+			    },
+			      	exporting:{
+					        enabled:false
+							},
+				    credits: {
+				        enabled: false
+				    },
+			    tooltip: {
+			        borderRadius: 10,             // 边框圆角
+				         style: {                      // 文字内容相关样式
+							        color: "#FFFFFF",
+							        fontSize: "12px",
+							        //fontWeight: "blod",
+							        fontFamily: "Courir new"
+										    },
+			        pointFormat: '<b>{series.name}: {point.percentage:.1f}%</b>'
+			    },
+			    plotOptions: {
+			        pie: {
+			            allowPointSelect: true,
+			            cursor: 'pointer',
+			             borderColor: 'rgba(0,0,0,0)',
+			            dataLabels: {
+			                enabled: true,
+			                /* format: '<b>{point.name}</b> <br> {point.percentage:.1f} %', */
+			                formatter: function() {
+									//this 为当前的点（扇区）对象，可以通过  console.log(this) 来查看详细信息
+									return '<span style="color: ' + this.point.color + '"> '+this.point.name+':'+this.y+'</span>';
+								},
+								
+							 style: {
+							  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+			                   fontSize: "12px",
+							        //fontWeight: "blod",
+							    fontFamily: "Courir new"
+			                }
+			               
+							
+			                
+			            }
+			          
+			        }
+			    },
+			    series: [{
+			       
+			        name: '占比',
+			        data: [
+			            ['果皮箱', option_.gpx],
+			            ['垃圾箱', option_.ljx],
+			            ['垃圾楼', option_.ljl],
+			            ['小区',   option_.xq]
+			            
+			        ]
+		    }]
+	}
+}
+export {getGCBJopition,getLajiCZoption,getRoadTotaloption,getRoadtypeOption,getRubbComple,getLajiFBoption}

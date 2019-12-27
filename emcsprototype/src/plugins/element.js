@@ -161,7 +161,7 @@ Vue.prototype.$showTostinfo=(str,this_)=>{
  		Message({
  					message: icreateElement('p', {style:'color:white'},[
 				          icreateElement('h3', null, str),
-				          icreateElement('i', { style: 'color:yellow' }, 'Again!')
+				          icreateElement('i', { style: 'color:yellow' }, '……')
 				        ])
 				      }); 
   		}

@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
 import Firstpage from '@/views/Firstpage'
+import welcomGWpage from '@/views/welcomGWpage'
+import welcomHwzx from '@/views/welcomHwzxpage'
+import welcomDefault from '@/views/welcomDefault'
 import Login from '@/views/Login'
 import About from '@/views/About'
 import Lost from '@/views/Lost'
 import Secendpage from '@/views/Secendpage'
 import LoginTimer from '@/views/LoginTimer'
-
-
 Vue.use(Router)
 
 
@@ -95,8 +96,23 @@ linkActiveClass: "active",
 	  },
 	  {
 	    path: '/first',
-	    name: 'first', 
-	    component:Firstpage 
+	    name: 'first',
+	    component:Firstpage
+	  }, 
+	  {
+	    path: '/welcomGW',
+	    name: 'welcomGW',
+	    component:welcomGWpage
+	  },
+	  {
+	    path: '/welcomHwzx',
+	    name: 'welcomHwzx',
+	    component:welcomHwzx
+	  },
+	  {
+	    path: '/welcomCG',
+	    name: 'welcomCG',
+	    component:welcomDefault
 	  },
 	  {
 	    path: '/about',
@@ -118,12 +134,12 @@ linkActiveClass: "active",
       name: '404',
       component:  () => import("@/views/Lost.vue")
     },
-    {
-    	path:'/home/first',
-    	name: 'hfirst',
-    	redirect: '/first',
-      	component: Home
-    },
+//  {
+//  	path:'/home/first',
+//  	name: 'hfirst',
+//  	redirect: '/first',
+//    	component: Home
+//  },
     {
     	path:'/home/sec',
     	name: 'sec',
@@ -144,8 +160,7 @@ router.beforeEach((to, from, next) => { // 全局 跳转验证   ；局部路由
 //		next(); 
   let needAuth = to.matched.some(item => item.meta.login);
   let isLogin = sessionStorage.token ? true : false; 
-//console.log('【isLogin】：'+isLogin)
-//console.log('【要验证？】' + needAuth + '::') 
+  let userType= window.sessionStorage.getItem("usertype");
   switch (to.path) {
     	case '/':
 	    case '/index':
@@ -155,9 +170,30 @@ router.beforeEach((to, from, next) => { // 全局 跳转验证   ；局部路由
 	    case '/loginTip':
 	      next();
 	      break;
+	    case '/welcomGW':
+    	  	if(userType=='gw'){
+    	  		next();
+    	  	}else{
+    	  		router.push({path:'/404'})
+    	  	}
+    	  break;
+    	case '/welcomHwzx':
+    	  	if(userType=='hwzx'){
+    	  		next();
+    	  	}else{
+    	  		router.push({path:'/404'})
+    	  	}
+    	  break;
+    	case '/welcomCG':
+    	  	if(userType=='cg'){
+    	  		next();
+    	  	}else{
+    	  		router.push({path:'/404'})
+    	  	}
+    	  break;
 	    default:
 	      isLogin ? next() : router.push({path:'/loginTip'});
-			next();
+			//next();
 	      break;
 	}
 })

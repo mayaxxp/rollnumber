@@ -6,18 +6,18 @@ import {Loading} from 'element-ui'
 //import promiseFinally from 'promise.prototype.finally';
 //promiseFinally.shim();
 axios.defaults = Object.assign(axios.defaults, {
-//	baseURL:"http://127.0.0.1:3000"
-//  baseURL: "http://106.75.66.247:80"
-     baseURL:"http://192.168.100.142:9007/emcs-admin" 
-//  	baseURL: "http://192.168.20.54:8888"
-	    ,timeout:3000
-	    ,responseType: "json"
-	    ,withCredentials:true
-	    ,crossDomain: true
-	    ,headers: {
-	        "Content-Type": "application/json"   //"application/x-www-form-urlencoded" 
-//	        ,"Cache-Control": "no-cache" 
-	    }
+//	baseURL:"http://localhost:3000"
+//  baseURL: "" 
+    baseURL:"http://192.168.100.142:9007/emcs-admin" 
+    ,timeout:3000
+    ,responseType: "json" 
+    ,withCredentials:true
+    ,crossDomain: true
+    ,headers: { 
+    	"Content-Type": "application/json"   //"application/x-www-form-urlencoded"
+    	,"Access-Control-Allow-Origin":"*"
+//	    ,"Cache-Control": "no-cache" 
+    }
 }); 
 let IShowToster = (str)=>{
 			let option_ = {
@@ -82,13 +82,23 @@ axios.interceptors.request.use(
 		}
         if (config.data && !config.data.token) { 
             config.data.token = sessionStorage.getItem("token") || ""; 
-        }
+        } 
         if(config.headers && !config.headers.token){ 
         	  config.headers.token = sessionStorage.getItem("token") || "";
         	  if(config.url.indexOf("code/image") > -1){ 
         	  		config.headers["Access-Control-Allow-Headers"] = "verifyToken,token"
         	  }
-        }  
+        } 
+//		if(config.url.indexOf("tianqi.com") > -1){ 
+//		  		console.log(config)
+//		  		config.headers["Access-Control-Allow-Origin"] = "http://i.tianqi.com"
+////      	  		config.headers["Content-Type"] = "text/html" 
+////      	  		config.baseURL=''
+//				config.responseType="text/html;charset=UTF-8"
+//		}
+		if(config.headers && !config.headers.type){ 
+        	  config.headers.type = window.sessionStorage.getItem("usertype") || ""; 
+       	}  
         return config;
     },
     error => {
@@ -101,7 +111,8 @@ axios.interceptors.request.use(
 //	,logintime:0
 // 添加响应拦截器
 axios.interceptors.response.use(
-    response => {   
+    response => {  
+    	console.log(response)
     	if(window.$vm.$store.state.isloding==true){
     		window.$vm.$store.state.isloding=false
     	}
@@ -180,7 +191,8 @@ axios.interceptors.response.use(
 		}else if(JSON.stringify(error.message).indexOf("Network Error")>-1){
 			IShowLoad(`网络错误!`,false) 
 			//IShowToster(`~网络故障~  \n (${error})`)
-			console.log("~网络故障~")  
+			console.log("~网络故障~") 
+			console.log(error)  
 		}
 		return Promise.reject(error) 
     }

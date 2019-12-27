@@ -43,7 +43,7 @@
 					 	<div class="shurff"> 
 							<el-button @click="loginHander">登录</el-button>
 						</div>
-
+						
 					</form>
 
 					<div class="appEwmAC"  >
@@ -86,7 +86,7 @@ export default {
  				window.sessionStorage.clear();
   },
   mounted () {
-     	this.loadimage()
+     	this.loadimage() 
      	this.$refs.nameInput.focus()
 	}
   ,methods: {
@@ -100,21 +100,24 @@ export default {
 						let verifytoken_=rep.headers.verifytoken
 						window.sessionStorage.setItem("verifyToken", verifytoken_); 
 					}catch(err){
+						let verifytoken_=''
+						window.sessionStorage.setItem("verifyToken", verifytoken_); 
 						console.log(err)
 					}
  			}).catch((err)=>{
  					console.log(err)
  			})
- }
-//		, showTostinfo: function(str) {
-//				 		const h = this.$createElement;
-//				 		this.$message({
-//				 					message: h('p', {style:'color:white'},[
-//								          h('h3', null, str),
-//								          h('i', { style: 'color:yellow' }, 'Again!')
-//								        ])
-//								      }); 
-//		}
+ 		}
+		,
+			getWheather(){
+				let url_='http://i.tianqi.com/index.php?c=code&id=19&color=%23FFFFFF&icon=6&py=haidian&temp=1&num=3&site=13'; 
+				this.axios.get(url_,{responseType: 'text/html'}).then((data) => {
+					console.log(data)
+					 this.wheatherHtml=data
+				}).catch((error) => {
+					 console.log(error)
+				}); 
+			}
   		,loginHander: function () {
 		   				 let that=this
 			   if(this.user==""){ 
@@ -152,8 +155,15 @@ export default {
  												window.sessionStorage.setItem("token", data.data.token); 
  												
 												if(data.data.type=="gw"){
-													self.$router.push({ path: "/first"})
-												}
+														window.sessionStorage.setItem("usertype", "gw");
+														self.$router.push({ path: "/welcomGW"})
+												}else if(data.data.type=="hwzx"){
+														window.sessionStorage.setItem("usertype", "hwzx");
+														self.$router.push({path:"/welcomHwzx"})
+												}else if(data.data.type=="cg"){
+														window.sessionStorage.setItem("usertype", "cg");
+														self.$router.push({path:"/welcomCG"})
+												} 
  												break;
 											case 4000:
 												this.$showTostinfo('登录名或密码不对哦～',this)
