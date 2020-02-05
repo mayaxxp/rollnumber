@@ -7,11 +7,11 @@ import {Loading} from 'element-ui'
 //promiseFinally.shim();
 axios.defaults = Object.assign(axios.defaults, {
 //	baseURL:"http://localhost:3000"
-//  baseURL: "" 
-    baseURL:"http://192.168.100.142:9007/emcs-admin" 
+   baseURL: "http://7a91fa9e.ngrok.io"
+    //baseURL:"http://192.168.100.142:9007/emcs-admin" 
     ,timeout:3000
     ,responseType: "json" 
-    ,withCredentials:true
+    ,withCredentials:false
     ,crossDomain: true
     ,headers: { 
     	"Content-Type": "application/json"   //"application/x-www-form-urlencoded"

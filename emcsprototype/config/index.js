@@ -9,7 +9,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/': {    //自定义
-          target: 'http://192.168.100.142:9007',   //这里可以跟随项目实际部署服务器来
+          target: 'http://127.0.0.1:9007',   //这里可以跟随项目实际部署服务器来
           changeOrigin: true,
           pathRewrite: {
               '^/api/': '' 				//自定义
@@ -18,7 +18,7 @@ module.exports = {
   },
 
     // Various Dev Server settings
-    host: '192.168.20.67', // can be overwritten by process.env.HOST
+    host: '192.168.43.48', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
